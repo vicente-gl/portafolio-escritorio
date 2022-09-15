@@ -1,0 +1,16 @@
+E:\Portafolio\Control de Tareas - Escritorio\portafolio-escritorio\Control de Tareas\Control de Tareas\bin\Debug\Control de Tareas.exe.config
+E:\Portafolio\Control de Tareas - Escritorio\portafolio-escritorio\Control de Tareas\Control de Tareas\bin\Debug\Control de Tareas.exe
+E:\Portafolio\Control de Tareas - Escritorio\portafolio-escritorio\Control de Tareas\Control de Tareas\bin\Debug\Control de Tareas.pdb
+E:\Portafolio\Control de Tareas - Escritorio\portafolio-escritorio\Control de Tareas\Control de Tareas\obj\Debug\Control de Tareas.csproj.AssemblyReference.cache
+E:\Portafolio\Control de Tareas - Escritorio\portafolio-escritorio\Control de Tareas\Control de Tareas\obj\Debug\Control de Tareas.csproj.SuggestedBindingRedirects.cache
+E:\Portafolio\Control de Tareas - Escritorio\portafolio-escritorio\Control de Tareas\Control de Tareas\obj\Debug\MainWindow.g.cs
+E:\Portafolio\Control de Tareas - Escritorio\portafolio-escritorio\Control de Tareas\Control de Tareas\obj\Debug\App.g.cs
+E:\Portafolio\Control de Tareas - Escritorio\portafolio-escritorio\Control de Tareas\Control de Tareas\obj\Debug\Control de Tareas_MarkupCompile.cache
+E:\Portafolio\Control de Tareas - Escritorio\portafolio-escritorio\Control de Tareas\Control de Tareas\obj\Debug\Control de Tareas_MarkupCompile.lref
+E:\Portafolio\Control de Tareas - Escritorio\portafolio-escritorio\Control de Tareas\Control de Tareas\obj\Debug\MainWindow.baml
+E:\Portafolio\Control de Tareas - Escritorio\portafolio-escritorio\Control de Tareas\Control de Tareas\obj\Debug\Control de Tareas.g.resources
+E:\Portafolio\Control de Tareas - Escritorio\portafolio-escritorio\Control de Tareas\Control de Tareas\obj\Debug\Control_de_Tareas.Properties.Resources.resources
+E:\Portafolio\Control de Tareas - Escritorio\portafolio-escritorio\Control de Tareas\Control de Tareas\obj\Debug\Control de Tareas.csproj.GenerateResource.cache
+E:\Portafolio\Control de Tareas - Escritorio\portafolio-escritorio\Control de Tareas\Control de Tareas\obj\Debug\Control de Tareas.csproj.CoreCompileInputs.cache
+E:\Portafolio\Control de Tareas - Escritorio\portafolio-escritorio\Control de Tareas\Control de Tareas\obj\Debug\Control de Tareas.exe
+E:\Portafolio\Control de Tareas - Escritorio\portafolio-escritorio\Control de Tareas\Control de Tareas\obj\Debug\Control de Tareas.pdb

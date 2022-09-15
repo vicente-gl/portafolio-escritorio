@@ -5,8 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Control_de_Tareas"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="MainWindow" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid Background="#FF171725" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Rectangle HorizontalAlignment="Center" Height="434" VerticalAlignment="Center" Width="800" Opacity="0.2">
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF18B9BD"/>
+                    <GradientStop Color="#FF35C781" Offset="1"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle HorizontalAlignment="Center" Height="163" Margin="0,147,0,0" VerticalAlignment="Top" Width="292" Fill="#FFEDEDED"/>
+
+        <Image HorizontalAlignment="Left" Height="174" Margin="23,16,0,0" RenderOptions.BitmapScalingMode="HighQuality" VerticalAlignment="Top" Width="244" Source="/Process Color Alpha.png"/>
+        <TextBox x:Name="txtBoxUser" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" Margin="382,0,0,0"/>
+        <PasswordBox x:Name="txtBoxPassword" HorizontalAlignment="Left" Margin="382,240,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="btnLogin" Content="Login" HorizontalAlignment="Center" Margin="0,281,0,0" VerticalAlignment="Top" Width="120" BorderBrush="{x:Null}" Background="#FF11A8A8" Foreground="White"/>
+        <Label x:Name="txtUser" Content="Usuario" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="307,0,0,0" VerticalAlignment="Center" Background="{x:Null}" Foreground="Black" Height="35"/>
+        <Label x:Name="txtPassword" Content="Contraseña" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="297,232,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="Black" Height="34"/>
+        <Image HorizontalAlignment="Left" Height="174" Margin="716,16,0,0" RenderOptions.BitmapScalingMode="HighQuality" VerticalAlignment="Top" Width="48" Source="/Control de Tareas.png"/>
+        <Label Content="Bienvenido" HorizontalAlignment="Center" Height="25" Margin="0,147,0,0" VerticalAlignment="Top" Width="68"/>
+        <Label Content="Ingrese sus datos" HorizontalAlignment="Center" Height="28" Margin="0,160,0,0" VerticalAlignment="Top" Width="120" FontSize="14"/>
+        <Grid/>
+
     </Grid>
 </Window>
