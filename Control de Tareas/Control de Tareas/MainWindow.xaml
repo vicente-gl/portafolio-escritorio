@@ -17,10 +17,10 @@
         </Rectangle>
         <Rectangle HorizontalAlignment="Center" Height="163" Margin="0,147,0,0" VerticalAlignment="Top" Width="292" Fill="#FFEDEDED"/>
 
-        <Image HorizontalAlignment="Left" Height="174" Margin="23,16,0,0" RenderOptions.BitmapScalingMode="HighQuality" VerticalAlignment="Top" Width="244" Source="/Process Color Alpha.png"/>
+        <Image HorizontalAlignment="Left" Height="83" Margin="23,16,0,0" RenderOptions.BitmapScalingMode="HighQuality" VerticalAlignment="Top" Width="244" Source="/Process Color Alpha.png"/>
         <TextBox x:Name="txtBoxUser" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" Margin="382,0,0,0"/>
         <PasswordBox x:Name="txtBoxPassword" HorizontalAlignment="Left" Margin="382,240,0,0" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="btnLogin" Content="Login" HorizontalAlignment="Center" Margin="0,281,0,0" VerticalAlignment="Top" Width="120" BorderBrush="{x:Null}" Background="#FF11A8A8" Foreground="White"/>
+        <Button x:Name="btnLogin" Content="Login" Click="btnLogin_Click" HorizontalAlignment="Center" Margin="0,281,0,0" VerticalAlignment="Top" Width="120" BorderBrush="{x:Null}" Background="#FF11A8A8" Foreground="White"/>
         <Label x:Name="txtUser" Content="Usuario" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="307,0,0,0" VerticalAlignment="Center" Background="{x:Null}" Foreground="Black" Height="35"/>
         <Label x:Name="txtPassword" Content="Contraseña" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="297,232,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="Black" Height="34"/>
         <Image HorizontalAlignment="Left" Height="174" Margin="716,16,0,0" RenderOptions.BitmapScalingMode="HighQuality" VerticalAlignment="Top" Width="48" Source="/Control de Tareas.png"/>

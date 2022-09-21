@@ -24,5 +24,29 @@ namespace Control_de_Tareas
         {
             InitializeComponent();
         }
+
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            TryLogin();
+        }
+
+
+
+        private void TryLogin()
+        {
+
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Hide();
+
+            string name = txtBoxUser.Text;
+            string pass = txtBoxPassword.Password.ToString();
+            Console.WriteLine(name);
+            Console.WriteLine(pass);
+            Console.WriteLine("Login Exitoso");
+
+            Dashboard dashboard = new Dashboard();
+            dashboard.Show();
+            mainWindow.Hide();
+        }
     }
 }

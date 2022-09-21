@@ -1,0 +1,84 @@
+﻿<Window x:Class="Control_de_Tareas.Dashboard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Control_de_Tareas"
+        mc:Ignorable="d"
+        Title="Dashboard" Height="1080" Width="1920" WindowStartupLocation="CenterScreen" FontFamily="Intel Clear Pro">
+    <Grid Name="GridDashboard">
+        <Grid Name="MainMenu" Margin="0,80,0,0" Height="984" VerticalAlignment="Top" HorizontalAlignment="Left" Width="{Binding ActualWidth, ElementName=GridDashboard}">
+            <Rectangle Fill="#CFCFCF"></Rectangle>
+            <StackPanel HorizontalAlignment="Left" Margin="15,30,0,0">
+                <Button x:Name="mainMenuNegocios" Click="mainMenuNegocios_Click" Content="Negocios" FontFamily="Inter Medium" FontSize="20" Height="50" Width="250" Background="#FFCFCFCF" BorderBrush="{x:Null}"></Button>
+                <Button x:Name="mainMenuGruposTrabajo" Content="Grupos de Trabajo" FontFamily="Inter Medium" FontSize="20" Height="50" Width="250" Background="#FFCFCFCF" Margin="0,0,0,0" BorderBrush="{x:Null}"></Button>
+                <Button x:Name="mainMenuFlujosTarea" Content="Flujos de Tarea" FontFamily="Inter Medium" FontSize="20" Height="50" Width="250" Background="#FFCFCFCF" BorderBrush="{x:Null}"></Button>
+                <Button x:Name="mainMenuUsuarios" Content="Usuarios" FontFamily="Inter Medium" FontSize="20" Height="50" Width="250" Background="#FFCFCFCF" BorderBrush="{x:Null}"></Button>
+                <Button x:Name="mainMenuPerfilesNegocio" Content="Perfiles de Negocio" FontFamily="Inter Medium" FontSize="20" Height="50" Width="250" Background="#FFCFCFCF" BorderBrush="{x:Null}"></Button>
+            </StackPanel>
+        </Grid>
+        <Grid x:Name="MenuNegocio" Margin="260,80,0,0" Height="984" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1630" Visibility="Hidden">
+            <Rectangle Fill="#EDEDED"></Rectangle>
+            <StackPanel HorizontalAlignment="Left" Margin="0,30,0,0">
+                <Button x:Name="btn_negocio_crear" Click="btn_negocio_crear_Click" Content="Agregar Negocio" FontFamily="Inter Medium" FontSize="20" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
+                <Button x:Name="btn_negocio_listar" Content="Listar Negocios" FontFamily="Inter Medium" FontSize="20" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
+            </StackPanel>
+            <Label Content="Negocios /" Foreground="Gray" Margin="15,5,0,0" FontSize="15" FontFamily="Inter"></Label>
+        </Grid>
+        <Grid Name="MenuGrupoTrabajo" Margin="260,80,0,0" Height="984" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1630" Visibility="Hidden">
+            <Rectangle Fill="#EDEDED"></Rectangle>
+            <StackPanel HorizontalAlignment="Left" Margin="0,30,0,0">
+                <Button x:Name="btn_grupotrabajo_crear" Content="Agregar Grupo Trabajo" FontFamily="Inter Medium" FontSize="20" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
+            </StackPanel>
+        </Grid>
+        <Grid Name="Pantalla_Agregar_Negocio" Margin="522,80,0,0" Height="984" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1398" Visibility="Hidden">
+            <Rectangle Fill="#FFFFFF"></Rectangle>
+            <Label HorizontalAlignment="Center" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="30" Content="Datos de Negocio"></Label>
+            <StackPanel HorizontalAlignment="Center" Margin="0,90,0,0" Orientation="Horizontal">
+                <StackPanel HorizontalAlignment="Center" Name="Labels" Margin="0,0,20,0">
+                    <Label Margin="3" FontFamily="Inter" FontSize="20" Content="Nombre"></Label>
+                    <Label Margin="3" FontFamily="Inter" FontSize="20" Content="Dirección"></Label>
+                    <Label Margin="3" FontFamily="Inter" FontSize="20" Content="Rol Único Tributario (RUT)"></Label>
+                    <Label Margin="3" FontFamily="Inter" FontSize="20" Content="Giro Comercial"></Label>
+                    <Label Margin="3" FontFamily="Inter" FontSize="20" Content="Nombre Jefe"></Label>
+                    <Label Margin="3" FontFamily="Inter" FontSize="20" Content="Mail Jefe"></Label>
+                    <Label Margin="3" FontFamily="Inter" FontSize="20" Content="Teléfono de Contacto"></Label>
+                    <Label Margin="3" FontFamily="Inter" FontSize="20" Content="Sitio Web / RRSS"></Label>
+                    <Label Margin="3" FontFamily="Inter" FontSize="20" Content="Fecha de Inicio"></Label>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center" Width="500" Name="Data">
+                    <TextBox Name="txtbox_nombre" Margin="5" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                    <TextBox Name="txtbox_direccion" Margin="5" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                    <TextBox Name="txtbox_rut_negocio" Margin="5" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                    <TextBox Name="txtbox_girocomercial" Margin="5" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                    <TextBox Name="txtbox_nombre_jefe" Margin="5" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                    <TextBox Name="txtbox_mail_jefe" Margin="5" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                    <TextBox Name="txtbox_num_contacto" Margin="5" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                    <TextBox Name="txtbox_web_rrss" Margin="5" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                    <DatePicker Name="date_pick" FontFamily="Inter" FontSize="20" Margin="5" Height="30"></DatePicker>
+                    <Button FontFamily="Inter" FontSize="20" Content="Agregar Negocio" Margin="0,40,0,20" Height="40" Width="250"></Button>
+                    <Button x:Name="btn_crearNegocio_limpiar" Click="btn_crearNegocio_limpiar_Click" FontFamily="Inter" FontSize="13" Content="Limpiar Campos" Margin="0" Height="20" Width="150"></Button>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        <Grid Name="GridTopBar" HorizontalAlignment="Center" Height="80" Width="{Binding ActualWidth, ElementName=GridDashboard}" VerticalAlignment="Top">
+            <Rectangle Fill="#171725" HorizontalAlignment="Center" Width="1920" Height="134" VerticalAlignment="Top"/>
+            <Image Source="/Process Color Alpha.png" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" RenderOptions.BitmapScalingMode="HighQuality"></Image>
+            <Ellipse HorizontalAlignment="Left" Margin="300,0,0,0" Width="50" Height="50">
+                <Ellipse.Fill>
+                    <ImageBrush ImageSource="/Iconos/WIN_20220921_11_50_38_Pro (2).jpg" RenderOptions.BitmapScalingMode="HighQuality" />
+                </Ellipse.Fill>
+            </Ellipse>
+            <Label Content="Vicente Octavio Gonzalez Lorca" Foreground="WhiteSmoke" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="360, 0, 0, 0" FontSize="20" FontFamily="Inter Light"></Label>
+            <Grid Name="GridNegocioSeleccionado" Margin="400,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="700" Height="55">
+                <Rectangle Fill="#EFEFEF"></Rectangle>
+                <Label Content="Negocio Seleccionado:" VerticalAlignment="Center" Padding="40, 0, 0, 0" Foreground="Black" FontSize="18" FontFamily="Inter Light"></Label>
+                <Grid HorizontalAlignment="Right" Margin="0,0,40,0" Width="400" Height="40">
+                    <Rectangle Fill="#1AD49F"></Rectangle>
+                    <Label Content="Ninguno" FontFamily="Inter" Foreground="WhiteSmoke" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" ></Label>
+                </Grid>
+            </Grid>
+        </Grid>
+
+    </Grid>
+</Window>
