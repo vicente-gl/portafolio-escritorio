@@ -10,20 +10,24 @@
         <Grid Name="MainMenu" Margin="0,80,0,0" Height="984" VerticalAlignment="Top" HorizontalAlignment="Left" Width="{Binding ActualWidth, ElementName=GridDashboard}">
             <Rectangle Fill="#CFCFCF"></Rectangle>
             <StackPanel HorizontalAlignment="Left" Margin="15,30,0,0">
-                <Button x:Name="mainMenuNegocios" Click="mainMenuNegocios_Click" Content="Negocios" FontFamily="Inter Medium" FontSize="20" Height="50" Width="250" Background="#FFCFCFCF" BorderBrush="{x:Null}"></Button>
-                <Button x:Name="mainMenuGruposTrabajo" Content="Grupos de Trabajo" FontFamily="Inter Medium" FontSize="20" Height="50" Width="250" Background="#FFCFCFCF" Margin="0,0,0,0" BorderBrush="{x:Null}"></Button>
-                <Button x:Name="mainMenuFlujosTarea" Content="Flujos de Tarea" FontFamily="Inter Medium" FontSize="20" Height="50" Width="250" Background="#FFCFCFCF" BorderBrush="{x:Null}"></Button>
-                <Button x:Name="mainMenuUsuarios" Content="Usuarios" FontFamily="Inter Medium" FontSize="20" Height="50" Width="250" Background="#FFCFCFCF" BorderBrush="{x:Null}"></Button>
-                <Button x:Name="mainMenuPerfilesNegocio" Content="Perfiles de Negocio" FontFamily="Inter Medium" FontSize="20" Height="50" Width="250" Background="#FFCFCFCF" BorderBrush="{x:Null}"></Button>
+                <Button x:Name="mainMenuNegocios" Click="mainMenuNegocios_Click" Content="Negocios" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#FFCFCFCF" BorderBrush="{x:Null}"></Button>
+                <Button x:Name="mainMenuGruposTrabajo" Click="mainMenuGruposTrabajo_Click" Content="Grupos de Trabajo" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#FFCFCFCF" Margin="0,0,0,0" BorderBrush="{x:Null}"></Button>
+                <Button x:Name="mainMenuFlujosTarea" Content="Flujos de Tarea" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#FFCFCFCF" BorderBrush="{x:Null}"></Button>
+                <Button x:Name="mainMenuUsuarios" Content="Usuarios" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#FFCFCFCF" BorderBrush="{x:Null}"></Button>
+                <Button x:Name="mainMenuPerfilesNegocio" Content="Perfiles de Negocio" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#FFCFCFCF" BorderBrush="{x:Null}"></Button>
             </StackPanel>
         </Grid>
-        <Grid x:Name="MenuNegocio" Margin="260,80,0,0" Height="984" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1630" Visibility="Hidden">
-            <Rectangle Fill="#EDEDED"></Rectangle>
-            <StackPanel HorizontalAlignment="Left" Margin="0,30,0,0">
-                <Button x:Name="btn_negocio_crear" Click="btn_negocio_crear_Click" Content="Agregar Negocio" FontFamily="Inter Medium" FontSize="20" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
-                <Button x:Name="btn_negocio_listar" Content="Listar Negocios" FontFamily="Inter Medium" FontSize="20" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
+        <Grid x:Name="MenuNegocio" Margin="264,80,0,0" Height="984" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1800" Visibility="Hidden">
+            <Rectangle Fill="#EDEDED">
+                <Rectangle.Effect>
+                    <DropShadowEffect Direction="180"/>
+                </Rectangle.Effect>
+            </Rectangle>
+            <Label Content="Negocios /" Foreground="Gray" Margin="15,10,0,0" FontSize="12" FontFamily="Inter"></Label>
+            <StackPanel HorizontalAlignment="Left" Margin="0,50,0,0">
+                <Button x:Name="btn_negocio_crear" Click="btn_negocio_crear_Click" Content="Agregar Negocio" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
+                <Button x:Name="btn_negocio_listar" Content="Listar Negocios" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
             </StackPanel>
-            <Label Content="Negocios /" Foreground="Gray" Margin="15,5,0,0" FontSize="15" FontFamily="Inter"></Label>
         </Grid>
         <Grid Name="MenuGrupoTrabajo" Margin="260,80,0,0" Height="984" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1630" Visibility="Hidden">
             <Rectangle Fill="#EDEDED"></Rectangle>
@@ -31,7 +35,7 @@
                 <Button x:Name="btn_grupotrabajo_crear" Content="Agregar Grupo Trabajo" FontFamily="Inter Medium" FontSize="20" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
             </StackPanel>
         </Grid>
-        <Grid Name="Pantalla_Agregar_Negocio" Margin="522,80,0,0" Height="984" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1398" Visibility="Hidden">
+        <Grid Name="Pantalla_Agregar_Negocio" Margin="509,80,0,0" Height="984" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1398" Visibility="Hidden">
             <Rectangle Fill="#FFFFFF"></Rectangle>
             <Label HorizontalAlignment="Center" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="30" Content="Datos de Negocio"></Label>
             <StackPanel HorizontalAlignment="Center" Margin="0,90,0,0" Orientation="Horizontal">
