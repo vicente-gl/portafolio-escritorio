@@ -25,7 +25,7 @@ namespace Control_de_Tareas
         string color_menu2_idle = "#EDEDED";
         string color_menu2_pressed = "#FFFFFF";
 
-        string nombreUsuario;
+        string queryResult;
 
         public Dashboard()
         {
@@ -43,16 +43,16 @@ namespace Control_de_Tareas
             conex.ConnectionString = cConexion.cadenaConexion;
             conex.Open();
             string query = "SELECT CONCAT(nombre, ' ', apellidop, ' ', apellidom) AS nombrecompleto FROM usuario WHERE id = " + mainWindow.logedUser + ";";
-            
+            //string query = "SELECT CONCAT(nombre, ' ', apellidop, ' ', apellidom) AS nombrecompleto FROM usuario WHERE id = 1;";
             var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
             var reader = cmd.ExecuteReader();
 
             while (reader.Read())
             {
-                nombreUsuario = reader.GetString("nombrecompleto");
+                queryResult = reader.GetString("nombrecompleto");
             }
 
-            label_logedUser.Content = nombreUsuario;
+            label_logedUser.Content = queryResult;
 
 
 

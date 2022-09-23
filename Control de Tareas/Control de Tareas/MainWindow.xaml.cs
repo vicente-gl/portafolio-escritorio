@@ -23,13 +23,11 @@ namespace Control_de_Tareas
 
     public partial class MainWindow : Window
     {
-        private string username, password, sql;
-        private CConexion conn = new CConexion();
-        private MySqlCommand command;
-        public int logedUser = 0;
+        public int logedUser;
+        private string queryResult;
 
-
-        bool btnlogin = true;
+        private string username;
+        private string password;
         public MainWindow()
         {
             InitializeComponent();
@@ -37,9 +35,9 @@ namespace Control_de_Tareas
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            TryLogin();
             username = txtBoxUser.Text;
             password = txtBoxPassword.Password;
+            TryLogin();
 
         }
 
@@ -47,25 +45,38 @@ namespace Control_de_Tareas
 
         private void TryLogin()
         {
+            try
             {
-               if (btnlogin)
+                MySqlConnection conex = new MySqlConnection();
+                CConexion cConexion = new CConexion();
+                MainWindow mainWindow = new MainWindow();
+
+
+                conex.ConnectionString = cConexion.cadenaConexion;
+                conex.Open();
+                string query = "SELECT id from usuario where nombre = '" + username + "';";
+
+                var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
                 {
-                string name = txtBoxUser.Text;
-                string pass = txtBoxPassword.Password.ToString();
-                Console.WriteLine(name);
-                Console.WriteLine(pass);
-                Console.WriteLine("Login Exitoso");
+                    queryResult = reader.GetString("id");
+                }
+
+                //logedUser = Int32.Parse(queryResult);
+                logedUser = 1;
+                System.Windows.MessageBox.Show(logedUser.ToString());
+
 
                 Dashboard dashboard = new Dashboard();
                 dashboard.Show();
-
                 this.Close();
 
-                }
-                else
-                {
-                    System.Windows.MessageBox.Show("Debe");
-                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
             }
         }
 
