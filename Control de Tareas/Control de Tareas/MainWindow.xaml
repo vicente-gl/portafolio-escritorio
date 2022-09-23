@@ -5,7 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Control_de_Tareas"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
     <Grid Background="#FF171725" HorizontalAlignment="Center" VerticalAlignment="Center">
         <Rectangle HorizontalAlignment="Center" Height="434" VerticalAlignment="Center" Width="800" Opacity="0.2">
             <Rectangle.Fill>
@@ -15,17 +23,16 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <Rectangle HorizontalAlignment="Center" Height="163" Margin="0,147,0,0" VerticalAlignment="Top" Width="292" Fill="#FFEDEDED"/>
-
+        <Rectangle HorizontalAlignment="Center" Height="180" Margin="0,147,0,0" VerticalAlignment="Top" Width="300" Fill="#FFEDEDED"/>
         <Image HorizontalAlignment="Left" Height="83" Margin="23,16,0,0" RenderOptions.BitmapScalingMode="HighQuality" VerticalAlignment="Top" Width="244" Source="/Process Color Alpha.png"/>
-        <TextBox x:Name="txtBoxUser" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" Margin="382,0,0,0"/>
-        <PasswordBox x:Name="txtBoxPassword" HorizontalAlignment="Left" Margin="382,240,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBox Text="abcd" x:Name="txtBoxUser" Foreground="Black" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" Margin="382,0,0,0"/>
+        <PasswordBox Password="abcde" Foreground="Black" x:Name="txtBoxPassword" HorizontalAlignment="Left" Margin="382,240,0,0" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="btnLogin" Content="Login" Click="btnLogin_Click" HorizontalAlignment="Center" Margin="0,281,0,0" VerticalAlignment="Top" Width="120" BorderBrush="{x:Null}" Background="#FF11A8A8" Foreground="White"/>
         <Label x:Name="txtUser" Content="Usuario" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="307,0,0,0" VerticalAlignment="Center" Background="{x:Null}" Foreground="Black" Height="35"/>
         <Label x:Name="txtPassword" Content="Contraseña" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="297,232,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="Black" Height="34"/>
         <Image HorizontalAlignment="Left" Height="174" Margin="716,16,0,0" RenderOptions.BitmapScalingMode="HighQuality" VerticalAlignment="Top" Width="48" Source="/Control de Tareas.png"/>
-        <Label Content="Bienvenido" HorizontalAlignment="Center" Height="25" Margin="0,147,0,0" VerticalAlignment="Top" Width="68"/>
-        <Label Content="Ingrese sus datos" HorizontalAlignment="Center" Height="28" Margin="0,160,0,0" VerticalAlignment="Top" Width="120" FontSize="14"/>
+        <Label Content="Bienvenido" Foreground="Black" HorizontalAlignment="Center" Height="25" Margin="0,147,0,0" VerticalAlignment="Top" Width= "71"/>
+        <Label Content="Ingrese sus datos" Foreground="Black" HorizontalAlignment="Center" Height="28" Margin="0,160,0,0" VerticalAlignment="Top" Width="120" FontSize="14"/>
         <Grid/>
 
     </Grid>

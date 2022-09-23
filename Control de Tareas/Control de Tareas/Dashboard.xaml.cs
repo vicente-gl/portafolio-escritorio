@@ -26,10 +26,6 @@ namespace Control_de_Tareas
         string color_menu2_idle = "#EDEDED";
         string color_menu2_pressed = "#FFFFFF";
 
-        bool menu1_selected = false;
-        bool menu2_selected = false;
-
-
         public Dashboard()
         {
             InitializeComponent();
@@ -39,33 +35,64 @@ namespace Control_de_Tareas
         //Botones Main Menú
         private void mainMenuNegocios_Click(object sender, RoutedEventArgs e)
         {
-            OcultarMenu2();
             ApagarBotonesMainMenu();
-            if (MenuNegocio.Visibility.Equals(Visibility.Hidden) && !menu1_selected)
+            if (MenuNegocio.Visibility.Equals(Visibility.Hidden))
             {
+                OcultarOtrosMenus(MenuNegocio);
                 MenuNegocio.Visibility = Visibility.Visible;
                 CambiarColorBoton(mainMenuNegocios, color_menu1_pressed);
-                menu1_selected = true;
             }
             else
             {
-                menu1_selected = false;
+                OcultarOtrosMenus(MenuNegocio);
             }
         }
 
         private void mainMenuGruposTrabajo_Click(object sender, RoutedEventArgs e)
         {
-            OcultarMenu2();
             ApagarBotonesMainMenu();
-            if (MenuNegocio.Visibility.Equals(Visibility.Hidden) && !menu1_selected)
+            if (MenuGrupoTrabajo.Visibility.Equals(Visibility.Hidden))
             {
+                OcultarOtrosMenus(MenuGrupoTrabajo);
+                MenuGrupoTrabajo.Visibility = Visibility.Visible;
                 CambiarColorBoton(mainMenuGruposTrabajo, color_menu2_pressed);
-                menu2_selected = true;
             }
             else
             {
-                menu2_selected = false;
+                OcultarOtrosMenus(MenuGrupoTrabajo);
             }
+        }
+
+
+        private void mainMenuFlujosTarea_Click(object sender, RoutedEventArgs e)
+        {
+            ApagarBotonesMainMenu();
+            if (MenuFlujos.Visibility.Equals(Visibility.Hidden))
+            {
+                OcultarOtrosMenus(MenuFlujos);
+                MenuFlujos.Visibility = Visibility.Visible;
+                CambiarColorBoton(mainMenuFlujosTarea, color_menu2_pressed);
+            }
+            else
+            {
+                OcultarOtrosMenus(MenuFlujos);
+            }
+        }
+
+        private void mainMenuUsuarios_Click(object sender, RoutedEventArgs e)
+        {
+            ApagarBotonesMainMenu();
+            if (MenuUsuarios.Visibility.Equals(Visibility.Hidden))
+            {
+                OcultarOtrosMenus(MenuUsuarios);
+                MenuUsuarios.Visibility = Visibility.Visible;
+                CambiarColorBoton(mainMenuUsuarios, color_menu2_pressed);
+            }
+            else
+            {
+                OcultarOtrosMenus(MenuUsuarios);
+            }
+
         }
 
 
@@ -74,25 +101,31 @@ namespace Control_de_Tareas
         //Botones Menu Negocio
         private void btn_negocio_crear_Click(object sender, RoutedEventArgs e)
         {
-            if (Pantalla_Agregar_Negocio.Visibility.Equals(Visibility.Hidden) && !menu2_selected)
+            if (Pantalla_Agregar_Negocio.Visibility.Equals(Visibility.Hidden))
             {
                 date_pick.SelectedDate = DateTime.Now;
                 Pantalla_Agregar_Negocio.Visibility = Visibility.Visible;
-
                 CambiarColorBoton(btn_negocio_crear, color_menu2_pressed);
-
-                menu2_selected = true;
-
             }
             else
             {
                 Pantalla_Agregar_Negocio.Visibility = Visibility.Hidden;
-
-                var bc = new BrushConverter();
                 CambiarColorBoton(btn_negocio_crear, color_menu2_idle);
+            }
+        }
 
-                menu2_selected = false;
-
+        private void btn_negocio_listar_Click(object sender, RoutedEventArgs e)
+        {
+            if (Pantalla_Listar_Negocio.Visibility.Equals(Visibility.Hidden))
+            {
+                date_pick.SelectedDate = DateTime.Now;
+                Pantalla_Listar_Negocio.Visibility = Visibility.Visible;
+                CambiarColorBoton(btn_negocio_listar, color_menu2_pressed);
+            }
+            else
+            {
+                Pantalla_Listar_Negocio.Visibility = Visibility.Hidden;
+                CambiarColorBoton(btn_negocio_listar, color_menu2_idle);
             }
         }
 
@@ -126,12 +159,28 @@ namespace Control_de_Tareas
             CambiarColorBoton(mainMenuUsuarios, color_menu1_idle);
             CambiarColorBoton(mainMenuPerfilesNegocio, color_menu1_idle);
         }
-
-        private void OcultarMenu2()
+        private void OcultarOtrosMenus(Grid selectedGrid)
         {
-            MenuNegocio.Visibility = Visibility.Hidden;
-            MenuGrupoTrabajo.Visibility = Visibility.Hidden;
-            
+            List<Grid> lista_menu2;
+            lista_menu2 = new List<Grid>();
+
+            lista_menu2.Add(MenuNegocio);
+            lista_menu2.Add(MenuGrupoTrabajo);
+            lista_menu2.Add(MenuFlujos);
+            lista_menu2.Add(MenuUsuarios);
+            //opcion5
+
+            foreach (Grid item in lista_menu2)
+            {
+                if(selectedGrid != item)
+                {
+                    item.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    selectedGrid.Visibility = Visibility.Hidden;
+                }
+            }
         }
     }
 }

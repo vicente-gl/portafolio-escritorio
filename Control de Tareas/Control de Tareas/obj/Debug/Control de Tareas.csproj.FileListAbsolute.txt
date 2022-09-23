@@ -17,3 +17,10 @@ E:\Portafolio\Control de Tareas - Escritorio\portafolio-escritorio\Control de Ta
 E:\Portafolio\Control de Tareas - Escritorio\portafolio-escritorio\Control de Tareas\Control de Tareas\obj\Debug\Dashboard.g.cs
 E:\Portafolio\Control de Tareas - Escritorio\portafolio-escritorio\Control de Tareas\Control de Tareas\obj\Debug\Dashboard.baml
 E:\Portafolio\Control de Tareas - Escritorio\portafolio-escritorio\Control de Tareas\Control de Tareas\obj\Debug\Control de Tareas_Content.g.cs
+E:\Portafolio\Control de Tareas - Escritorio\portafolio-escritorio\Control de Tareas\Control de Tareas\bin\Debug\MaterialDesignColors.dll
+E:\Portafolio\Control de Tareas - Escritorio\portafolio-escritorio\Control de Tareas\Control de Tareas\bin\Debug\MaterialDesignThemes.Wpf.dll
+E:\Portafolio\Control de Tareas - Escritorio\portafolio-escritorio\Control de Tareas\Control de Tareas\bin\Debug\MaterialDesignColors.pdb
+E:\Portafolio\Control de Tareas - Escritorio\portafolio-escritorio\Control de Tareas\Control de Tareas\bin\Debug\MaterialDesignThemes.Wpf.pdb
+E:\Portafolio\Control de Tareas - Escritorio\portafolio-escritorio\Control de Tareas\Control de Tareas\bin\Debug\MaterialDesignThemes.Wpf.xml
+E:\Portafolio\Control de Tareas - Escritorio\portafolio-escritorio\Control de Tareas\Control de Tareas\obj\Debug\App.baml
+E:\Portafolio\Control de Tareas - Escritorio\portafolio-escritorio\Control de Tareas\Control de Tareas\obj\Debug\Control de Tareas.csproj.CopyComplete

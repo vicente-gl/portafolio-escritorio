@@ -12,27 +12,42 @@
             <StackPanel HorizontalAlignment="Left" Margin="15,30,0,0">
                 <Button x:Name="mainMenuNegocios" Click="mainMenuNegocios_Click" Content="Negocios" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#FFCFCFCF" BorderBrush="{x:Null}"></Button>
                 <Button x:Name="mainMenuGruposTrabajo" Click="mainMenuGruposTrabajo_Click" Content="Grupos de Trabajo" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#FFCFCFCF" Margin="0,0,0,0" BorderBrush="{x:Null}"></Button>
-                <Button x:Name="mainMenuFlujosTarea" Content="Flujos de Tarea" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#FFCFCFCF" BorderBrush="{x:Null}"></Button>
-                <Button x:Name="mainMenuUsuarios" Content="Usuarios" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#FFCFCFCF" BorderBrush="{x:Null}"></Button>
+                <Button x:Name="mainMenuFlujosTarea" Click="mainMenuFlujosTarea_Click"  Content="Flujos de Tarea" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#FFCFCFCF" BorderBrush="{x:Null}"></Button>
+                <Button x:Name="mainMenuUsuarios" Click="mainMenuUsuarios_Click" Content="Usuarios" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#FFCFCFCF" BorderBrush="{x:Null}"></Button>
                 <Button x:Name="mainMenuPerfilesNegocio" Content="Perfiles de Negocio" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#FFCFCFCF" BorderBrush="{x:Null}"></Button>
             </StackPanel>
         </Grid>
         <Grid x:Name="MenuNegocio" Margin="264,80,0,0" Height="984" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1800" Visibility="Hidden">
-            <Rectangle Fill="#EDEDED">
-                <Rectangle.Effect>
-                    <DropShadowEffect Direction="180"/>
-                </Rectangle.Effect>
-            </Rectangle>
+            <Rectangle Fill="#EDEDED"></Rectangle>
             <Label Content="Negocios /" Foreground="Gray" Margin="15,10,0,0" FontSize="12" FontFamily="Inter"></Label>
             <StackPanel HorizontalAlignment="Left" Margin="0,50,0,0">
-                <Button x:Name="btn_negocio_crear" Click="btn_negocio_crear_Click" Content="Agregar Negocio" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
-                <Button x:Name="btn_negocio_listar" Content="Listar Negocios" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
+                <Button x:Name="btn_negocio_crear" Click="btn_negocio_crear_Click" Content="Agregar Grupo de Trabajo" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
+                <Button x:Name="btn_negocio_listar" Click="btn_negocio_listar_Click" Content="Listar Negocios" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
             </StackPanel>
         </Grid>
-        <Grid Name="MenuGrupoTrabajo" Margin="260,80,0,0" Height="984" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1630" Visibility="Hidden">
+        <Grid Name="MenuGrupoTrabajo" Margin="260,80,0,0" Height="984" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1800" Visibility="Hidden">
             <Rectangle Fill="#EDEDED"></Rectangle>
-            <StackPanel HorizontalAlignment="Left" Margin="0,30,0,0">
-                <Button x:Name="btn_grupotrabajo_crear" Content="Agregar Grupo Trabajo" FontFamily="Inter Medium" FontSize="20" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
+            <Label Content="Negocios /" Foreground="Gray" Margin="15,10,0,0" FontSize="12" FontFamily="Inter"></Label>
+            <StackPanel HorizontalAlignment="Left" Margin="0,50,0,0">
+                <Button x:Name="btn_admin_rol" Content="Administrar Roles" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
+                <Button x:Name="btn_gptrabajo_crear" Content="Agregar Negocio" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
+                <Button x:Name="btn_gptrabajo_listar" Content="Listar Grupos de Trabajo" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
+            </StackPanel>
+        </Grid>
+        <Grid Name="MenuFlujos" Margin="260,80,0,0" Height="984" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1800" Visibility="Hidden">
+            <Rectangle Fill="#EDEDED"></Rectangle>
+            <Label Content="Negocios /" Foreground="Gray" Margin="15,10,0,0" FontSize="12" FontFamily="Inter"></Label>
+            <StackPanel HorizontalAlignment="Left" Margin="0,50,0,0">
+                <Button x:Name="btn_flujos_crear" Content="Agregar Flujo de Tarea" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
+                <Button x:Name="btn_flujos_listar" Content="Listar Flujos de Tarea" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
+            </StackPanel>
+        </Grid>
+        <Grid Name="MenuUsuarios" Margin="260,80,0,0" Height="984" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1800" Visibility="Hidden">
+            <Rectangle Fill="#EDEDED"></Rectangle>
+            <Label Content="Negocios /" Foreground="Gray" Margin="15,10,0,0" FontSize="12" FontFamily="Inter"></Label>
+            <StackPanel HorizontalAlignment="Left" Margin="0,50,0,0">
+                <Button x:Name="btn_usuarios_crear" Content="Agregar Usuario" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
+                <Button x:Name="btn_usuarios_listar" Content="Listar Usuarios" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
             </StackPanel>
         </Grid>
         <Grid Name="Pantalla_Agregar_Negocio" Margin="509,80,0,0" Height="984" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1398" Visibility="Hidden">
@@ -61,9 +76,17 @@
                     <TextBox Name="txtbox_web_rrss" Margin="5" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
                     <DatePicker Name="date_pick" FontFamily="Inter" FontSize="20" Margin="5" Height="30"></DatePicker>
                     <Button FontFamily="Inter" FontSize="20" Content="Agregar Negocio" Margin="0,40,0,20" Height="40" Width="250"></Button>
-                    <Button x:Name="btn_crearNegocio_limpiar" Click="btn_crearNegocio_limpiar_Click" FontFamily="Inter" FontSize="13" Content="Limpiar Campos" Margin="0" Height="20" Width="150"></Button>
+                    <Button x:Name="btn_crearNegocio_limpiar" Click="btn_crearNegocio_limpiar_Click" FontFamily="Inter" FontSize="13" Content="Limpiar Campos" Margin="0" Height="30" Width="150"></Button>
                 </StackPanel>
             </StackPanel>
+        </Grid>
+        <Grid Name="Pantalla_Listar_Negocio" Margin="509,80,0,0" Height="984" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1398" Visibility="Hidden">
+            <Rectangle Fill="#FFFFFF"></Rectangle>
+            <Label HorizontalAlignment="Center" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="30" Content="Lista de Negocios"></Label>
+            <DataGrid VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,100,0,0" Grid.Row="50" Grid.Column="9" Width="900" Height="500"/>
+            <Border>
+                <Button FontFamily="Inter" FontSize="20" Content="Editar Negocio" Margin="0,40,0,20" Height="40" Width="250"></Button>
+            </Border>
         </Grid>
         <Grid Name="GridTopBar" HorizontalAlignment="Center" Height="80" Width="{Binding ActualWidth, ElementName=GridDashboard}" VerticalAlignment="Top">
             <Rectangle Fill="#171725" HorizontalAlignment="Center" Width="1920" Height="134" VerticalAlignment="Top"/>

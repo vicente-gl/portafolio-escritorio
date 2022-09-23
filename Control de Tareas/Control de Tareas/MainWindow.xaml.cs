@@ -20,6 +20,7 @@ namespace Control_de_Tareas
     /// </summary>
     public partial class MainWindow : Window
     {
+        bool btnlogin = true;
         public MainWindow()
         {
             InitializeComponent();
@@ -34,19 +35,30 @@ namespace Control_de_Tareas
 
         private void TryLogin()
         {
+            if (btnlogin && txtBoxUser.Text == "" && txtBoxPassword.Password == ""){
+                System.Windows.MessageBox.Show("Debe ingresar datos");
+            }
+            else
+            {
+               if (btnlogin)
+                {
+                string name = txtBoxUser.Text;
+                string pass = txtBoxPassword.Password.ToString();
+                Console.WriteLine(name);
+                Console.WriteLine(pass);
+                Console.WriteLine("Login Exitoso");
 
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Hide();
+                Dashboard dashboard = new Dashboard();
+                dashboard.Show();
 
-            string name = txtBoxUser.Text;
-            string pass = txtBoxPassword.Password.ToString();
-            Console.WriteLine(name);
-            Console.WriteLine(pass);
-            Console.WriteLine("Login Exitoso");
+                this.Close();
 
-            Dashboard dashboard = new Dashboard();
-            dashboard.Show();
-            mainWindow.Hide();
+                }
+                else
+                {
+                    System.Windows.MessageBox.Show("Debe");
+                }
+            }
         }
     }
 }
