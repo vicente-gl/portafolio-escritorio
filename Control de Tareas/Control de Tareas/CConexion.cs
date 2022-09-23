@@ -25,15 +25,40 @@ namespace Control_de_Tareas
             {
                 conex.ConnectionString = cadenaConexion;
                 conex.Open();
-                Console.WriteLine("Conexion exitosa");
-                System.Windows.MessageBox.Show("TESTTT");
+                System.Windows.MessageBox.Show("Conexión Exitosa");
             }
             catch (MySqlException e)
             {
-                Console.WriteLine("No se pudo establecer conexion, Error: " + e);
-                System.Windows.MessageBox.Show("test");
+                System.Windows.MessageBox.Show("No se pudo establecer conexion, Error: " + e);
             }
             return conex;
+        }
+
+        public string NombreUsuarioLogeado(int idUsuario)
+        {
+            return null;
+        }
+
+        public MySqlCommand ReadSingleDB(int id, string tabla)
+        {
+            try
+            {
+                conex.ConnectionString = cadenaConexion;
+                conex.Open();
+
+                MySqlCommand dataREAD = new MySqlCommand("SELECT * FROM " + tabla + " WHERE ID= " + id + ";", conex);
+                return dataREAD;
+            }
+            catch (MySqlException e)
+            {
+                System.Windows.MessageBox.Show("test:" + e);
+                return null;
+            }
+        }
+
+        public void CerrarConn()
+        {
+            conex.Close();
         }
     }
 }

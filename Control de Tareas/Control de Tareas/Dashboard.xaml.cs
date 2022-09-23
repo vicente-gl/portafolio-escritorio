@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MySql.Data.MySqlClient;
 
 namespace Control_de_Tareas
 {
@@ -30,6 +31,7 @@ namespace Control_de_Tareas
         {
             InitializeComponent();
             WindowState = WindowState.Maximized;
+
         }
 
         //Botones Main Menú
@@ -143,6 +145,12 @@ namespace Control_de_Tareas
             date_pick.SelectedDate = DateTime.Now;
         }
 
+        //Botones Listar Negocios
+
+        private void btn_listarNegocios_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
 
         //Metodos Extras
         private void CambiarColorBoton(Button botonObjetivo, string nuevo_color)

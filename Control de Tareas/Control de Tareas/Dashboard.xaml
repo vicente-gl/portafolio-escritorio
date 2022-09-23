@@ -82,9 +82,9 @@
         </Grid>
         <Grid Name="Pantalla_Listar_Negocio" Margin="509,80,0,0" Height="984" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1398" Visibility="Hidden">
             <Rectangle Fill="#FFFFFF"></Rectangle>
-            <Button x:Name="btn_listarNegocios" FontFamily="Inter" FontSize="15" HorizontalAlignment="Left" Background="GreenYellow" VerticalAlignment="Top" Content="Cargar Negocios" Margin="40,40,0,20"></Button>
+            <Button x:Name="btn_listarNegocios" Click="btn_listarNegocios_Click"  FontFamily="Inter" FontSize="15" HorizontalAlignment="Left" Background="GreenYellow" VerticalAlignment="Top" Content="Cargar Negocios" Margin="40,40,0,20"></Button>
             <Label HorizontalAlignment="Center" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="30" Content="Lista de Negocios"></Label>
-            <DataGrid VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,100,0,0" Grid.Row="50" Grid.Column="9" Width="900" Height="500"/>
+            <DataGrid x:Name="tablaNegocios" AutoGenerateColumns="True" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,100,0,0" Width="900" Height="500"/>
             <Button FontFamily="Inter" FontSize="20" Content="Editar Negocio" Margin="0,40,0,20" Height="40" Width="250"></Button>
 
         </Grid>
@@ -96,7 +96,7 @@
                     <ImageBrush ImageSource="/Iconos/WIN_20220921_11_50_38_Pro (2).jpg" RenderOptions.BitmapScalingMode="HighQuality" />
                 </Ellipse.Fill>
             </Ellipse>
-            <Label Content="Vicente Octavio Gonzalez Lorca" Foreground="WhiteSmoke" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="360, 0, 0, 0" FontSize="20" FontFamily="Inter Light"></Label>
+            <Label x:Name="label_logedUser" Content="Vicente Octavio Gonzalez Lorca" Foreground="WhiteSmoke" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="360, 0, 0, 0" FontSize="20" FontFamily="Inter Light"></Label>
             <Grid Name="GridNegocioSeleccionado" Margin="400,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="700" Height="55">
                 <Rectangle Fill="#EFEFEF"></Rectangle>
                 <Label Content="Negocio Seleccionado:" VerticalAlignment="Center" Padding="40, 0, 0, 0" Foreground="Black" FontSize="18" FontFamily="Inter Light"></Label>
