@@ -23,6 +23,7 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
+        <Button x:Name="btn_connectBD" Click="btn_connectBD_Click" Content="Conectar a Base de datos" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="#FF11A8A8" Margin="15,0,0,15"></Button>
         <Rectangle HorizontalAlignment="Center" Height="180" Margin="0,147,0,0" VerticalAlignment="Top" Width="300" Fill="#FFEDEDED"/>
         <Image HorizontalAlignment="Left" Height="83" Margin="23,16,0,0" RenderOptions.BitmapScalingMode="HighQuality" VerticalAlignment="Top" Width="244" Source="/Process Color Alpha.png"/>
         <TextBox Text="abcd" x:Name="txtBoxUser" Foreground="Black" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" Margin="382,0,0,0"/>

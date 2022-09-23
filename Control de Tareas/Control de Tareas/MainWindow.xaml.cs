@@ -60,5 +60,11 @@ namespace Control_de_Tareas
                 }
             }
         }
+
+        private void btn_connectBD_Click(object sender, RoutedEventArgs e)
+        {
+            CConexion objConexion = new CConexion();
+            objConexion.EstablecerConn();
+        }
     }
 }

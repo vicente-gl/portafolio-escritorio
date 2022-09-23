@@ -82,11 +82,11 @@
         </Grid>
         <Grid Name="Pantalla_Listar_Negocio" Margin="509,80,0,0" Height="984" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1398" Visibility="Hidden">
             <Rectangle Fill="#FFFFFF"></Rectangle>
+            <Button x:Name="btn_listarNegocios" FontFamily="Inter" FontSize="15" HorizontalAlignment="Left" Background="GreenYellow" VerticalAlignment="Top" Content="Cargar Negocios" Margin="40,40,0,20"></Button>
             <Label HorizontalAlignment="Center" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="30" Content="Lista de Negocios"></Label>
             <DataGrid VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,100,0,0" Grid.Row="50" Grid.Column="9" Width="900" Height="500"/>
-            <Border>
-                <Button FontFamily="Inter" FontSize="20" Content="Editar Negocio" Margin="0,40,0,20" Height="40" Width="250"></Button>
-            </Border>
+            <Button FontFamily="Inter" FontSize="20" Content="Editar Negocio" Margin="0,40,0,20" Height="40" Width="250"></Button>
+
         </Grid>
         <Grid Name="GridTopBar" HorizontalAlignment="Center" Height="80" Width="{Binding ActualWidth, ElementName=GridDashboard}" VerticalAlignment="Top">
             <Rectangle Fill="#171725" HorizontalAlignment="Center" Width="1920" Height="134" VerticalAlignment="Top"/>
