@@ -62,30 +62,23 @@ namespace Control_de_Tareas
         private void mainMenuNegocios_Click(object sender, RoutedEventArgs e)
         {
             ApagarBotonesMainMenu();
+            OcultarOtrosMenus(MenuNegocio);
             if (MenuNegocio.Visibility.Equals(Visibility.Hidden))
             {
-                OcultarOtrosMenus(MenuNegocio);
                 MenuNegocio.Visibility = Visibility.Visible;
                 CambiarColorBoton(mainMenuNegocios, color_menu1_pressed);
             }
-            else
-            {
-                OcultarOtrosMenus(MenuNegocio);
-            }
+
         }
 
         private void mainMenuGruposTrabajo_Click(object sender, RoutedEventArgs e)
         {
             ApagarBotonesMainMenu();
+            OcultarOtrosMenus(MenuGrupoTrabajo);
             if (MenuGrupoTrabajo.Visibility.Equals(Visibility.Hidden))
             {
-                OcultarOtrosMenus(MenuGrupoTrabajo);
                 MenuGrupoTrabajo.Visibility = Visibility.Visible;
                 CambiarColorBoton(mainMenuGruposTrabajo, color_menu2_pressed);
-            }
-            else
-            {
-                OcultarOtrosMenus(MenuGrupoTrabajo);
             }
         }
 
@@ -93,30 +86,22 @@ namespace Control_de_Tareas
         private void mainMenuFlujosTarea_Click(object sender, RoutedEventArgs e)
         {
             ApagarBotonesMainMenu();
+            OcultarOtrosMenus(MenuFlujos);
             if (MenuFlujos.Visibility.Equals(Visibility.Hidden))
             {
-                OcultarOtrosMenus(MenuFlujos);
                 MenuFlujos.Visibility = Visibility.Visible;
                 CambiarColorBoton(mainMenuFlujosTarea, color_menu2_pressed);
-            }
-            else
-            {
-                OcultarOtrosMenus(MenuFlujos);
             }
         }
 
         private void mainMenuUsuarios_Click(object sender, RoutedEventArgs e)
         {
             ApagarBotonesMainMenu();
+            OcultarOtrosMenus(MenuUsuarios);
             if (MenuUsuarios.Visibility.Equals(Visibility.Hidden))
             {
-                OcultarOtrosMenus(MenuUsuarios);
                 MenuUsuarios.Visibility = Visibility.Visible;
                 CambiarColorBoton(mainMenuUsuarios, color_menu2_pressed);
-            }
-            else
-            {
-                OcultarOtrosMenus(MenuUsuarios);
             }
 
         }
@@ -127,6 +112,7 @@ namespace Control_de_Tareas
         //Botones Menu Negocio
         private void btn_negocio_crear_Click(object sender, RoutedEventArgs e)
         {
+            OcultarOtrasPantallas(Pantalla_Agregar_Negocio);
             if (Pantalla_Agregar_Negocio.Visibility.Equals(Visibility.Hidden))
             {
                 date_pick.SelectedDate = DateTime.Now;
@@ -142,6 +128,7 @@ namespace Control_de_Tareas
 
         private void btn_negocio_listar_Click(object sender, RoutedEventArgs e)
         {
+            OcultarOtrasPantallas(Pantalla_Listar_Negocio);
             if (Pantalla_Listar_Negocio.Visibility.Equals(Visibility.Hidden))
             {
                 date_pick.SelectedDate = DateTime.Now;
@@ -158,6 +145,7 @@ namespace Control_de_Tareas
         //Botones Menu Usuarios
         private void btn_usuarios_crear_Click(object sender, RoutedEventArgs e)
         {
+            OcultarOtrasPantallas(Pantalla_Agregar_Usuario);
             if (Pantalla_Agregar_Usuario.Visibility.Equals(Visibility.Hidden))
             {
                 Pantalla_Agregar_Usuario.Visibility = Visibility.Visible;
@@ -173,6 +161,7 @@ namespace Control_de_Tareas
 
         private void btn_usuarios_listar_Click(object sender, RoutedEventArgs e)
         {
+            OcultarOtrasPantallas(Pantalla_Listar_Usuarios);
             if (Pantalla_Listar_Usuarios.Visibility.Equals(Visibility.Hidden))
             {
                 Pantalla_Listar_Usuarios.Visibility = Visibility.Visible;
@@ -185,7 +174,7 @@ namespace Control_de_Tareas
             }
         }
 
-        //Botones Listar Usuarios
+        //Botones Pantalla Listar Usuarios
 
         private void btn_listarUsuarios_Click(object sender, RoutedEventArgs e)
         {
@@ -251,6 +240,29 @@ namespace Control_de_Tareas
             foreach (Grid item in lista_menu2)
             {
                 if(selectedGrid != item)
+                {
+                    item.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    selectedGrid.Visibility = Visibility.Hidden;
+                }
+            }
+        }
+        private void OcultarOtrasPantallas(Grid selectedGrid)
+        {
+            List<Grid> lista_pantalla;
+            lista_pantalla = new List<Grid>();
+
+            lista_pantalla.Add(Pantalla_Agregar_Negocio);
+            lista_pantalla.Add(Pantalla_Listar_Negocio);
+            lista_pantalla.Add(Pantalla_Agregar_Usuario);
+            lista_pantalla.Add(Pantalla_Listar_Usuarios);
+            //opcion5
+
+            foreach (Grid item in lista_pantalla)
+            {
+                if (selectedGrid != item)
                 {
                     item.Visibility = Visibility.Hidden;
                 }
