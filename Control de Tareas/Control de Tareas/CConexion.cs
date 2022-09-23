@@ -17,21 +17,42 @@ namespace Control_de_Tareas
         static string password = "duoc1234";
         static string puerto = "3306";
 
-        string cadenaConexion = "server=" + servidor + ";" + "port=" + puerto + ";" + "uid=" + usuario + ";" + "pwd=" + password + ";" + "database=" + bd + ";";
+        string query = "SELECT * FROM usuario where id = 1;";
 
-        public MySqlConnection EstablecerConn()
+        public string cadenaConexion = "server=" + servidor + ";" + "port=" + puerto + ";" + "uid=" + usuario + ";" + "pwd=" + password + ";" + "database=" + bd + ";";
+
+        string testString;
+        public bool EstablecerConn()
         {
             try
             {
+                //Limpiar conexion para que no diga nombre de usuario
+                //no se borra para saber que hace
                 conex.ConnectionString = cadenaConexion;
                 conex.Open();
-                System.Windows.MessageBox.Show("Conexión Exitosa");
+
+                
+
+                var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    testString = reader.GetString("nombre");
+                }
+               
+
+                System.Windows.MessageBox.Show("Conexión Exitosa, Bienvenido: " + testString);
+                return true;
+                conex.Close();
             }
             catch (MySqlException e)
             {
                 System.Windows.MessageBox.Show("No se pudo establecer conexion, Error: " + e);
+                return false;
+                conex.Close();
             }
-            return conex;
+            conex.Close();
         }
 
         public string NombreUsuarioLogeado(int idUsuario)
@@ -58,7 +79,67 @@ namespace Control_de_Tareas
 
         public void CerrarConn()
         {
+            this.conex.Close();
+        }
+
+        public MySqlConnection Get_connection()
+        {
+            return this.conex;
+        }
+
+        public bool EjecutarMetodoBaseDatos()
+        {
+            try
+            {
+                conex.ConnectionString = cadenaConexion;
+                conex.Open();
+                return true;
+            }
+            catch (MySqlException e)
+            {
+                System.Windows.MessageBox.Show("No se pudo establecer conexion, Error: " + e);
+                return false;
+            }
+        }
+
+        public string getConnString()
+        {            
+            return cadenaConexion.ToString();
+        }
+         // Rescata nombre con query
+        /*
+        public bool EstablecerConn()
+        {
+            try
+            {
+                conex.ConnectionString = cadenaConexion;
+                conex.Open();
+
+
+
+                var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    testString = reader.GetString("nombre");
+                }
+
+
+                System.Windows.MessageBox.Show("Conexión Exitosa, Bienvenido: " + testString);
+                return true;
+                conex.Close();
+            }
+            catch (MySqlException e)
+            {
+                System.Windows.MessageBox.Show("No se pudo establecer conexion, Error: " + e);
+                return false;
+                conex.Close();
+            }
             conex.Close();
         }
+        */
+
+
     }
 }

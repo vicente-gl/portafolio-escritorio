@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="Dashboard" Height="1080" Width="1920" WindowStartupLocation="CenterScreen" FontFamily="Intel Clear Pro">
     <Grid Name="GridDashboard">
+        <!--MENU PRINCIPAL-->
         <Grid Name="MainMenu" Margin="0,80,0,0" Height="984" VerticalAlignment="Top" HorizontalAlignment="Left" Width="{Binding ActualWidth, ElementName=GridDashboard}">
             <Rectangle Fill="#CFCFCF"></Rectangle>
             <StackPanel HorizontalAlignment="Left" Margin="15,30,0,0">
@@ -17,6 +18,7 @@
                 <Button x:Name="mainMenuPerfilesNegocio" Content="Perfiles de Negocio" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#FFCFCFCF" BorderBrush="{x:Null}"></Button>
             </StackPanel>
         </Grid>
+        <!--MENU NEGOCIO-->
         <Grid x:Name="MenuNegocio" Margin="264,80,0,0" Height="984" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1800" Visibility="Hidden">
             <Rectangle Fill="#EDEDED"></Rectangle>
             <Label Content="Negocios /" Foreground="Gray" Margin="15,10,0,0" FontSize="12" FontFamily="Inter"></Label>
@@ -25,6 +27,7 @@
                 <Button x:Name="btn_negocio_listar" Click="btn_negocio_listar_Click" Content="Listar Negocios" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
             </StackPanel>
         </Grid>
+        <!--MENU GRUPOTRABAJO-->
         <Grid Name="MenuGrupoTrabajo" Margin="260,80,0,0" Height="984" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1800" Visibility="Hidden">
             <Rectangle Fill="#EDEDED"></Rectangle>
             <Label Content="Negocios /" Foreground="Gray" Margin="15,10,0,0" FontSize="12" FontFamily="Inter"></Label>
@@ -34,6 +37,7 @@
                 <Button x:Name="btn_gptrabajo_listar" Content="Listar Grupos de Trabajo" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
             </StackPanel>
         </Grid>
+        <!--MENU FLUJOS-->
         <Grid Name="MenuFlujos" Margin="260,80,0,0" Height="984" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1800" Visibility="Hidden">
             <Rectangle Fill="#EDEDED"></Rectangle>
             <Label Content="Negocios /" Foreground="Gray" Margin="15,10,0,0" FontSize="12" FontFamily="Inter"></Label>
@@ -42,14 +46,17 @@
                 <Button x:Name="btn_flujos_listar" Content="Listar Flujos de Tarea" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
             </StackPanel>
         </Grid>
+        <!--MENU USUARIOS-->
         <Grid Name="MenuUsuarios" Margin="260,80,0,0" Height="984" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1800" Visibility="Hidden">
             <Rectangle Fill="#EDEDED"></Rectangle>
             <Label Content="Negocios /" Foreground="Gray" Margin="15,10,0,0" FontSize="12" FontFamily="Inter"></Label>
             <StackPanel HorizontalAlignment="Left" Margin="0,50,0,0">
-                <Button x:Name="btn_usuarios_crear" Content="Agregar Usuario" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
-                <Button x:Name="btn_usuarios_listar" Content="Listar Usuarios" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
+                <Button Click="btn_usuarios_crear_Click" x:Name="btn_usuarios_crear" Content="Agregar Usuario" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
+                <Button Click="btn_usuarios_listar_Click" x:Name="btn_usuarios_listar" Content="Listar Usuarios" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
             </StackPanel>
         </Grid>
+        <!--PANTALLAS-->
+        <!--PANTALLAS NEGOCIO-->
         <Grid Name="Pantalla_Agregar_Negocio" Margin="509,80,0,0" Height="984" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1398" Visibility="Hidden">
             <Rectangle Fill="#FFFFFF"></Rectangle>
             <Label HorizontalAlignment="Center" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="30" Content="Datos de Negocio"></Label>
@@ -66,14 +73,14 @@
                     <Label Margin="3" FontFamily="Inter" FontSize="20" Content="Fecha de Inicio"></Label>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Center" Width="500" Name="Data">
-                    <TextBox Name="txtbox_nombre" Margin="5" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
-                    <TextBox Name="txtbox_direccion" Margin="5" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
-                    <TextBox Name="txtbox_rut_negocio" Margin="5" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
-                    <TextBox Name="txtbox_girocomercial" Margin="5" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
-                    <TextBox Name="txtbox_nombre_jefe" Margin="5" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
-                    <TextBox Name="txtbox_mail_jefe" Margin="5" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
-                    <TextBox Name="txtbox_num_contacto" Margin="5" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
-                    <TextBox Name="txtbox_web_rrss" Margin="5" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                    <TextBox Name="txtbox_negocio_nombre" Margin="5" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                    <TextBox Name="txtbox_negocio_direccion" Margin="5" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                    <TextBox Name="txtbox_negocio_rut_negocio" Margin="5" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                    <TextBox Name="txtbox_negocio_girocomercial" Margin="5" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                    <TextBox Name="txtbox_negocio_nombre_jefe" Margin="5" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                    <TextBox Name="txtbox_negocio_mail_jefe" Margin="5" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                    <TextBox Name="txtbox_negocio_num_contacto" Margin="5" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                    <TextBox Name="txtbox_negocio_web_rrss" Margin="5" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
                     <DatePicker Name="date_pick" FontFamily="Inter" FontSize="20" Margin="5" Height="30"></DatePicker>
                     <Button FontFamily="Inter" FontSize="20" Content="Agregar Negocio" Margin="0,40,0,20" Height="40" Width="250"></Button>
                     <Button x:Name="btn_crearNegocio_limpiar" Click="btn_crearNegocio_limpiar_Click" FontFamily="Inter" FontSize="13" Content="Limpiar Campos" Margin="0" Height="30" Width="150"></Button>
@@ -86,8 +93,78 @@
             <Label HorizontalAlignment="Center" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="30" Content="Lista de Negocios"></Label>
             <DataGrid x:Name="tablaNegocios" AutoGenerateColumns="True" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,100,0,0" Width="900" Height="500"/>
             <Button FontFamily="Inter" FontSize="20" Content="Editar Negocio" Margin="0,40,0,20" Height="40" Width="250"></Button>
-
         </Grid>
+        <!--PANTALLAS USUARIO-->
+            <!--PANTALLAS AGREGAR USUARIO-->
+        <Grid Name="Pantalla_Agregar_Usuario" Margin="509,80,0,0" Height="1000" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden">
+            <Rectangle Fill="#FFFFFF"></Rectangle>
+            <Label HorizontalAlignment="Center" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="30" Content="Datos de Usuario"></Label>
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,100,0,0" Height="500" Width="800">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>                    
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                
+                <Label Grid.Column="0" Grid.Row="0" Margin="3" FontFamily="Inter" FontSize="20" Content="Rol Único Tributario (RUT)"></Label>
+                <Label Grid.Column="0" Grid.Row="1" Margin="3" FontFamily="Inter" FontSize="20" Content="Usuario"></Label>
+                <Label Grid.Column="0" Grid.Row="2" Margin="3" FontFamily="Inter" FontSize="20" Content="Contraseña"></Label>
+                <Label Grid.Column="0" Grid.Row="3" Margin="3" FontFamily="Inter" FontSize="20" Content="Nombre"></Label>
+                <Label Grid.Column="0" Grid.Row="4" Margin="3" FontFamily="Inter" FontSize="20" Content="Apellido Paterno"></Label>
+                <Label Grid.Column="0" Grid.Row="5" Margin="3" FontFamily="Inter" FontSize="20" Content="Apelido Materno"></Label>
+                <Label Grid.Column="0" Grid.Row="6" Margin="3" FontFamily="Inter" FontSize="20" Content="Correo Electrónico"></Label>
+                <Label Grid.Column="0" Grid.Row="7" Margin="3" FontFamily="Inter" FontSize="20" Content="Celular"></Label>
+                <Label Grid.Column="0" Grid.Row="8" Margin="3" FontFamily="Inter" FontSize="20" Content="Jefe"></Label>
+                <Label Grid.Column="0" Grid.Row="9" Margin="3" FontFamily="Inter" FontSize="20" Content="Negocio"></Label>
+                <Label Grid.Column="0" Grid.Row="10" Margin="3" FontFamily="Inter" FontSize="20" Content="Rol"></Label>
+                <Label Grid.Column="0" Grid.Row="11" Margin="3" FontFamily="Inter" FontSize="20" Content="Grupo de Trabajo"></Label>
+                <Label Grid.Column="0" Grid.Row="12" Margin="3" FontFamily="Inter" FontSize="20" Content="Foto de Perfil"></Label>
+
+                <TextBox Grid.Column="1" Grid.Row="0" Name="txtbox_user_username" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                <TextBox Grid.Column="1" Grid.Row="1" Name="txtbox_user_password" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                <TextBox Grid.Column="1" Grid.Row="2" Name="txtbox_user_nombre" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                <TextBox Grid.Column="1" Grid.Row="3" Name="txtbox_user_rut" FontFamily="Inter" FontSize="20"></TextBox>
+                <TextBox Grid.Column="1" Grid.Row="4" Name="txtbox_user_apellidop" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                <TextBox Grid.Column="1" Grid.Row="5" Name="txtbox_user_apellidom" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                <TextBox Grid.Column="1" Grid.Row="6" Name="txtbox_user_correo" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                <TextBox Grid.Column="1" Grid.Row="7" Name="txtbox_user_celular" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                <ComboBox Grid.Column="1" Grid.Row="8" Name="cbox_user_jefe"  FontFamily="Inter" FontSize="20" Height="30"></ComboBox>
+                <ComboBox Grid.Column="1" Grid.Row="9" Name="cbox_user_negocio"  FontFamily="Inter" FontSize="20" Height="30"></ComboBox>
+                <ComboBox Grid.Column="1" Grid.Row="10" Name="cbox_user_rol"  FontFamily="Inter" FontSize="20" Height="30"></ComboBox>
+                <ComboBox Grid.Column="1" Grid.Row="11" Name="cbox_user_gtrabajo" FontFamily="Inter" FontSize="20" Height="30"></ComboBox>
+                <TextBox Grid.Column="1" Grid.Row="12" Name="txtbox_placeholder" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                <Border></Border>
+                <Button Grid.Column="1" Grid.Row="14" Width="250" x:Name="btn_agregar_usuario" HorizontalAlignment="Right" FontFamily="Inter" FontSize="20" Content="Agregar Usuario"></Button>
+                <Button Grid.Column="0" Grid.Row="14" Width="150" HorizontalAlignment="Left" x:Name="btn_agregarUser_limpiar" Click="btn_crearNegocio_limpiar_Click" FontFamily="Inter" FontSize="13" Content="Limpiar Campos" ></Button>
+            </Grid>
+        </Grid>
+            <!--PANTALLA LISTAR USUARIOS-->
+        <Grid Name="Pantalla_Listar_Usuarios" Margin="509,80,0,0" Height='800' VerticalAlignment="Top" HorizontalAlignment="Center" Width="1398" Visibility="Hidden">
+            <Rectangle Fill="#FFFFFF"></Rectangle>
+            <Button x:Name="btn_listarUsuarios" Click="btn_listarUsuarios_Click" FontFamily="Inter" FontSize="15" HorizontalAlignment="Left" Background="GreenYellow" VerticalAlignment="Top" Content="Cargar Usuarios" Margin="160,40,0,20"></Button>
+            <Label HorizontalAlignment="Center" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="30" Content="Lista de Usuarios"></Label>
+            <DataGrid x:Name="tablaUsuarios" AutoGenerateColumns="True" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,100,0,0" Width="900" Height="500"/>
+            <Button FontFamily="Inter" FontSize="20" VerticalAlignment="Bottom" Content="Editar Usuario" Margin="0,40,0,20" Height="40" Width="250"></Button>
+        </Grid>
+
+
+        <!--BARRA DE ARRIBA-->
         <Grid Name="GridTopBar" HorizontalAlignment="Center" Height="80" Width="{Binding ActualWidth, ElementName=GridDashboard}" VerticalAlignment="Top">
             <Rectangle Fill="#171725" HorizontalAlignment="Center" Width="1920" Height="134" VerticalAlignment="Top"/>
             <Image Source="/Process Color Alpha.png" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" RenderOptions.BitmapScalingMode="HighQuality"></Image>
@@ -96,7 +173,7 @@
                     <ImageBrush ImageSource="/Iconos/WIN_20220921_11_50_38_Pro (2).jpg" RenderOptions.BitmapScalingMode="HighQuality" />
                 </Ellipse.Fill>
             </Ellipse>
-            <Label x:Name="label_logedUser" Content="Vicente Octavio Gonzalez Lorca" Foreground="WhiteSmoke" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="360, 0, 0, 0" FontSize="20" FontFamily="Inter Light"></Label>
+            <Label x:Name="label_logedUser" Content="PLACEHOLDER" Foreground="WhiteSmoke" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="360, 0, 0, 0" FontSize="20" FontFamily="Inter Light"></Label>
             <Grid Name="GridNegocioSeleccionado" Margin="400,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="700" Height="55">
                 <Rectangle Fill="#EFEFEF"></Rectangle>
                 <Label Content="Negocio Seleccionado:" VerticalAlignment="Center" Padding="40, 0, 0, 0" Foreground="Black" FontSize="18" FontFamily="Inter Light"></Label>

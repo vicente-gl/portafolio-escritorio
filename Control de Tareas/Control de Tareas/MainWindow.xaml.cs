@@ -12,14 +12,23 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MySql.Data.MySqlClient;
 
 namespace Control_de_Tareas
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+
     public partial class MainWindow : Window
     {
+        private string username, password, sql;
+        private CConexion conn = new CConexion();
+        private MySqlCommand command;
+        public int logedUser = 0;
+
+
         bool btnlogin = true;
         public MainWindow()
         {
@@ -29,16 +38,15 @@ namespace Control_de_Tareas
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             TryLogin();
+            username = txtBoxUser.Text;
+            password = txtBoxPassword.Password;
+
         }
 
 
 
         private void TryLogin()
         {
-            if (btnlogin && txtBoxUser.Text == "" && txtBoxPassword.Password == ""){
-                System.Windows.MessageBox.Show("Debe ingresar datos");
-            }
-            else
             {
                if (btnlogin)
                 {
