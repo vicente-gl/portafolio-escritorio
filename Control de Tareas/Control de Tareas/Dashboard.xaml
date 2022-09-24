@@ -150,8 +150,8 @@
                 <ComboBox Grid.Column="1" Grid.Row="11" Name="cbox_user_gtrabajo" FontFamily="Inter" FontSize="20" Height="30"></ComboBox>
                 <TextBox Grid.Column="1" Grid.Row="12" Name="txtbox_placeholder" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
                 <Border></Border>
-                <Button Grid.Column="1" Grid.Row="14" Width="250" x:Name="btn_agregar_usuario" HorizontalAlignment="Right" FontFamily="Inter" FontSize="20" Content="Agregar Usuario"></Button>
-                <Button Grid.Column="0" Grid.Row="14" Width="150" HorizontalAlignment="Left" x:Name="btn_agregarUser_limpiar" Click="btn_crearNegocio_limpiar_Click" FontFamily="Inter" FontSize="13" Content="Limpiar Campos" ></Button>
+                <Button Grid.Column="1" Grid.Row="14" Width="250" x:Name="btn_agregar_usuario" HorizontalAlignment="Right" Click="btn_agregar_usuario_Click" FontFamily="Inter" FontSize="20" Content="Agregar Usuario"></Button>
+                <Button Grid.Column="0" Grid.Row="14" Width="150" HorizontalAlignment="Left" x:Name="btn_agregarUser_limpiar" Click="btn_agregarUser_limpiar_Click"  FontFamily="Inter" FontSize="13" Content="Limpiar Campos" ></Button>
             </Grid>
         </Grid>
             <!--PANTALLA LISTAR USUARIOS-->

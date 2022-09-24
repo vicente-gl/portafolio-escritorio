@@ -173,7 +173,43 @@ namespace Control_de_Tareas
                 CambiarColorBoton(btn_listarUsuarios, color_menu2_idle);
             }
         }
+        //Botonos Pantalla Crear Usuario
+            //Boton Crear Usuario
+        private void btn_agregar_usuario_Click(object sender, RoutedEventArgs e)
+        {
+            MySqlConnection conex = new MySqlConnection();
+            CConexion cConexion = new CConexion();
+            MainWindow mainWindow = new MainWindow();
 
+            conex.ConnectionString = cConexion.cadenaConexion;
+            conex.Open();
+            //Crear contador de rows para ID
+            //Agregar columnas y campos al query
+
+            string query = "INSERT INTO 'usuario' () VALUES ();";
+            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            var reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                queryResult = reader.GetString("nombrecompleto");
+            }
+        }
+            //Boton Limpiar Campos de Crear Usuario
+        private void btn_agregarUser_limpiar_Click(object sender, RoutedEventArgs e)
+        {
+            txtbox_user_username.Text = "";
+            txtbox_user_password.Text = "";
+            txtbox_user_nombre.Text = "";
+            txtbox_user_rut.Text = "";
+            txtbox_user_apellidop.Text = "";
+            txtbox_user_apellidom.Text = "";
+            txtbox_user_correo.Text = "";
+            txtbox_user_celular.Text = "";
+            cbox_user_jefe.SelectedItem = null;
+            cbox_user_negocio.SelectedItem = null;
+            cbox_user_gtrabajo.SelectedItem = null;
+        }
         //Botones Pantalla Listar Usuarios
 
         private void btn_listarUsuarios_Click(object sender, RoutedEventArgs e)
@@ -189,8 +225,8 @@ namespace Control_de_Tareas
 
         }
 
-
-        //Botones Crear Negocio
+        
+        //Botones Pantalla Crear Negocio
         private void btn_crearNegocio_limpiar_Click(object sender, RoutedEventArgs e)
         {
             txtbox_negocio_nombre.Text = "";
@@ -204,7 +240,7 @@ namespace Control_de_Tareas
             date_pick.SelectedDate = DateTime.Now;
         }
 
-        //Botones Listar Negocios
+        //Botones Pantalla Listar Negocios
 
         private void btn_listarNegocios_Click(object sender, RoutedEventArgs e)
         {
@@ -229,12 +265,13 @@ namespace Control_de_Tareas
         private void OcultarOtrosMenus(Grid selectedGrid)
         {
             List<Grid> lista_menu2;
-            lista_menu2 = new List<Grid>();
-
-            lista_menu2.Add(MenuNegocio);
-            lista_menu2.Add(MenuGrupoTrabajo);
-            lista_menu2.Add(MenuFlujos);
-            lista_menu2.Add(MenuUsuarios);
+            lista_menu2 = new List<Grid>
+            {
+                MenuNegocio,
+                MenuGrupoTrabajo,
+                MenuFlujos,
+                MenuUsuarios
+            };
             //opcion5
 
             foreach (Grid item in lista_menu2)
@@ -252,12 +289,13 @@ namespace Control_de_Tareas
         private void OcultarOtrasPantallas(Grid selectedGrid)
         {
             List<Grid> lista_pantalla;
-            lista_pantalla = new List<Grid>();
-
-            lista_pantalla.Add(Pantalla_Agregar_Negocio);
-            lista_pantalla.Add(Pantalla_Listar_Negocio);
-            lista_pantalla.Add(Pantalla_Agregar_Usuario);
-            lista_pantalla.Add(Pantalla_Listar_Usuarios);
+            lista_pantalla = new List<Grid>
+            {
+                Pantalla_Agregar_Negocio,
+                Pantalla_Listar_Negocio,
+                Pantalla_Agregar_Usuario,
+                Pantalla_Listar_Usuarios
+            };
             //opcion5
 
             foreach (Grid item in lista_pantalla)
