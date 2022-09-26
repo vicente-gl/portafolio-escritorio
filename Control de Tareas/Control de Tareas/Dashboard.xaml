@@ -145,7 +145,7 @@
                 <TextBox Grid.Column="1" Grid.Row="6" Name="txtbox_user_correo" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
                 <TextBox Grid.Column="1" Grid.Row="7" Name="txtbox_user_celular" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
                 <ComboBox Grid.Column="1" Grid.Row="8" Name="cbox_user_jefe"  FontFamily="Inter" FontSize="20" Height="30"></ComboBox>
-                <ComboBox Grid.Column="1" Grid.Row="9" Name="cbox_user_negocio"  FontFamily="Inter" FontSize="20" Height="30"></ComboBox>
+                <ComboBox Grid.Column="1" Grid.Row="9" Name="cbox_user_negocio" SelectionChanged="cbox_user_negocio_SelectionChanged"  FontFamily="Inter" FontSize="20" Height="30"></ComboBox>
                 <ComboBox Grid.Column="1" Grid.Row="10" Name="cbox_user_rol"  FontFamily="Inter" FontSize="20" Height="30"></ComboBox>
                 <ComboBox Grid.Column="1" Grid.Row="11" Name="cbox_user_gtrabajo" FontFamily="Inter" FontSize="20" Height="30"></ComboBox>
                 <TextBox Grid.Column="1" Grid.Row="12" Name="txtbox_placeholder" FontFamily="Inter" FontSize="20" Height="30"></TextBox>

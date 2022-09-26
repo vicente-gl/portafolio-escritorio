@@ -18,7 +18,11 @@ namespace Control_de_Tareas
 {
     public partial class Dashboard : Window
     {
-        int negocioSeleccionado = 0;
+        public int negocioSeleccionado = 0;
+        public int idUsuarioLogeado;
+
+        private string negocioSelected;
+
 
         string color_menu1_idle = "#FFCFCFCF";
         string color_menu1_pressed = "#EDEDED";
@@ -31,19 +35,21 @@ namespace Control_de_Tareas
         {
 
             InitializeComponent();
-            WindowState = WindowState.Maximized;
+            WindowState = WindowState.Maximized;            
+        }
 
+        public void LogearUsuario()
+        {
             //Poner nombre de usuario logeado
             //por ahora se seleccionara el usuario con id 0
 
             MySqlConnection conex = new MySqlConnection();
             CConexion cConexion = new CConexion();
-            MainWindow mainWindow = new MainWindow();
 
             conex.ConnectionString = cConexion.cadenaConexion;
             conex.Open();
-            string query = "SELECT CONCAT(nombre, ' ', apellidop, ' ', apellidom) AS nombrecompleto FROM usuario WHERE id = " + mainWindow.logedUser + ";";
-            //string query = "SELECT CONCAT(nombre, ' ', apellidop, ' ', apellidom) AS nombrecompleto FROM usuario WHERE id = 1;";
+            Console.WriteLine("logeado desde dashboard: " + idUsuarioLogeado);
+            string query = "SELECT CONCAT(nombre, ' ', apellidop, ' ', apellidom) AS nombrecompleto FROM usuario WHERE id = " + idUsuarioLogeado + ";";
             var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
             var reader = cmd.ExecuteReader();
 
@@ -51,11 +57,9 @@ namespace Control_de_Tareas
             {
                 queryResult = reader.GetString("nombrecompleto");
             }
-
+            //System.Windows.MessageBox.Show(mainWindow.logedUser.ToString());
             label_logedUser.Content = queryResult;
-
-
-
+            conex.Close();
         }
 
         //Botones Main Menú
@@ -156,6 +160,8 @@ namespace Control_de_Tareas
                 Pantalla_Agregar_Usuario.Visibility = Visibility.Hidden;
                 CambiarColorBoton(btn_usuarios_crear, color_menu2_idle);
             }
+            CargarCombobox();
+
         }
 
 
@@ -184,16 +190,41 @@ namespace Control_de_Tareas
             conex.ConnectionString = cConexion.cadenaConexion;
             conex.Open();
             //Crear contador de rows para ID
-            //Agregar columnas y campos al query
-
-            string query = "INSERT INTO 'usuario' () VALUES ();";
+            string totalID;
+            string query = "select COUNT(id) FROM usuario;";
             var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
-            var reader = cmd.ExecuteReader();
+            //var reader = cmd.ExecuteReader();
+            totalID = cmd.ExecuteScalar().ToString();
 
-            while (reader.Read())
+            Console.WriteLine(totalID);
+            /*while (reader.Read())
             {
-                queryResult = reader.GetString("nombrecompleto");
-            }
+                //totalID = reader.GetString(query);
+                queryResult = cmd.ExecuteScalar().ToString();
+            }*/
+            totalID = queryResult;
+            //Crear variables para query
+            string u_rut = txtbox_user_rut.Text;
+            string u_rol = cbox_user_rol.SelectedItem as string;
+            string u_nombre = txtbox_user_nombre.Text;
+            string u_apellidop = txtbox_user_apellidop.Text;
+            string u_apellidom = txtbox_user_apellidom.Text;
+            string u_correo = txtbox_user_correo.Text;
+            string u_celular = txtbox_user_celular.Text;
+            string u_jefe = cbox_user_jefe.SelectedItem as string;
+            string u_negocio = cbox_user_negocio.SelectedItem as string;
+            string u_grupotrabajo = cbox_user_gtrabajo.SelectedItem as string;
+
+
+            //Agregar columnas y campos al query
+            
+            //query = "INSERT INTO usuario VALUES ("+totalID+", "+u_rut+", "+u_rol+", '"+u_nombre+"', '"+u_apellidop+"', '"+u_apellidom+"', '"+u_correo+"', "+u_celular+", 0, 0, 0, 0, 0, 0, NULL, NULL, null);";
+            query = "INSERT INTO usuario VALUES (3, 18999333-2, 0, '" + u_nombre + "', '" + u_apellidop + "', '" + u_apellidom + "', '" + u_correo + "', " + u_celular + ", 0, 0, 0, 0, 0, 0, NULL, NULL, null);";
+            cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            cmd.ExecuteReader();
+
+            conex.Close();
+            //reader = cmd.ExecuteReader();
         }
             //Boton Limpiar Campos de Crear Usuario
         private void btn_agregarUser_limpiar_Click(object sender, RoutedEventArgs e)
@@ -208,6 +239,7 @@ namespace Control_de_Tareas
             txtbox_user_celular.Text = "";
             cbox_user_jefe.SelectedItem = null;
             cbox_user_negocio.SelectedItem = null;
+            cbox_user_rol.SelectedItem = null;
             cbox_user_gtrabajo.SelectedItem = null;
         }
         //Botones Pantalla Listar Usuarios
@@ -308,6 +340,143 @@ namespace Control_de_Tareas
                 {
                     selectedGrid.Visibility = Visibility.Hidden;
                 }
+            }
+        }
+
+        private void CargarCombobox()
+        {
+            //Llenar Combobox de Add User
+
+            MySqlConnection conex = new MySqlConnection();
+            CConexion cConexion = new CConexion();
+            conex.ConnectionString = cConexion.cadenaConexion;
+
+            string query = "SELECT nombrerol FROM rol;";
+            MySqlCommand cmd = new MySqlCommand(query, conex);
+            MySqlDataReader mydr;
+            try
+            {
+                conex.Open();
+                mydr = cmd.ExecuteReader();
+                while (mydr.Read())
+                {
+                    string subj = mydr.GetString("nombrerol");
+                    cbox_user_rol.Items.Add(subj);
+                }
+                conex.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            //Llenar Jefe
+            /*
+            query = "SELECT CONCAT(nombre, ' ', apellidop, ' ', apellidom) AS nombrecompleto FROM usuario WHERE rol_id = 3;";
+            try
+            {
+                conex.Open();
+                mydr = cmd.ExecuteReader();
+                while (mydr.Read())
+                {
+                    string subj = mydr.GetString("nombrecompleto");
+                    cbox_user_rol.Items.Add(subj);
+                }
+                conex.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            **/
+
+            //Llenar Negocio
+            query = "select nombre FROM negocio;";
+            cmd = new MySqlCommand(query, conex);
+            MySqlDataReader mydr2;
+            try
+            {
+                conex.Open();
+                mydr2 = cmd.ExecuteReader();
+                while (mydr2.Read())
+                {
+                    string subj = mydr2.GetString("nombre");
+                    cbox_user_negocio.Items.Add(subj);
+                }
+                conex.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            //Llenar Grupo Trabajo
+
+            query = "select nombre FROM grupotrabajo;";
+            cmd = new MySqlCommand(query, conex);
+            MySqlDataReader mydr5;
+            try
+            {
+                conex.Open();
+                mydr5 = cmd.ExecuteReader();
+                while (mydr5.Read())
+                {
+                    string subj = mydr5.GetString("nombre");
+                    cbox_user_gtrabajo.Items.Add(subj);
+                }
+                conex.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+
+        private void cbox_user_negocio_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            MySqlConnection conex = new MySqlConnection();
+            CConexion cConexion = new CConexion();
+            
+            conex.ConnectionString = cConexion.cadenaConexion;
+
+
+            //guardar negocio seleccionado para mostrar los grupos de tarea que corresponden a ese negocio
+            string query = "SELECT id FROM negocio WHERE nombre = '" + cbox_user_negocio.SelectedValue + "';";
+
+            conex.Open();
+            MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            var reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                queryResult = reader.GetString("id");
+            }
+            negocioSelected = queryResult;
+            conex.Close();
+
+            //cambiar combobox de grupos de trabajo
+
+            query = "select nombre FROM grupotrabajo where id_negocio = " + negocioSelected + ";";
+            cmd = new MySqlCommand(query, conex);
+            MySqlDataReader mydr;
+
+            cbox_user_gtrabajo.Items.Clear();
+
+            try
+            {
+                conex.Open();
+                mydr = cmd.ExecuteReader();
+                while (mydr.Read())
+                {
+                    string subj = mydr.GetString("nombre");
+                    cbox_user_gtrabajo.Items.Add(subj);
+                }
+                conex.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }

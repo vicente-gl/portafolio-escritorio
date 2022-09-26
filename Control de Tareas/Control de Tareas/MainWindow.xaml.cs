@@ -23,7 +23,6 @@ namespace Control_de_Tareas
 
     public partial class MainWindow : Window
     {
-        public int logedUser;
         private string queryResult;
 
         private string username;
@@ -63,13 +62,11 @@ namespace Control_de_Tareas
                 {
                     queryResult = reader.GetString("id");
                 }
-
-                //logedUser = Int32.Parse(queryResult);
-                logedUser = 1;
-                System.Windows.MessageBox.Show(logedUser.ToString());
-
-
+                reader.Close();
                 Dashboard dashboard = new Dashboard();
+                dashboard.idUsuarioLogeado = Int32.Parse(queryResult);
+                dashboard.LogearUsuario();
+                //Console.WriteLine("logeado en login: " + dashboard.idUsuarioLogeado);
                 dashboard.Show();
                 this.Close();
 
