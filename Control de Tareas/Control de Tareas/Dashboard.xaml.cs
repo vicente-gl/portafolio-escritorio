@@ -150,6 +150,7 @@ namespace Control_de_Tareas
         private void btn_usuarios_crear_Click(object sender, RoutedEventArgs e)
         {
             OcultarOtrasPantallas(Pantalla_Agregar_Usuario);
+            LimpiarCbox();
             if (Pantalla_Agregar_Usuario.Visibility.Equals(Visibility.Hidden))
             {
                 Pantalla_Agregar_Usuario.Visibility = Visibility.Visible;
@@ -246,15 +247,33 @@ namespace Control_de_Tareas
 
         private void btn_listarUsuarios_Click(object sender, RoutedEventArgs e)
         {
-            //tablaUsuarios.DataContext = GetUserList();
             LlamarTabla("usuario");
-
         }
 
 
         private void LlamarTabla(string tabla)
         {
 
+            MySqlConnection conex = new MySqlConnection();
+            CConexion cConexion = new CConexion();
+            conex.ConnectionString = cConexion.cadenaConexion;
+
+            string query = "SELECT * FROM "+ tabla +";";
+            MySqlCommand cmd = new MySqlCommand(query, conex);
+
+            try
+            {
+                conex.Open();
+                MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                adp.Fill(ds, "LoadDataBinding");
+                tablaUsuarios.DataContext = ds;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            conex.Close();
         }
 
         
@@ -345,6 +364,9 @@ namespace Control_de_Tareas
 
         private void CargarCombobox()
         {
+
+            //Limpiar Cbox
+
             //Llenar Combobox de Add User
 
             MySqlConnection conex = new MySqlConnection();
@@ -411,7 +433,6 @@ namespace Control_de_Tareas
             }
 
             //Llenar Grupo Trabajo
-
             query = "select nombre FROM grupotrabajo;";
             cmd = new MySqlCommand(query, conex);
             MySqlDataReader mydr5;
@@ -478,6 +499,15 @@ namespace Control_de_Tareas
             {
                 MessageBox.Show(ex.Message);
             }
+
+            //cambiar combobox de Jefes
+        }
+        private void LimpiarCbox()
+        {
+            cbox_user_gtrabajo.Items.Clear ();
+            cbox_user_jefe.Items.Clear (); 
+            cbox_user_negocio.Items.Clear ();
+            cbox_user_rol.Items.Clear ();
         }
     }
 }

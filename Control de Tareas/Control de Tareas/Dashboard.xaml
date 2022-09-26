@@ -122,33 +122,37 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 
-                <Label Grid.Column="0" Grid.Row="0" Margin="3" FontFamily="Inter" FontSize="20" Content="Rol Único Tributario (RUT)"></Label>
-                <Label Grid.Column="0" Grid.Row="1" Margin="3" FontFamily="Inter" FontSize="20" Content="Usuario"></Label>
-                <Label Grid.Column="0" Grid.Row="2" Margin="3" FontFamily="Inter" FontSize="20" Content="Contraseña"></Label>
-                <Label Grid.Column="0" Grid.Row="3" Margin="3" FontFamily="Inter" FontSize="20" Content="Nombre"></Label>
-                <Label Grid.Column="0" Grid.Row="4" Margin="3" FontFamily="Inter" FontSize="20" Content="Apellido Paterno"></Label>
-                <Label Grid.Column="0" Grid.Row="5" Margin="3" FontFamily="Inter" FontSize="20" Content="Apelido Materno"></Label>
-                <Label Grid.Column="0" Grid.Row="6" Margin="3" FontFamily="Inter" FontSize="20" Content="Correo Electrónico"></Label>
-                <Label Grid.Column="0" Grid.Row="7" Margin="3" FontFamily="Inter" FontSize="20" Content="Celular"></Label>
-                <Label Grid.Column="0" Grid.Row="8" Margin="3" FontFamily="Inter" FontSize="20" Content="Jefe"></Label>
-                <Label Grid.Column="0" Grid.Row="9" Margin="3" FontFamily="Inter" FontSize="20" Content="Negocio"></Label>
-                <Label Grid.Column="0" Grid.Row="10" Margin="3" FontFamily="Inter" FontSize="20" Content="Rol"></Label>
+                <Label Grid.Column="0" Grid.Row="0" Margin="3" FontFamily="Inter" FontSize="20" Content="Negocio"></Label>
+                <Label Grid.Column="0" Grid.Row="1" Margin="3" FontFamily="Inter" FontSize="20" Content="Rol Único Tributario (RUT)"></Label>
+                <Label Grid.Column="0" Grid.Row="2" Margin="3" FontFamily="Inter" FontSize="20" Content="Usuario"></Label>
+                <Label Grid.Column="0" Grid.Row="3" Margin="3" FontFamily="Inter" FontSize="20" Content="Contraseña"></Label>
+                <Label Grid.Column="0" Grid.Row="4" Margin="3" FontFamily="Inter" FontSize="20" Content="Rol"></Label>
+                <Label Grid.Column="0" Grid.Row="5" Margin="3" FontFamily="Inter" FontSize="20" Content="Nombre"></Label>
+                <Label Grid.Column="0" Grid.Row="6" Margin="3" FontFamily="Inter" FontSize="20" Content="Apellido Paterno"></Label>
+                <Label Grid.Column="0" Grid.Row="7" Margin="3" FontFamily="Inter" FontSize="20" Content="Apelido Materno"></Label>
+                <Label Grid.Column="0" Grid.Row="8" Margin="3" FontFamily="Inter" FontSize="20" Content="Correo Electrónico"></Label>
+                <Label Grid.Column="0" Grid.Row="9" Margin="3" FontFamily="Inter" FontSize="20" Content="Celular"></Label>
+                <Label Grid.Column="0" Grid.Row="10" Margin="3" FontFamily="Inter" FontSize="20" Content="Jefe"></Label>
                 <Label Grid.Column="0" Grid.Row="11" Margin="3" FontFamily="Inter" FontSize="20" Content="Grupo de Trabajo"></Label>
+                <!--
                 <Label Grid.Column="0" Grid.Row="12" Margin="3" FontFamily="Inter" FontSize="20" Content="Foto de Perfil"></Label>
+                -->
 
-                <TextBox Grid.Column="1" Grid.Row="0" Name="txtbox_user_username" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
-                <TextBox Grid.Column="1" Grid.Row="1" Name="txtbox_user_password" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
-                <TextBox Grid.Column="1" Grid.Row="2" Name="txtbox_user_nombre" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
-                <TextBox Grid.Column="1" Grid.Row="3" Name="txtbox_user_rut" FontFamily="Inter" FontSize="20"></TextBox>
-                <TextBox Grid.Column="1" Grid.Row="4" Name="txtbox_user_apellidop" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
-                <TextBox Grid.Column="1" Grid.Row="5" Name="txtbox_user_apellidom" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
-                <TextBox Grid.Column="1" Grid.Row="6" Name="txtbox_user_correo" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
-                <TextBox Grid.Column="1" Grid.Row="7" Name="txtbox_user_celular" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
-                <ComboBox Grid.Column="1" Grid.Row="8" Name="cbox_user_jefe"  FontFamily="Inter" FontSize="20" Height="30"></ComboBox>
-                <ComboBox Grid.Column="1" Grid.Row="9" Name="cbox_user_negocio" SelectionChanged="cbox_user_negocio_SelectionChanged"  FontFamily="Inter" FontSize="20" Height="30"></ComboBox>
-                <ComboBox Grid.Column="1" Grid.Row="10" Name="cbox_user_rol"  FontFamily="Inter" FontSize="20" Height="30"></ComboBox>
+                <ComboBox Grid.Column="1" Grid.Row="0" Name="cbox_user_negocio" SelectionChanged="cbox_user_negocio_SelectionChanged"  FontFamily="Inter" FontSize="20" Height="30"></ComboBox>
+                <TextBox Grid.Column="1"  Grid.Row="1" Name="txtbox_user_username" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                <TextBox Grid.Column="1"  Grid.Row="2" Name="txtbox_user_password" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                <TextBox Grid.Column="1"  Grid.Row="3" Name="txtbox_user_nombre" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                <ComboBox Grid.Column="1" Grid.Row="4" Name="cbox_user_rol"  FontFamily="Inter" FontSize="20" Height="30"></ComboBox>
+                <TextBox Grid.Column="1"  Grid.Row="5" Name="txtbox_user_rut" FontFamily="Inter" FontSize="20"></TextBox>
+                <TextBox Grid.Column="1"  Grid.Row="6" Name="txtbox_user_apellidop" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                <TextBox Grid.Column="1"  Grid.Row="7" Name="txtbox_user_apellidom" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                <TextBox Grid.Column="1"  Grid.Row="8" Name="txtbox_user_correo" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                <TextBox Grid.Column="1"  Grid.Row="9" Name="txtbox_user_celular" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                <ComboBox Grid.Column="1" Grid.Row="10" Name="cbox_user_jefe"  FontFamily="Inter" FontSize="20" Height="30"></ComboBox>
                 <ComboBox Grid.Column="1" Grid.Row="11" Name="cbox_user_gtrabajo" FontFamily="Inter" FontSize="20" Height="30"></ComboBox>
-                <TextBox Grid.Column="1" Grid.Row="12" Name="txtbox_placeholder" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                <!--
+                <TextBox Grid.Column="1"  Grid.Row="12" Name="txtbox_placeholder" FontFamily="Inter" FontSize="20" Height="30"></TextBox>
+                -->
                 <Border></Border>
                 <Button Grid.Column="1" Grid.Row="14" Width="250" x:Name="btn_agregar_usuario" HorizontalAlignment="Right" Click="btn_agregar_usuario_Click" FontFamily="Inter" FontSize="20" Content="Agregar Usuario"></Button>
                 <Button Grid.Column="0" Grid.Row="14" Width="150" HorizontalAlignment="Left" x:Name="btn_agregarUser_limpiar" Click="btn_agregarUser_limpiar_Click"  FontFamily="Inter" FontSize="13" Content="Limpiar Campos" ></Button>
@@ -159,7 +163,7 @@
             <Rectangle Fill="#FFFFFF"></Rectangle>
             <Button x:Name="btn_listarUsuarios" Click="btn_listarUsuarios_Click" FontFamily="Inter" FontSize="15" HorizontalAlignment="Left" Background="GreenYellow" VerticalAlignment="Top" Content="Cargar Usuarios" Margin="160,40,0,20"></Button>
             <Label HorizontalAlignment="Center" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="30" Content="Lista de Usuarios"></Label>
-            <DataGrid x:Name="tablaUsuarios" AutoGenerateColumns="True" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,100,0,0" Width="900" Height="500"/>
+            <DataGrid x:Name="tablaUsuarios" IsReadOnly="True" FontFamily="Inter" FontSize="15" ItemsSource="{Binding Path=LoadDataBinding}" AutoGenerateColumns="True" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,100,0,0" Width="1100" Height="500"/>
             <Button FontFamily="Inter" FontSize="20" VerticalAlignment="Bottom" Content="Editar Usuario" Margin="0,40,0,20" Height="40" Width="250"></Button>
         </Grid>
 
