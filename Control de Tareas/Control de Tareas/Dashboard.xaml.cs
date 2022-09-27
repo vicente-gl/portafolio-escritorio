@@ -18,11 +18,9 @@ namespace Control_de_Tareas
 {
     public partial class Dashboard : Window
     {
-        public int negocioSeleccionado = 0;
         public int idUsuarioLogeado;
 
         private string negocioSelected;
-
 
         string color_menu1_idle = "#FFCFCFCF";
         string color_menu1_pressed = "#EDEDED";
@@ -86,7 +84,6 @@ namespace Control_de_Tareas
             }
         }
 
-
         private void mainMenuFlujosTarea_Click(object sender, RoutedEventArgs e)
         {
             ApagarBotonesMainMenu();
@@ -111,11 +108,10 @@ namespace Control_de_Tareas
         }
 
 
-
-
-        //Botones Menu Negocio
+        //Botones Menu 2 Negocio
         private void btn_negocio_crear_Click(object sender, RoutedEventArgs e)
         {
+            ApagarBotonesMenu2();
             OcultarOtrasPantallas(Pantalla_Agregar_Negocio);
             if (Pantalla_Agregar_Negocio.Visibility.Equals(Visibility.Hidden))
             {
@@ -132,6 +128,7 @@ namespace Control_de_Tareas
 
         private void btn_negocio_listar_Click(object sender, RoutedEventArgs e)
         {
+            ApagarBotonesMenu2();
             OcultarOtrasPantallas(Pantalla_Listar_Negocio);
             if (Pantalla_Listar_Negocio.Visibility.Equals(Visibility.Hidden))
             {
@@ -146,9 +143,28 @@ namespace Control_de_Tareas
             }
         }
 
-        //Botones Menu Usuarios
+        //Botones Menu 2 Grupos de Trabajo
+        private void btn_admin_rol_Click(object sender, RoutedEventArgs e)
+        {
+            ApagarBotonesMenu2();
+            OcultarOtrasPantallas(Pantalla_Administrar_Roles);
+            if (Pantalla_Administrar_Roles.Visibility.Equals(Visibility.Hidden))
+            {
+                date_pick.SelectedDate = DateTime.Now;
+                Pantalla_Administrar_Roles.Visibility = Visibility.Visible;
+                CambiarColorBoton(btn_admin_rol, color_menu2_pressed);
+            }
+            else
+            {
+                Pantalla_Administrar_Roles.Visibility = Visibility.Hidden;
+                CambiarColorBoton(btn_admin_rol, color_menu2_idle);
+            }
+        }
+
+        //Botones Menu 2 Usuarios
         private void btn_usuarios_crear_Click(object sender, RoutedEventArgs e)
         {
+            ApagarBotonesMenu2();
             OcultarOtrasPantallas(Pantalla_Agregar_Usuario);
             LimpiarCbox();
             if (Pantalla_Agregar_Usuario.Visibility.Equals(Visibility.Hidden))
@@ -165,21 +181,42 @@ namespace Control_de_Tareas
 
         }
 
-
         private void btn_usuarios_listar_Click(object sender, RoutedEventArgs e)
         {
+            ApagarBotonesMenu2();
             OcultarOtrasPantallas(Pantalla_Listar_Usuarios);
             if (Pantalla_Listar_Usuarios.Visibility.Equals(Visibility.Hidden))
             {
                 Pantalla_Listar_Usuarios.Visibility = Visibility.Visible;
-                CambiarColorBoton(btn_listarUsuarios, color_menu2_pressed);
+                CambiarColorBoton(btn_usuarios_listar, color_menu2_pressed);
             }
             else
             {
                 Pantalla_Listar_Usuarios.Visibility = Visibility.Hidden;
-                CambiarColorBoton(btn_listarUsuarios, color_menu2_idle);
+                CambiarColorBoton(btn_usuarios_listar, color_menu2_idle);
             }
         }
+        
+        //Botones Pantalla Crear Negocio
+        private void btn_crearNegocio_limpiar_Click(object sender, RoutedEventArgs e)
+        {
+            txtbox_negocio_nombre.Text = "";
+            txtbox_negocio_rut_negocio.Text = "";
+            txtbox_negocio_direccion.Text = "";
+            txtbox_negocio_nombre_jefe.Text = "";
+            txtbox_negocio_mail_jefe.Text = "";
+            txtbox_negocio_num_contacto.Text = "";
+            txtbox_negocio_web_rrss.Text = "";
+            txtbox_negocio_girocomercial.Text = "";
+            date_pick.SelectedDate = DateTime.Now;
+        }
+
+        //Botones Pantalla Listar Negocios
+        private void btn_listarNegocios_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        
         //Botonos Pantalla Crear Usuario
             //Boton Crear Usuario
         private void btn_agregar_usuario_Click(object sender, RoutedEventArgs e)
@@ -194,43 +231,91 @@ namespace Control_de_Tareas
             string totalID;
             string query = "select COUNT(id) FROM usuario;";
             var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
-            //var reader = cmd.ExecuteReader();
-            totalID = cmd.ExecuteScalar().ToString();
 
-            Console.WriteLine(totalID);
-            /*while (reader.Read())
-            {
-                //totalID = reader.GetString(query);
-                queryResult = cmd.ExecuteScalar().ToString();
-            }*/
-            totalID = queryResult;
+            totalID = cmd.ExecuteScalar().ToString();
             //Crear variables para query
+            string u_correo = txtbox_user_correo.Text;
+            string u_password = txtbox_user_password.Text;
             string u_rut = txtbox_user_rut.Text;
-            string u_rol = cbox_user_rol.SelectedItem as string;
             string u_nombre = txtbox_user_nombre.Text;
             string u_apellidop = txtbox_user_apellidop.Text;
             string u_apellidom = txtbox_user_apellidom.Text;
-            string u_correo = txtbox_user_correo.Text;
             string u_celular = txtbox_user_celular.Text;
-            string u_jefe = cbox_user_jefe.SelectedItem as string;
             string u_negocio = cbox_user_negocio.SelectedItem as string;
+            string u_rol = cbox_user_rol.SelectedItem as string;
             string u_grupotrabajo = cbox_user_gtrabajo.SelectedItem as string;
 
+            // Obtener ID de: Rol, Negocio, Grupo de Trabajo
+            //Obtener Negocio
+            
+            query = "select ID FROM negocio where nombre = '" + u_negocio + "';";
+            cmd = new MySqlCommand(query, conex);
+            MySqlDataReader mydr;
+
+            try
+            {
+                //conex.Open();
+                mydr = cmd.ExecuteReader();
+                while (mydr.Read())
+                {
+                    string subj = mydr.GetString("id");
+                    u_negocio = subj;
+                }
+                mydr.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+           
+            
+            //Obtener Rol
+            query = "select ID FROM rol where nombre = '"+ u_rol+"';";
+            try
+            {
+                mydr = cmd.ExecuteReader();
+                while (mydr.Read())
+                {
+                    string subj = mydr.GetString("id");
+                    u_rol = subj;
+                }
+                mydr.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
+            
+            //Obtener GrupoTrabajo
+            query = "select ID FROM grupotrabajo where nombre = '" + u_grupotrabajo + "';";
+            try
+            {
+                //conex.Open();
+                mydr = cmd.ExecuteReader();
+                while (mydr.Read())
+                {
+                    string subj = mydr.GetString("id");
+                    u_grupotrabajo = subj;
+                }
+                mydr.Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
             //Agregar columnas y campos al query
-            
-            //query = "INSERT INTO usuario VALUES ("+totalID+", "+u_rut+", "+u_rol+", '"+u_nombre+"', '"+u_apellidop+"', '"+u_apellidom+"', '"+u_correo+"', "+u_celular+", 0, 0, 0, 0, 0, 0, NULL, NULL, null);";
-            query = "INSERT INTO usuario VALUES (3, 18999333-2, 0, '" + u_nombre + "', '" + u_apellidop + "', '" + u_apellidom + "', '" + u_correo + "', " + u_celular + ", 0, 0, 0, 0, 0, 0, NULL, NULL, null);";
+            query = "INSERT INTO usuario VALUES("+totalID+", '"+u_correo+"', '"+u_password+"', '"+u_rut+"', '"+u_nombre+"', '"+u_apellidop+"', '"+u_apellidom+"', '"+u_celular+"', 0, "+u_rol+", "+u_negocio+", "+u_grupotrabajo+", NULL);";
             cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
-            cmd.ExecuteReader();
+            cmd.ExecuteNonQuery();
 
             conex.Close();
-            //reader = cmd.ExecuteReader();
         }
             //Boton Limpiar Campos de Crear Usuario
         private void btn_agregarUser_limpiar_Click(object sender, RoutedEventArgs e)
         {
-            txtbox_user_username.Text = "";
             txtbox_user_password.Text = "";
             txtbox_user_nombre.Text = "";
             txtbox_user_rut.Text = "";
@@ -238,7 +323,6 @@ namespace Control_de_Tareas
             txtbox_user_apellidom.Text = "";
             txtbox_user_correo.Text = "";
             txtbox_user_celular.Text = "";
-            cbox_user_jefe.SelectedItem = null;
             cbox_user_negocio.SelectedItem = null;
             cbox_user_rol.SelectedItem = null;
             cbox_user_gtrabajo.SelectedItem = null;
@@ -276,27 +360,6 @@ namespace Control_de_Tareas
             conex.Close();
         }
 
-        
-        //Botones Pantalla Crear Negocio
-        private void btn_crearNegocio_limpiar_Click(object sender, RoutedEventArgs e)
-        {
-            txtbox_negocio_nombre.Text = "";
-            txtbox_negocio_rut_negocio.Text = "";
-            txtbox_negocio_direccion.Text = "";
-            txtbox_negocio_nombre_jefe.Text = "";
-            txtbox_negocio_mail_jefe.Text = "";
-            txtbox_negocio_num_contacto.Text = "";
-            txtbox_negocio_web_rrss.Text = "";
-            txtbox_negocio_girocomercial.Text = "";
-            date_pick.SelectedDate = DateTime.Now;
-        }
-
-        //Botones Pantalla Listar Negocios
-
-        private void btn_listarNegocios_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         //Metodos Extras
         private void CambiarColorBoton(Button botonObjetivo, string nuevo_color)
@@ -312,6 +375,21 @@ namespace Control_de_Tareas
             CambiarColorBoton(mainMenuFlujosTarea, color_menu1_idle);
             CambiarColorBoton(mainMenuUsuarios, color_menu1_idle);
             CambiarColorBoton(mainMenuPerfilesNegocio, color_menu1_idle);
+        }
+
+        private void ApagarBotonesMenu2()
+        {
+            //Negocio
+            CambiarColorBoton(btn_negocio_crear, color_menu2_idle);
+            CambiarColorBoton(btn_negocio_listar, color_menu2_idle);
+            //Grupo de Trabajo
+            CambiarColorBoton(btn_admin_rol, color_menu2_idle);
+            CambiarColorBoton(btn_gptrabajo_crear, color_menu2_idle);
+            CambiarColorBoton(btn_gptrabajo_listar, color_menu2_idle);
+            //Usuarios
+            CambiarColorBoton(btn_usuarios_crear, color_menu2_idle);
+            CambiarColorBoton(btn_usuarios_listar, color_menu2_idle);
+
         }
         private void OcultarOtrosMenus(Grid selectedGrid)
         {
@@ -337,6 +415,8 @@ namespace Control_de_Tareas
                 }
             }
         }
+
+        //Oculta todas las pantallas menos la recien seleccionada
         private void OcultarOtrasPantallas(Grid selectedGrid)
         {
             List<Grid> lista_pantalla;
@@ -344,6 +424,7 @@ namespace Control_de_Tareas
             {
                 Pantalla_Agregar_Negocio,
                 Pantalla_Listar_Negocio,
+                Pantalla_Administrar_Roles,
                 Pantalla_Agregar_Usuario,
                 Pantalla_Listar_Usuarios
             };
@@ -362,6 +443,7 @@ namespace Control_de_Tareas
             }
         }
 
+        //Carga los Combobox de la pantalla Crear Usuario
         private void CargarCombobox()
         {
 
@@ -375,57 +457,35 @@ namespace Control_de_Tareas
 
             string query = "SELECT nombrerol FROM rol;";
             MySqlCommand cmd = new MySqlCommand(query, conex);
+            conex.Open();
             MySqlDataReader mydr;
             try
             {
-                conex.Open();
                 mydr = cmd.ExecuteReader();
                 while (mydr.Read())
                 {
                     string subj = mydr.GetString("nombrerol");
                     cbox_user_rol.Items.Add(subj);
                 }
-                conex.Close();
+                mydr.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-
-            //Llenar Jefe
-            /*
-            query = "SELECT CONCAT(nombre, ' ', apellidop, ' ', apellidom) AS nombrecompleto FROM usuario WHERE rol_id = 3;";
-            try
-            {
-                conex.Open();
-                mydr = cmd.ExecuteReader();
-                while (mydr.Read())
-                {
-                    string subj = mydr.GetString("nombrecompleto");
-                    cbox_user_rol.Items.Add(subj);
-                }
-                conex.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            **/
 
             //Llenar Negocio
             query = "select nombre FROM negocio;";
             cmd = new MySqlCommand(query, conex);
-            MySqlDataReader mydr2;
             try
             {
-                conex.Open();
-                mydr2 = cmd.ExecuteReader();
-                while (mydr2.Read())
+                mydr = cmd.ExecuteReader();
+                while (mydr.Read())
                 {
-                    string subj = mydr2.GetString("nombre");
+                    string subj = mydr.GetString("nombre");
                     cbox_user_negocio.Items.Add(subj);
                 }
-                conex.Close();
+                mydr.Close();
             }
             catch (Exception ex)
             {
@@ -435,25 +495,25 @@ namespace Control_de_Tareas
             //Llenar Grupo Trabajo
             query = "select nombre FROM grupotrabajo;";
             cmd = new MySqlCommand(query, conex);
-            MySqlDataReader mydr5;
             try
             {
-                conex.Open();
-                mydr5 = cmd.ExecuteReader();
-                while (mydr5.Read())
+                mydr = cmd.ExecuteReader();
+                while (mydr.Read())
                 {
-                    string subj = mydr5.GetString("nombre");
+                    string subj = mydr.GetString("nombre");
                     cbox_user_gtrabajo.Items.Add(subj);
                 }
-                conex.Close();
+                mydr.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+            conex.Close();
 
         }
 
+        //Actualiza los combobox dependiendo del negocio seleccionado
         private void cbox_user_negocio_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             MySqlConnection conex = new MySqlConnection();
@@ -502,12 +562,13 @@ namespace Control_de_Tareas
 
             //cambiar combobox de Jefes
         }
+        //antes de actualizar los combobox es necesario limpiarlos para evitar duplicados
         private void LimpiarCbox()
         {
             cbox_user_gtrabajo.Items.Clear ();
-            cbox_user_jefe.Items.Clear (); 
             cbox_user_negocio.Items.Clear ();
             cbox_user_rol.Items.Clear ();
         }
+
     }
 }

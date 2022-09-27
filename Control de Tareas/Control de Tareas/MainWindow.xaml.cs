@@ -36,7 +36,8 @@ namespace Control_de_Tareas
         {
             username = txtBoxUser.Text;
             password = txtBoxPassword.Password;
-            TryLogin();
+            //TryLogin();
+            LoginSinCredencial();
 
         }
 
@@ -75,6 +76,13 @@ namespace Control_de_Tareas
             {
                 System.Windows.MessageBox.Show(ex.Message);
             }
+        }
+
+        private void LoginSinCredencial()
+        {
+            Dashboard dashboard = new Dashboard();
+            dashboard.Show();
+            this.Close();
         }
 
         private void btn_connectBD_Click(object sender, RoutedEventArgs e)

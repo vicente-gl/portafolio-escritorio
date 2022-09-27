@@ -44,15 +44,13 @@ namespace Control_de_Tareas
 
                 System.Windows.MessageBox.Show("Conexión Exitosa, Bienvenido: " + testString);
                 return true;
-                conex.Close();
+
             }
             catch (MySqlException e)
             {
                 System.Windows.MessageBox.Show("No se pudo establecer conexion, Error: " + e);
                 return false;
-                conex.Close();
             }
-            conex.Close();
         }
 
         public string NombreUsuarioLogeado(int idUsuario)
@@ -105,41 +103,6 @@ namespace Control_de_Tareas
         public string getConnString()
         {            
             return cadenaConexion.ToString();
-        }
-         // Rescata nombre con query
-        /*
-        public bool EstablecerConn()
-        {
-            try
-            {
-                conex.ConnectionString = cadenaConexion;
-                conex.Open();
-
-
-
-                var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
-                var reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    testString = reader.GetString("nombre");
-                }
-
-
-                System.Windows.MessageBox.Show("Conexión Exitosa, Bienvenido: " + testString);
-                return true;
-                conex.Close();
-            }
-            catch (MySqlException e)
-            {
-                System.Windows.MessageBox.Show("No se pudo establecer conexion, Error: " + e);
-                return false;
-                conex.Close();
-            }
-            conex.Close();
-        }
-        */
-
-
+        }        
     }
 }
