@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using System.Data;
+using System.Windows.Data;
+using System.Windows;
 
 namespace Control_de_Tareas
 {
@@ -135,6 +137,101 @@ namespace Control_de_Tareas
                 return true;
             }
         }
-        
+
+        public void LlamarTabla(string tabla, System.Windows.Controls.DataGrid datagridItem)
+        {
+            EstablecerConn();
+            string query = "SELECT * FROM " + tabla + ";";
+            MySqlCommand cmd = new MySqlCommand(query, conex);
+
+            try
+            {
+                MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                adp.Fill(ds, "LoadDataBinding");
+                datagridItem.DataContext = ds;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        public string getNameByNegocioID(string id, string tabla)
+        {
+            //EstablecerConn();
+
+            string query = "select nombre FROM " + tabla + " where id = " + id + ";";
+            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            var reader = cmd.ExecuteReader();
+            string result = "";
+
+            while (reader.Read())
+            {
+                result = reader.GetString("nombre");
+            }
+
+            return result;
+        }
+
+        public string[] CargarCombobox(string tabla)
+        {
+            string query = "SELECT nombre FROM " + tabla + ";";
+            MySqlCommand cmd = new MySqlCommand(query, conex);
+            MySqlDataReader mydr;
+            List<string> datosCombo = new List<string>();
+            try
+            {
+                mydr = cmd.ExecuteReader();
+                while (mydr.Read())
+                {
+                    string subj = mydr.GetString("nombre");
+                    datosCombo.Add(subj);
+                }
+                mydr.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return datosCombo.ToArray();
+        }
+
+        public string[] CargarComboboxNegocio(string negocio)
+        {
+
+            string query = "SELECT id FROM negocio WHERE nombre = '" + negocio + "';";
+            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            var reader = cmd.ExecuteReader();
+            string result = "";
+
+            while (reader.Read())
+            {
+                result = reader.GetString("id");
+            }
+            reader.Close();
+
+            query = "select nombre FROM grupotrabajo where id_negocio = " + result + ";";
+            cmd = new MySqlCommand(query, conex);
+            MySqlDataReader mydr;
+            List<string> datosCombo = new List<string>();
+            try
+            {
+                mydr = cmd.ExecuteReader();
+                while (mydr.Read())
+                {
+                    string subj = mydr.GetString("nombre");
+                    datosCombo.Add(subj);
+                }
+                mydr.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return datosCombo.ToArray();
+        }
+
+
     }
 }

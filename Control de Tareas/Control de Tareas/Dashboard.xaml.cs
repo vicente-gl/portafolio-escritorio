@@ -29,35 +29,11 @@ namespace Control_de_Tareas
 
         string queryResult;
 
+
         public Dashboard()
         {
-
             InitializeComponent();
             WindowState = WindowState.Maximized;            
-        }
-
-        public void LogearUsuario()
-        {
-            //Poner nombre de usuario logeado
-            //por ahora se seleccionara el usuario con id 0
-
-            MySqlConnection conex = new MySqlConnection();
-            CConexion cConexion = new CConexion();
-
-            conex.ConnectionString = cConexion.cadenaConexion;
-            conex.Open();
-            Console.WriteLine("logeado desde dashboard: " + idUsuarioLogeado);
-            string query = "SELECT CONCAT(nombre, ' ', apellidop, ' ', apellidom) AS nombrecompleto FROM usuario WHERE id = " + idUsuarioLogeado + ";";
-            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
-            var reader = cmd.ExecuteReader();
-
-            while (reader.Read())
-            {
-                queryResult = reader.GetString("nombrecompleto");
-            }
-            //System.Windows.MessageBox.Show(mainWindow.logedUser.ToString());
-            label_logedUser.Content = queryResult;
-            conex.Close();
         }
 
         //Botones Main Menú
@@ -164,9 +140,9 @@ namespace Control_de_Tareas
         //Botones Menu 2 Usuarios
         private void btn_usuarios_crear_Click(object sender, RoutedEventArgs e)
         {
+            LimpiarCbox();
             ApagarBotonesMenu2();
             OcultarOtrasPantallas(Pantalla_Agregar_Usuario);
-            LimpiarCbox();
             if (Pantalla_Agregar_Usuario.Visibility.Equals(Visibility.Hidden))
             {
                 Pantalla_Agregar_Usuario.Visibility = Visibility.Visible;
@@ -214,7 +190,8 @@ namespace Control_de_Tareas
         //Botones Pantalla Listar Negocios
         private void btn_listarNegocios_Click(object sender, RoutedEventArgs e)
         {
-            LlamarTabla("negocio", tablaNegocios);
+            CConexion cConexion = new CConexion();
+            cConexion.LlamarTabla("negocio", tablaNegocios);
         }
         
         //Botonos Pantalla Crear Usuario
@@ -331,37 +308,58 @@ namespace Control_de_Tareas
 
         private void btn_listarUsuarios_Click(object sender, RoutedEventArgs e)
         {
-            LlamarTabla("usuario", tablaUsuarios);
-        }
-
-        private void LlamarTabla(string tabla, DataGrid datagridFocus)
-        {
-
-            MySqlConnection conex = new MySqlConnection();
             CConexion cConexion = new CConexion();
-            conex.ConnectionString = cConexion.cadenaConexion;
+            cConexion.LlamarTabla("usuario", tablaUsuarios);
+        }        
 
-            string query = "SELECT * FROM "+ tabla +";";
-            MySqlCommand cmd = new MySqlCommand(query, conex);
+        private void btn_editarUsuario_Click(object sender, RoutedEventArgs e)
+        {
+            if(tablaUsuarios.SelectedValue == null)
+            {
+                MessageBox.Show("No se ha seleccionado ningún Usuario");
+            }
+            else
+            {
+                //IList rows = tablaUsuarios.SelectedItems;
+                DataRowView row = (DataRowView)tablaUsuarios.SelectedItems[0];
+                string idSelected = row["id"].ToString();
+                string[] datosUsuario = new string[10];
 
-            try
-            {
-                conex.Open();
-                MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
-                DataSet ds = new DataSet();
-                adp.Fill(ds, "LoadDataBinding");
-                datagridFocus.DataContext = ds;
+                datosUsuario[0] = row["negocio_id"].ToString();
+                datosUsuario[1] = row["rut"].ToString();
+                datosUsuario[2] = row["correo"].ToString();
+                datosUsuario[3] = row["password"].ToString();
+                datosUsuario[4] = row["rol_id"].ToString(); // transformar a ID
+                datosUsuario[5] = row["nombre"].ToString();
+                datosUsuario[6] = row["apellidop"].ToString();
+                datosUsuario[7] = row["apellidom"].ToString();
+                datosUsuario[8] = row["celular"].ToString();
+                datosUsuario[9] = row["grupotrabajo_id"].ToString();
+
+                Pantalla_Editar_Usuario.Visibility = Visibility.Visible;
+                LlenarCamposEditarUser(datosUsuario);
+                
             }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            conex.Close();
         }
-        
+
 
 
         //Metodos Extras
+
+        private void LlenarCamposEditarUser(string[] datosUsuario)
+        {
+            edit_cbox_user_negocio.Text = datosUsuario[0];
+            edit_txtbox_user_rut.Text = datosUsuario[1];
+            edit_txtbox_user_correo.Text = datosUsuario[2];
+            edit_txtbox_user_password.Text = datosUsuario[3];
+            edit_cbox_user_rol.Text = datosUsuario[4];
+            edit_txtbox_user_nombre.Text = datosUsuario[5];
+            edit_txtbox_user_apellidop.Text = datosUsuario[6];
+            edit_txtbox_user_apellidom.Text = datosUsuario[7];
+            edit_txtbox_user_celular.Text = datosUsuario[8];
+            edit_cbox_user_gtrabajo.Text = datosUsuario[9];
+        }
+
         private void CambiarColorBoton(Button botonObjetivo, string nuevo_color)
         {
             var bc = new BrushConverter();
@@ -446,121 +444,44 @@ namespace Control_de_Tareas
         //Carga los Combobox de la pantalla Crear Usuario
         private void CargarCombobox()
         {
-
-            //Limpiar Cbox
-
             //Llenar Combobox de Add User
 
-            MySqlConnection conex = new MySqlConnection();
             CConexion cConexion = new CConexion();
-            conex.ConnectionString = cConexion.cadenaConexion;
+            cConexion.EstablecerConn();
 
-            string query = "SELECT nombrerol FROM rol;";
-            MySqlCommand cmd = new MySqlCommand(query, conex);
-            conex.Open();
-            MySqlDataReader mydr;
-            try
+            string[] roles = cConexion.CargarCombobox("rol");
+            foreach (string role in roles)
             {
-                mydr = cmd.ExecuteReader();
-                while (mydr.Read())
-                {
-                    string subj = mydr.GetString("nombrerol");
-                    cbox_user_rol.Items.Add(subj);
-                }
-                mydr.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+                cbox_user_rol.Items.Add(role);
             }
 
-            //Llenar Negocio
-            query = "select nombre FROM negocio;";
-            cmd = new MySqlCommand(query, conex);
-            try
+            string[] negocios = cConexion.CargarCombobox("negocio");
+            foreach(string negocio in negocios)
             {
-                mydr = cmd.ExecuteReader();
-                while (mydr.Read())
-                {
-                    string subj = mydr.GetString("nombre");
-                    cbox_user_negocio.Items.Add(subj);
-                }
-                mydr.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+                cbox_user_negocio.Items.Add(negocio);
             }
 
-            //Llenar Grupo Trabajo
-            query = "select nombre FROM grupotrabajo;";
-            cmd = new MySqlCommand(query, conex);
-            try
+            string[] grupotrabajo = cConexion.CargarCombobox("grupotrabajo");
+            foreach(string grupostrabajo in grupotrabajo)
             {
-                mydr = cmd.ExecuteReader();
-                while (mydr.Read())
-                {
-                    string subj = mydr.GetString("nombre");
-                    cbox_user_gtrabajo.Items.Add(subj);
-                }
-                mydr.Close();
+                cbox_user_gtrabajo.Items.Add(grupostrabajo);
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            conex.Close();
 
         }
 
         //Actualiza los combobox dependiendo del negocio seleccionado
         private void cbox_user_negocio_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MySqlConnection conex = new MySqlConnection();
-            CConexion cConexion = new CConexion();
-            
-            conex.ConnectionString = cConexion.cadenaConexion;
-
-
-            //guardar negocio seleccionado para mostrar los grupos de tarea que corresponden a ese negocio
-            string query = "SELECT id FROM negocio WHERE nombre = '" + cbox_user_negocio.SelectedValue + "';";
-
-            conex.Open();
-            MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
-            var reader = cmd.ExecuteReader();
-
-            while (reader.Read())
-            {
-                queryResult = reader.GetString("id");
-            }
-            negocioSelected = queryResult;
-            conex.Close();
-
-            //cambiar combobox de grupos de trabajo
-
-            query = "select nombre FROM grupotrabajo where id_negocio = " + negocioSelected + ";";
-            cmd = new MySqlCommand(query, conex);
-            MySqlDataReader mydr;
-
             cbox_user_gtrabajo.Items.Clear();
+            CConexion cconexion = new CConexion();
+            cconexion.EstablecerConn();
+            string negocio = cbox_user_negocio.SelectedValue.ToString(); //Da error cuando entro a crear seleciono negocio, salgo y vuelvo de pantalla de Crear Usuario
 
-            try
+            string[] grupotrabajo = cconexion.CargarComboboxNegocio(negocio);
+            foreach(string grupostrabajo in grupotrabajo)
             {
-                conex.Open();
-                mydr = cmd.ExecuteReader();
-                while (mydr.Read())
-                {
-                    string subj = mydr.GetString("nombre");
-                    cbox_user_gtrabajo.Items.Add(subj);
-                }
-                conex.Close();
+                cbox_user_gtrabajo.Items.Add(grupostrabajo);
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-            //cambiar combobox de Jefes
         }
         //antes de actualizar los combobox es necesario limpiarlos para evitar duplicados
         private void LimpiarCbox()
@@ -569,6 +490,8 @@ namespace Control_de_Tareas
             cbox_user_negocio.Items.Clear ();
             cbox_user_rol.Items.Clear ();
         }
+
+
 
     }
 }
