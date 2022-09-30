@@ -32,7 +32,7 @@
         <Label Content="Ingrese sus datos" Foreground="Black" HorizontalAlignment="Center" Height="28" Margin="0,160,0,0" VerticalAlignment="Top" Width="120" FontSize="14"/>
         <Grid>
             <TextBox Text="vice.gonzalezl@duocuc.cl" x:Name="txtBoxUser" Foreground="Black" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="200" Margin="366,0,0,0"/>
-            <PasswordBox Password="test123" Foreground="Black" x:Name="txtBoxPassword" HorizontalAlignment="Left" Margin="366,240,0,0" VerticalAlignment="Top" Width="200"/>
+            <PasswordBox Password="test1234" Foreground="Black" x:Name="txtBoxPassword" HorizontalAlignment="Left" Margin="366,240,0,0" VerticalAlignment="Top" Width="200"/>
             <Label x:Name="txtUser" Content="Correo Electrónico" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="238,0,0,0" VerticalAlignment="Center" Background="{x:Null}" Foreground="Black" Height="34"/>
             <Label x:Name="txtPassword" Content="Contraseña" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="257,235,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="Black" Height="34"/>
         </Grid>

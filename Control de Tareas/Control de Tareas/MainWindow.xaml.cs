@@ -34,49 +34,17 @@ namespace Control_de_Tareas
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
+            CConexion cConexion = new CConexion();
             username = txtBoxUser.Text;
             password = txtBoxPassword.Password;
-            //TryLogin();
-            LoginSinCredencial();
+            //LoginSinCredencial();
 
-        }
-
-
-
-        private void TryLogin()
-        {
-            try
-            {
-                MySqlConnection conex = new MySqlConnection();
-                CConexion cConexion = new CConexion();
-                MainWindow mainWindow = new MainWindow();
-
-
-                conex.ConnectionString = cConexion.cadenaConexion;
-                conex.Open();
-                string query = "SELECT id from usuario where nombre = '" + username + "';";
-
-                var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
-                var reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    queryResult = reader.GetString("id");
-                }
-                reader.Close();
-                Dashboard dashboard = new Dashboard();
-                dashboard.idUsuarioLogeado = Int32.Parse(queryResult);
-                dashboard.LogearUsuario();
-                //Console.WriteLine("logeado en login: " + dashboard.idUsuarioLogeado);
-                dashboard.Show();
+            cConexion.EstablecerConn();
+            if(cConexion.CheckCredentials(username, password)){
                 this.Close();
+            }
 
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show(ex.Message);
-            }
-        }
+        }        
 
         private void LoginSinCredencial()
         {

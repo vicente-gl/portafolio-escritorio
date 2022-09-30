@@ -27,23 +27,8 @@ namespace Control_de_Tareas
         {
             try
             {
-                //Limpiar conexion para que no diga nombre de usuario
-                //no se borra para saber que hace
                 conex.ConnectionString = cadenaConexion;
                 conex.Open();
-
-                
-
-                var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
-                var reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    testString = reader.GetString("nombre");
-                }
-               
-
-                System.Windows.MessageBox.Show("Conexión Exitosa, Bienvenido: " + testString);
                 return true;
 
             }
@@ -105,6 +90,51 @@ namespace Control_de_Tareas
         public string getConnString()
         {            
             return cadenaConexion.ToString();
-        }        
+        }
+        
+        
+        public bool CheckCredentials(string email, string pass)
+        {
+
+            string query = "SELECT * FROM usuario WHERE correo = '" + email + "' AND password = '"+pass+"';";
+            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            var reader = cmd.ExecuteReader();
+            string result = "";
+
+            while (reader.Read())
+            {
+                result = reader.GetString("id");
+            }
+
+
+            if (result == "")
+            {
+                //Pass o mail incorrecto
+                Console.WriteLine("user not found");
+                return false;   
+            }
+            else
+            {
+                //User found
+                reader.Close();
+                Console.WriteLine(result);
+                query = "SELECT CONCAT(nombre, ' ', apellidop, ' ', apellidom) AS nombrecompleto FROM usuario WHERE id = " + result + ";";
+                cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    result = reader.GetString("nombrecompleto");
+                }
+
+                Dashboard dashboard = new Dashboard();
+                dashboard.label_logedUser.Content = result;
+                Console.WriteLine(result);
+                dashboard.Show();
+
+                return true;
+            }
+        }
+        
     }
 }
