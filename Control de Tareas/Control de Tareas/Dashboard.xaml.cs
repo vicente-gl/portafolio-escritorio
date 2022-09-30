@@ -214,7 +214,7 @@ namespace Control_de_Tareas
         //Botones Pantalla Listar Negocios
         private void btn_listarNegocios_Click(object sender, RoutedEventArgs e)
         {
-
+            LlamarTabla("negocio", tablaNegocios);
         }
         
         //Botonos Pantalla Crear Usuario
@@ -331,11 +331,10 @@ namespace Control_de_Tareas
 
         private void btn_listarUsuarios_Click(object sender, RoutedEventArgs e)
         {
-            LlamarTabla("usuario");
+            LlamarTabla("usuario", tablaUsuarios);
         }
 
-
-        private void LlamarTabla(string tabla)
+        private void LlamarTabla(string tabla, DataGrid datagridFocus)
         {
 
             MySqlConnection conex = new MySqlConnection();
@@ -351,7 +350,7 @@ namespace Control_de_Tareas
                 MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
                 DataSet ds = new DataSet();
                 adp.Fill(ds, "LoadDataBinding");
-                tablaUsuarios.DataContext = ds;
+                datagridFocus.DataContext = ds;
             }
             catch (MySqlException ex)
             {
@@ -359,6 +358,7 @@ namespace Control_de_Tareas
             }
             conex.Close();
         }
+        
 
 
         //Metodos Extras

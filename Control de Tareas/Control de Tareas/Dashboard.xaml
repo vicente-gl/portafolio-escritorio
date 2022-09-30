@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Control_de_Tareas"
         mc:Ignorable="d"
-        Title="Dashboard" Height="1080" Width="1920" WindowStartupLocation="CenterScreen" FontFamily="Intel Clear Pro">
+        Title="Process S.A - Administrador" Height="1080" Width="1920" WindowStartupLocation="CenterScreen" FontFamily="Intel Clear Pro">
     <Grid Name="GridDashboard">
         <!--MENU PRINCIPAL-->
         <Grid Name="MainMenu" Margin="0,80,0,0" Height="984" VerticalAlignment="Top" HorizontalAlignment="Left" Width="{Binding ActualWidth, ElementName=GridDashboard}">
@@ -33,7 +33,7 @@
             <Label Content="Negocios /" Foreground="Gray" Margin="15,10,0,0" FontSize="12" FontFamily="Inter"></Label>
             <StackPanel HorizontalAlignment="Left" Margin="0,50,0,0">
                 <Button x:Name="btn_admin_rol" Click="btn_admin_rol_Click" Content="Administrar Roles" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
-                <Button x:Name="btn_gptrabajo_crear" Content="Agregar Negocio" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
+                <Button x:Name="btn_gptrabajo_crear" Content="Agregar Grupo de Trabajo" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
                 <Button x:Name="btn_gptrabajo_listar" Content="Listar Grupos de Trabajo" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
             </StackPanel>
         </Grid>
@@ -57,7 +57,8 @@
         </Grid>
         <!--PANTALLAS-->
         <!--PANTALLAS NEGOCIO-->
-        <Grid Name="Pantalla_Agregar_Negocio" Margin="509,80,0,0" Height="984" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1398" Visibility="Hidden">
+        <Grid Name="Pantalla_Agregar_Negocio" Margin="509,80,0,0" Height='800' VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden">
+            <Rectangle Margin="509,0,0,0" Width="1500" Fill="#FFFFFF"></Rectangle>
             <Rectangle Fill="#FFFFFF"></Rectangle>
             <Label HorizontalAlignment="Center" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="30" Content="Datos de Negocio"></Label>
             <StackPanel HorizontalAlignment="Center" Margin="0,90,0,0" Orientation="Horizontal">
@@ -87,11 +88,12 @@
                 </StackPanel>
             </StackPanel>
         </Grid>
-        <Grid Name="Pantalla_Listar_Negocio" Margin="509,80,0,0" Height="984" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1398" Visibility="Hidden">
+        <Grid Name="Pantalla_Listar_Negocio" Margin="509,80,0,0" Height='800' VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden">
+            <Rectangle Margin="509,0,0,0" Width="1500" Fill="#FFFFFF"></Rectangle>
             <Rectangle Fill="#FFFFFF"></Rectangle>
             <Button x:Name="btn_listarNegocios" Click="btn_listarNegocios_Click"  FontFamily="Inter" FontSize="15" HorizontalAlignment="Left" Background="GreenYellow" VerticalAlignment="Top" Content="Cargar Negocios" Margin="40,40,0,20"></Button>
             <Label HorizontalAlignment="Center" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="30" Content="Lista de Negocios"></Label>
-            <DataGrid x:Name="tablaNegocios" AutoGenerateColumns="True" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,100,0,0" Width="900" Height="500"/>
+            <DataGrid x:Name="tablaNegocios" IsReadOnly="True" FontFamily="Inter" FontSize="15" ItemsSource="{Binding Path=LoadDataBinding}" AutoGenerateColumns="True" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,100,0,0" Width="1100" Height="500"/>
             <Button FontFamily="Inter" FontSize="20" Content="Editar Negocio" Margin="0,40,0,20" Height="40" Width="250"></Button>
         </Grid>
         <!--PANTALLAS GRUPOS DE TRABAJO-->
@@ -103,6 +105,7 @@
         <!--PANTALLAS USUARIO-->
             <!--PANTALLAS AGREGAR USUARIO-->
         <Grid Name="Pantalla_Agregar_Usuario" Margin="509,80,0,0" Height="1000" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden">
+            <Rectangle Margin="509,0,0,0" Width="1500" Fill="#FFFFFF"></Rectangle>
             <Rectangle Fill="#FFFFFF"></Rectangle>
             <Label HorizontalAlignment="Center" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="30" Content="Datos de Usuario"></Label>
             <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,100,0,0" Height="500" Width="800">
@@ -161,7 +164,8 @@
             </Grid>
         </Grid>
             <!--PANTALLA LISTAR USUARIOS-->
-        <Grid Name="Pantalla_Listar_Usuarios" Margin="509,80,0,0" Height='800' VerticalAlignment="Top" HorizontalAlignment="Center" Width="1398" Visibility="Hidden">
+        <Grid Name="Pantalla_Listar_Usuarios" Margin="509,80,0,0" Height='800' VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden">
+            <Rectangle Margin="509,0,0,0" Width="1500" Fill="#FFFFFF"></Rectangle>
             <Rectangle Fill="#FFFFFF"></Rectangle>
             <Button x:Name="btn_listarUsuarios" Click="btn_listarUsuarios_Click" FontFamily="Inter" FontSize="15" HorizontalAlignment="Left" Background="GreenYellow" VerticalAlignment="Top" Content="Cargar Usuarios" Margin="160,40,0,20"></Button>
             <Label HorizontalAlignment="Center" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="30" Content="Lista de Usuarios"></Label>

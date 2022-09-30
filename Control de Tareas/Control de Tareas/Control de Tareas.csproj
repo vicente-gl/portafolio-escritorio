@@ -39,6 +39,9 @@
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Control-de-Tareas.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="BouncyCastle.Crypto, Version=1.9.0.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
       <HintPath>..\packages\Portable.BouncyCastle.1.9.0\lib\net40\BouncyCastle.Crypto.dll</HintPath>
@@ -186,6 +189,7 @@
     <Resource Include="Iconos\noProfilePic.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Control-de-Tareas.ico" />
     <Content Include="Iconos\profilepic_placeholder.jpg" />
     <Resource Include="Iconos\WIN_20220921_11_50_38_Pro %282%29.jpg" />
   </ItemGroup>

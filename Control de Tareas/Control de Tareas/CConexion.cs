@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace Control_de_Tareas
 {
@@ -52,6 +53,7 @@ namespace Control_de_Tareas
                 return false;
             }
         }
+
 
         public string NombreUsuarioLogeado(int idUsuario)
         {
