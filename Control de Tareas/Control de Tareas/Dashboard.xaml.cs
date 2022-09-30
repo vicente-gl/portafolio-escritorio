@@ -29,6 +29,8 @@ namespace Control_de_Tareas
 
         string queryResult;
 
+        private string usuarioEditTarget;
+
 
         public Dashboard()
         {
@@ -153,7 +155,7 @@ namespace Control_de_Tareas
                 Pantalla_Agregar_Usuario.Visibility = Visibility.Hidden;
                 CambiarColorBoton(btn_usuarios_crear, color_menu2_idle);
             }
-            CargarCombobox();
+            CargarComboboxCrear();
 
         }
 
@@ -323,41 +325,79 @@ namespace Control_de_Tareas
                 //IList rows = tablaUsuarios.SelectedItems;
                 DataRowView row = (DataRowView)tablaUsuarios.SelectedItems[0];
                 string idSelected = row["id"].ToString();
-                string[] datosUsuario = new string[10];
+                string[] datosUsuario = new string[11];
 
-                datosUsuario[0] = row["negocio_id"].ToString();
-                datosUsuario[1] = row["rut"].ToString();
-                datosUsuario[2] = row["correo"].ToString();
-                datosUsuario[3] = row["password"].ToString();
-                datosUsuario[4] = row["rol_id"].ToString(); // transformar a ID
-                datosUsuario[5] = row["nombre"].ToString();
-                datosUsuario[6] = row["apellidop"].ToString();
-                datosUsuario[7] = row["apellidom"].ToString();
-                datosUsuario[8] = row["celular"].ToString();
-                datosUsuario[9] = row["grupotrabajo_id"].ToString();
+                usuarioEditTarget = idSelected;
+                datosUsuario[1] = row["negocio_id"].ToString();
+                datosUsuario[2] = row["rut"].ToString();
+                datosUsuario[3] = row["correo"].ToString();
+                datosUsuario[4] = row["password"].ToString();
+                datosUsuario[5] = row["rol_id"].ToString(); // transformar a ID
+                datosUsuario[6] = row["nombre"].ToString();
+                datosUsuario[7] = row["apellidop"].ToString();
+                datosUsuario[8] = row["apellidom"].ToString();
+                datosUsuario[9] = row["celular"].ToString();
+                datosUsuario[10] = row["grupotrabajo_id"].ToString();
 
                 Pantalla_Editar_Usuario.Visibility = Visibility.Visible;
                 LlenarCamposEditarUser(datosUsuario);
-                
+                CargarComboboxEditar();
+
+
             }
         }
 
+        private void edit_btn_editar_usuario_Click(object sender, RoutedEventArgs e)
+        {
+            if(edit_cbox_user_negocio.SelectedItem == null || edit_cbox_user_rol.SelectedItem == null || edit_cbox_user_gtrabajo.SelectedItem == null)
+            {
+                MessageBox.Show("Debe Ingresar todos los datos requeridos");
+            }
+            else
+            {
+                CConexion cConexion = new CConexion();
+                cConexion.EstablecerConn();
 
+                string editRol = cConexion.GetIDByName("rol", edit_cbox_user_rol.SelectedItem.ToString());
+                string editNegocio = cConexion.GetIDByName("negocio", edit_cbox_user_negocio.SelectedItem.ToString());
+                string editGrupoTrabajo = cConexion.GetIDByName("grupotrabajo", edit_cbox_user_gtrabajo.SelectedItem.ToString());
+                Console.WriteLine(editRol);
+
+                string[] datosUsuario = new string[13];
+                datosUsuario[0]  = usuarioEditTarget; // NADA pq es ID
+                datosUsuario[1]  = edit_txtbox_user_correo.Text; //correo
+                datosUsuario[2]  = edit_txtbox_user_password.Text; //password
+                datosUsuario[3]  = edit_txtbox_user_rut.Text; //rut
+                datosUsuario[4]  = edit_txtbox_user_nombre.Text; //nombre
+                datosUsuario[5]  = edit_txtbox_user_apellidop.Text; //apellidop
+                datosUsuario[6]  = edit_txtbox_user_apellidom.Text; //apellidom
+                datosUsuario[7]  = edit_txtbox_user_celular.Text; //celular
+                datosUsuario[8]  = ""; //deleted
+                datosUsuario[9]  = editRol; //rol_id
+                datosUsuario[10] = editNegocio;//negocio_id
+                datosUsuario[11] = editGrupoTrabajo;//grupotrabajo_id
+
+                cConexion.UpdateUsuario(datosUsuario);
+                MessageBox.Show("Usuario Modificado Exitosamente");
+            }
+
+
+        }
 
         //Metodos Extras
 
         private void LlenarCamposEditarUser(string[] datosUsuario)
         {
-            edit_cbox_user_negocio.Text = datosUsuario[0];
-            edit_txtbox_user_rut.Text = datosUsuario[1];
-            edit_txtbox_user_correo.Text = datosUsuario[2];
-            edit_txtbox_user_password.Text = datosUsuario[3];
-            edit_cbox_user_rol.Text = datosUsuario[4];
-            edit_txtbox_user_nombre.Text = datosUsuario[5];
-            edit_txtbox_user_apellidop.Text = datosUsuario[6];
-            edit_txtbox_user_apellidom.Text = datosUsuario[7];
-            edit_txtbox_user_celular.Text = datosUsuario[8];
-            edit_cbox_user_gtrabajo.Text = datosUsuario[9];
+            edit_cbox_user_negocio.Text = datosUsuario[1];
+            edit_txtbox_user_rut.Text = datosUsuario[2];
+            edit_txtbox_user_correo.Text = datosUsuario[3];
+            edit_txtbox_user_password.Text = datosUsuario[4];
+            edit_cbox_user_rol.Text = datosUsuario[5];
+            edit_txtbox_user_nombre.Text = datosUsuario[6];
+            edit_txtbox_user_apellidop.Text = datosUsuario[7];
+            edit_txtbox_user_apellidom.Text = datosUsuario[8];
+            edit_txtbox_user_celular.Text = datosUsuario[9];
+            edit_cbox_user_gtrabajo.Text = datosUsuario[10];
         }
 
         private void CambiarColorBoton(Button botonObjetivo, string nuevo_color)
@@ -442,7 +482,7 @@ namespace Control_de_Tareas
         }
 
         //Carga los Combobox de la pantalla Crear Usuario
-        private void CargarCombobox()
+        private void CargarComboboxCrear()
         {
             //Llenar Combobox de Add User
 
@@ -469,6 +509,33 @@ namespace Control_de_Tareas
 
         }
 
+        private void CargarComboboxEditar()
+        {
+            //Llenar Combobox de Add User
+
+            CConexion cConexion = new CConexion();
+            cConexion.EstablecerConn();
+
+            string[] roles = cConexion.CargarCombobox("rol");
+            foreach (string role in roles)
+            {
+                edit_cbox_user_rol.Items.Add(role);
+            }
+
+            string[] negocios = cConexion.CargarCombobox("negocio");
+            foreach (string negocio in negocios)
+            {
+                edit_cbox_user_negocio.Items.Add(negocio);
+            }
+
+            string[] grupotrabajo = cConexion.CargarCombobox("grupotrabajo");
+            foreach (string grupostrabajo in grupotrabajo)
+            {
+                edit_cbox_user_gtrabajo.Items.Add(grupostrabajo);
+            }
+
+        }
+
         //Actualiza los combobox dependiendo del negocio seleccionado
         private void cbox_user_negocio_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -483,6 +550,19 @@ namespace Control_de_Tareas
                 cbox_user_gtrabajo.Items.Add(grupostrabajo);
             }
         }
+        private void edit_cbox_user_negocio_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            edit_cbox_user_gtrabajo.Items.Clear();
+            CConexion cconexion = new CConexion();
+            cconexion.EstablecerConn();
+            string negocio = edit_cbox_user_negocio.SelectedValue.ToString(); //Da error cuando entro a crear seleciono negocio, salgo y vuelvo de pantalla de Crear Usuario
+
+            string[] grupotrabajo = cconexion.CargarComboboxNegocio(negocio);
+            foreach (string grupostrabajo in grupotrabajo)
+            {
+                edit_cbox_user_gtrabajo.Items.Add(grupostrabajo);
+            }
+        }
         //antes de actualizar los combobox es necesario limpiarlos para evitar duplicados
         private void LimpiarCbox()
         {
@@ -490,8 +570,6 @@ namespace Control_de_Tareas
             cbox_user_negocio.Items.Clear ();
             cbox_user_rol.Items.Clear ();
         }
-
-
 
     }
 }

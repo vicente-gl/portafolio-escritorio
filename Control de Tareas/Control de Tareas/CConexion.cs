@@ -157,7 +157,7 @@ namespace Control_de_Tareas
             }
         }
 
-        public string getNameByNegocioID(string id, string tabla)
+        public string GetNameByID(string id, string tabla)
         {
             //EstablecerConn();
 
@@ -171,6 +171,23 @@ namespace Control_de_Tareas
                 result = reader.GetString("nombre");
             }
 
+            return result;
+        }
+
+        public string GetIDByName(string tabla, string name)
+        {
+            //EstablecerConn();
+
+            string query = "select id FROM " + tabla + " where nombre = '" + name + "';";
+            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            var reader = cmd.ExecuteReader();
+            string result = "";
+
+            while (reader.Read())
+            {
+                result = reader.GetString("id");
+            }
+            reader.Close();
             return result;
         }
 
@@ -232,6 +249,22 @@ namespace Control_de_Tareas
             return datosCombo.ToArray();
         }
 
+        public void UpdateUsuario (string[] datosUsuario)
+        {
+            string query = "UPDATE usuario SET correo = '"+datosUsuario[1]+"', password = '"+datosUsuario[2]+"', rut = '"+datosUsuario[3]+"', nombre = '"+datosUsuario[4]+"', apellidop = '"+datosUsuario[5]+"', apellidom = '"+datosUsuario[6]+"', celular = '"+datosUsuario[7]+"', rol_id = "+datosUsuario[9]+", negocio_id = "+datosUsuario[10]+", grupotrabajo_id = "+datosUsuario[11]+" WHERE id = "+datosUsuario[0]+";";
+            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            var reader = cmd.ExecuteNonQuery();
+        }
+
+        public int CantidadRows()
+        {
+            string totalID;
+            string query = "select COUNT(id) FROM usuario;";
+            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            totalID = cmd.ExecuteScalar().ToString();
+
+            return Int32.Parse(totalID);
+        }
 
     }
 }
