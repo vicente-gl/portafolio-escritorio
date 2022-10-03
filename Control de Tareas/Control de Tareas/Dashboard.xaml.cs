@@ -308,10 +308,18 @@ namespace Control_de_Tareas
         }
         //Botones Pantalla Listar Usuarios
 
+
         private void btn_listarUsuarios_Click(object sender, RoutedEventArgs e)
         {
             CConexion cConexion = new CConexion();
             cConexion.LlamarTabla("usuario", tablaUsuarios);
+            /* ACTUALIZAR NOMBRE DE IDS
+            foreach (System.Data.DataRowView dr in tablaUsuarios.ItemsSource)
+            {
+                MessageBox.Show(dr[9].ToString());
+
+            }
+            */
         }        
 
         private void btn_editarUsuario_Click(object sender, RoutedEventArgs e)
@@ -322,6 +330,7 @@ namespace Control_de_Tareas
             }
             else
             {
+                LimpiarCbox();
                 //IList rows = tablaUsuarios.SelectedItems;
                 DataRowView row = (DataRowView)tablaUsuarios.SelectedItems[0];
                 string idSelected = row["id"].ToString();
@@ -346,6 +355,30 @@ namespace Control_de_Tareas
 
             }
         }
+        private void btn_eliminar_usuario_Click(object sender, RoutedEventArgs e)
+        {            
+            if (tablaUsuarios.SelectedValue == null)
+            {
+                MessageBox.Show("No se ha seleccionado ningún Usuario");
+            }
+            else
+            {
+                if (MessageBox.Show("¿Desea Eliminar el Usuario Seleccionado?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                {
+                    //do no stuff
+                }
+                else
+                {
+                    CConexion cConexion = new CConexion();
+                    cConexion.EstablecerConn();
+                    DataRowView row = (DataRowView)tablaUsuarios.SelectedItems[0];
+                    string idSelected = row["id"].ToString();
+                    cConexion.DeleteUsuario(idSelected);
+                    MessageBox.Show("Usuario Eliminado Exitosamente");
+                    //Falta Actualizar Tabla
+                }
+            }            
+        }
 
         private void edit_btn_editar_usuario_Click(object sender, RoutedEventArgs e)
         {
@@ -361,7 +394,6 @@ namespace Control_de_Tareas
                 string editRol = cConexion.GetIDByName("rol", edit_cbox_user_rol.SelectedItem.ToString());
                 string editNegocio = cConexion.GetIDByName("negocio", edit_cbox_user_negocio.SelectedItem.ToString());
                 string editGrupoTrabajo = cConexion.GetIDByName("grupotrabajo", edit_cbox_user_gtrabajo.SelectedItem.ToString());
-                Console.WriteLine(editRol);
 
                 string[] datosUsuario = new string[13];
                 datosUsuario[0]  = usuarioEditTarget; // NADA pq es ID
@@ -464,7 +496,8 @@ namespace Control_de_Tareas
                 Pantalla_Listar_Negocio,
                 Pantalla_Administrar_Roles,
                 Pantalla_Agregar_Usuario,
-                Pantalla_Listar_Usuarios
+                Pantalla_Listar_Usuarios,
+                Pantalla_Editar_Usuario
             };
             //opcion5
 
@@ -489,22 +522,25 @@ namespace Control_de_Tareas
             CConexion cConexion = new CConexion();
             cConexion.EstablecerConn();
 
-            string[] roles = cConexion.CargarCombobox("rol");
-            foreach (string role in roles)
+            if(cbox_user_negocio.Items.Count == 0)
             {
-                cbox_user_rol.Items.Add(role);
-            }
+                string[] roles = cConexion.CargarCombobox("rol");
+                foreach (string role in roles)
+                {
+                    cbox_user_rol.Items.Add(role);
+                }
 
-            string[] negocios = cConexion.CargarCombobox("negocio");
-            foreach(string negocio in negocios)
-            {
-                cbox_user_negocio.Items.Add(negocio);
-            }
+                string[] negocios = cConexion.CargarCombobox("negocio");
+                foreach(string negocio in negocios)
+                {
+                    cbox_user_negocio.Items.Add(negocio);
+                }
 
-            string[] grupotrabajo = cConexion.CargarCombobox("grupotrabajo");
-            foreach(string grupostrabajo in grupotrabajo)
-            {
-                cbox_user_gtrabajo.Items.Add(grupostrabajo);
+                string[] grupotrabajo = cConexion.CargarCombobox("grupotrabajo");
+                foreach(string grupostrabajo in grupotrabajo)
+                {
+                    cbox_user_gtrabajo.Items.Add(grupostrabajo);
+                }
             }
 
         }
@@ -539,37 +575,48 @@ namespace Control_de_Tareas
         //Actualiza los combobox dependiendo del negocio seleccionado
         private void cbox_user_negocio_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            cbox_user_gtrabajo.Items.Clear();
-            CConexion cconexion = new CConexion();
-            cconexion.EstablecerConn();
-            string negocio = cbox_user_negocio.SelectedValue.ToString(); //Da error cuando entro a crear seleciono negocio, salgo y vuelvo de pantalla de Crear Usuario
-
-            string[] grupotrabajo = cconexion.CargarComboboxNegocio(negocio);
-            foreach(string grupostrabajo in grupotrabajo)
+            if (cbox_user_negocio.Items.Count > 0)
             {
-                cbox_user_gtrabajo.Items.Add(grupostrabajo);
+                cbox_user_gtrabajo.Items.Clear();
+                CConexion cconexion = new CConexion();
+                cconexion.EstablecerConn();
+                string negocio = cbox_user_negocio.SelectedValue.ToString(); //Da error cuando entro a crear seleciono negocio, salgo y vuelvo de pantalla de Crear Usuario
+
+                string[] grupotrabajo = cconexion.CargarComboboxNegocio(negocio);
+                foreach (string grupostrabajo in grupotrabajo)
+                {
+                    cbox_user_gtrabajo.Items.Add(grupostrabajo);
+                }
             }
         }
         private void edit_cbox_user_negocio_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            edit_cbox_user_gtrabajo.Items.Clear();
-            CConexion cconexion = new CConexion();
-            cconexion.EstablecerConn();
-            string negocio = edit_cbox_user_negocio.SelectedValue.ToString(); //Da error cuando entro a crear seleciono negocio, salgo y vuelvo de pantalla de Crear Usuario
-
-            string[] grupotrabajo = cconexion.CargarComboboxNegocio(negocio);
-            foreach (string grupostrabajo in grupotrabajo)
+            if(edit_cbox_user_negocio.Items.Count > 0)
             {
-                edit_cbox_user_gtrabajo.Items.Add(grupostrabajo);
+                edit_cbox_user_gtrabajo.Items.Clear();
+                CConexion cconexion = new CConexion();
+                cconexion.EstablecerConn();
+                string negocio = edit_cbox_user_negocio.SelectedValue.ToString(); //Da error cuando entro a crear seleciono negocio, salgo y vuelvo de pantalla de Crear Usuario
+
+                string[] grupotrabajo = cconexion.CargarComboboxNegocio(negocio);
+                foreach (string grupostrabajo in grupotrabajo)
+                {
+                    edit_cbox_user_gtrabajo.Items.Add(grupostrabajo);
+                }
             }
         }
         //antes de actualizar los combobox es necesario limpiarlos para evitar duplicados
         private void LimpiarCbox()
         {
-            cbox_user_gtrabajo.Items.Clear ();
-            cbox_user_negocio.Items.Clear ();
-            cbox_user_rol.Items.Clear ();
+            cbox_user_gtrabajo.Items.Clear();
+            cbox_user_negocio.Items.Clear();
+            cbox_user_rol.Items.Clear();
+
+            edit_cbox_user_negocio.Items.Clear();
+            edit_cbox_user_gtrabajo.Items.Clear();
+            edit_cbox_user_rol.Items.Clear();
         }
+
 
     }
 }

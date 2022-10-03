@@ -138,10 +138,29 @@ namespace Control_de_Tareas
             }
         }
 
-        public void LlamarTabla(string tabla, System.Windows.Controls.DataGrid datagridItem)
+        public void LlamarTablaFull(string tabla, System.Windows.Controls.DataGrid datagridItem)
         {
             EstablecerConn();
             string query = "SELECT * FROM " + tabla + ";";
+            MySqlCommand cmd = new MySqlCommand(query, conex);
+
+            try
+            {
+                MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                adp.Fill(ds, "LoadDataBinding");
+                datagridItem.DataContext = ds;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        public void LlamarTabla(string tabla, System.Windows.Controls.DataGrid datagridItem)
+        {
+            EstablecerConn();
+            string query = "SELECT * FROM " + tabla + " where Deleted = 0;";
             MySqlCommand cmd = new MySqlCommand(query, conex);
 
             try
@@ -252,6 +271,13 @@ namespace Control_de_Tareas
         public void UpdateUsuario (string[] datosUsuario)
         {
             string query = "UPDATE usuario SET correo = '"+datosUsuario[1]+"', password = '"+datosUsuario[2]+"', rut = '"+datosUsuario[3]+"', nombre = '"+datosUsuario[4]+"', apellidop = '"+datosUsuario[5]+"', apellidom = '"+datosUsuario[6]+"', celular = '"+datosUsuario[7]+"', rol_id = "+datosUsuario[9]+", negocio_id = "+datosUsuario[10]+", grupotrabajo_id = "+datosUsuario[11]+" WHERE id = "+datosUsuario[0]+";";
+            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            var reader = cmd.ExecuteNonQuery();
+        }
+
+        public void DeleteUsuario(string idUsuario)
+        {
+            string query = "UPDATE usuario SET deleted = '1' WHERE id = " + idUsuario + ";";
             var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
             var reader = cmd.ExecuteNonQuery();
         }
