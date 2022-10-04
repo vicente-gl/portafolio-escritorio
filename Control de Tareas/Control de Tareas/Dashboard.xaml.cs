@@ -176,17 +176,44 @@ namespace Control_de_Tareas
         }
         
         //Botones Pantalla Crear Negocio
+            //Boton Limpiar campos de negocio
         private void btn_crearNegocio_limpiar_Click(object sender, RoutedEventArgs e)
         {
-            txtbox_negocio_nombre.Text = "";
-            txtbox_negocio_rut_negocio.Text = "";
-            txtbox_negocio_direccion.Text = "";
-            txtbox_negocio_nombre_jefe.Text = "";
-            txtbox_negocio_mail_jefe.Text = "";
-            txtbox_negocio_num_contacto.Text = "";
-            txtbox_negocio_web_rrss.Text = "";
-            txtbox_negocio_girocomercial.Text = "";
-            date_pick.SelectedDate = DateTime.Now;
+            LimpiarCamposNegocio();
+        }
+            //Boton Agregar Negocio
+        private void btn_agregarNegocio_Click(object sender, RoutedEventArgs e)
+        {
+            if(txtbox_negocio_nombre.Text == "" || txtbox_negocio_encargado.Text == "" || txtbox_negocio_correo_encargado.Text == "" || txtbox_negocio_rut.Text == "")
+            {
+                MessageBox.Show("Debes ingresar todos los campos.");
+            }
+            else
+            {
+                string myDate = date_pick.SelectedDate.Value.ToShortDateString();
+                string myDate2 = date_pick.SelectedDate.Value.ToString("yyyy-MM-dd");
+                try
+                {
+                    CConexion cConexion = new CConexion();
+                    cConexion.EstablecerConn();
+
+                    int cantidadNegocios = cConexion.CantidadRows("negocio");
+                    string[] datosNegocio = new string[6];
+
+                    datosNegocio[0] = cantidadNegocios.ToString();
+                    datosNegocio[1] = txtbox_negocio_nombre.Text;
+                    datosNegocio[2] = txtbox_negocio_encargado.Text;
+                    datosNegocio[3] = txtbox_negocio_correo_encargado.Text;
+                    datosNegocio[4] = myDate2;
+                    datosNegocio[5] = txtbox_negocio_rut.Text;
+
+                    cConexion.InsertNegocio(datosNegocio);
+                    MessageBox.Show("Negocio Agregado Exitosamente");
+                }catch(Exception ex)
+                {
+                    MessageBox.Show("No se pudo agregar negocio. Error: " +ex.Message);
+                }
+            }            
         }
 
         //Botones Pantalla Listar Negocios
@@ -194,125 +221,97 @@ namespace Control_de_Tareas
         {
             CConexion cConexion = new CConexion();
             cConexion.LlamarTabla("negocio", tablaNegocios);
+            tablaNegocios.Columns[0].Visibility = Visibility.Collapsed;
+            tablaNegocios.Columns[6].Visibility = Visibility.Collapsed;
         }
-        
+        //Eliminar Negocio
+        private void btn_listarNegocios_Eliminar_Click(object sender, RoutedEventArgs e)
+        {
+            if (tablaNegocios.SelectedValue == null)
+            {
+                MessageBox.Show("No se ha seleccionado ningún Usuario");
+            }
+            else
+            {
+                if (MessageBox.Show("¿Desea Eliminar el Negocio Seleccionado?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                {
+                    //do no stuff
+                }
+                else
+                {
+                    CConexion cConexion = new CConexion();
+                    cConexion.EstablecerConn();
+                    DataRowView row = (DataRowView)tablaNegocios.SelectedItems[0];
+                    string idSelected = row["id"].ToString();
+                    cConexion.DeleteRow(idSelected, "negocio");
+                    MessageBox.Show("Negocio Eliminado Exitosamente");
+                    cConexion.CerrarConn();
+                    CConexion ccConexion = new CConexion();
+                    ccConexion.LlamarTabla("negocio", tablaNegocios);
+                    ccConexion.CerrarConn();
+                }
+            }
+        }
+
         //Botonos Pantalla Crear Usuario
             //Boton Crear Usuario
         private void btn_agregar_usuario_Click(object sender, RoutedEventArgs e)
         {
-            MySqlConnection conex = new MySqlConnection();
-            CConexion cConexion = new CConexion();
-            MainWindow mainWindow = new MainWindow();
-
-            conex.ConnectionString = cConexion.cadenaConexion;
-            conex.Open();
-            //Crear contador de rows para ID
-            string totalID;
-            string query = "select COUNT(id) FROM usuario;";
-            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
-
-            totalID = cmd.ExecuteScalar().ToString();
-            //Crear variables para query
-            string u_correo = txtbox_user_correo.Text;
-            string u_password = txtbox_user_password.Text;
-            string u_rut = txtbox_user_rut.Text;
-            string u_nombre = txtbox_user_nombre.Text;
-            string u_apellidop = txtbox_user_apellidop.Text;
-            string u_apellidom = txtbox_user_apellidom.Text;
-            string u_celular = txtbox_user_celular.Text;
-            string u_negocio = cbox_user_negocio.SelectedItem as string;
-            string u_rol = cbox_user_rol.SelectedItem as string;
-            string u_grupotrabajo = cbox_user_gtrabajo.SelectedItem as string;
-
-            // Obtener ID de: Rol, Negocio, Grupo de Trabajo
-            //Obtener Negocio
-            
-            query = "select ID FROM negocio where nombre = '" + u_negocio + "';";
-            cmd = new MySqlCommand(query, conex);
-            MySqlDataReader mydr;
-
-            try
+            if(txtbox_user_correo.Text == "" || txtbox_user_password.Text.ToString() == "" || txtbox_user_rut.Text == "" || txtbox_user_nombre.Text == "" || txtbox_user_apellidop.Text == "" || txtbox_user_apellidom.Text == "" || txtbox_user_celular.Text == "" || cbox_user_rol.SelectedIndex == -1 || cbox_user_negocio.SelectedIndex == -1 || cbox_user_gtrabajo.SelectedIndex == -1)
             {
-                //conex.Open();
-                mydr = cmd.ExecuteReader();
-                while (mydr.Read())
+                MessageBox.Show("Debes ingresar todos los campos");
+            }
+            else
+            {
+                try
                 {
-                    string subj = mydr.GetString("id");
-                    u_negocio = subj;
+                    CConexion cConexion = new CConexion();
+                    cConexion.EstablecerConn();
+
+                    string[] datosUsuario = new string[13];
+                    datosUsuario[0] = cConexion.CantidadRows("usuario").ToString();
+                    datosUsuario[1] = txtbox_user_correo.Text;
+                    datosUsuario[2] = txtbox_user_password.Text.ToString();
+                    datosUsuario[3] = txtbox_user_rut.Text;
+                    datosUsuario[4] = txtbox_user_nombre.Text;
+                    datosUsuario[5] = txtbox_user_apellidop.Text;
+                    datosUsuario[6] = txtbox_user_apellidom.Text;
+                    datosUsuario[7] = txtbox_user_celular.Text;
+                    datosUsuario[8] = "0";
+                    datosUsuario[9] = cConexion.GetIDByName("rol", cbox_user_rol.SelectedItem.ToString());
+                    datosUsuario[10] = cConexion.GetIDByName("negocio", cbox_user_negocio.SelectedItem.ToString());
+                    datosUsuario[11] = cConexion.GetIDByName("grupotrabajo", cbox_user_gtrabajo.SelectedItem.ToString());
+                    datosUsuario[12] = null;
+
+                    Console.WriteLine(datosUsuario[9] + datosUsuario[10] + datosUsuario[11]);
+
+                    cConexion.InsertUsuario(datosUsuario);
+
+                    LimpiarCbox();
+                    LimpiarCampos();
+                    MessageBox.Show("Usuario Agregado Exitosamente");
                 }
-                mydr.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-           
-            
-            //Obtener Rol
-            query = "select ID FROM rol where nombre = '"+ u_rol+"';";
-            try
-            {
-                mydr = cmd.ExecuteReader();
-                while (mydr.Read())
+                catch (Exception ex)
                 {
-                    string subj = mydr.GetString("id");
-                    u_rol = subj;
+                    MessageBox.Show("No se pudo Agregar al usuario. Error: "+ex.Message);
                 }
-                mydr.Close();
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            
-            
-            //Obtener GrupoTrabajo
-            query = "select ID FROM grupotrabajo where nombre = '" + u_grupotrabajo + "';";
-            try
-            {
-                //conex.Open();
-                mydr = cmd.ExecuteReader();
-                while (mydr.Read())
-                {
-                    string subj = mydr.GetString("id");
-                    u_grupotrabajo = subj;
-                }
-                mydr.Close();
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-            //Agregar columnas y campos al query
-            query = "INSERT INTO usuario VALUES("+totalID+", '"+u_correo+"', '"+u_password+"', '"+u_rut+"', '"+u_nombre+"', '"+u_apellidop+"', '"+u_apellidom+"', '"+u_celular+"', 0, "+u_rol+", "+u_negocio+", "+u_grupotrabajo+", NULL);";
-            cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
-            cmd.ExecuteNonQuery();
-
-            conex.Close();
         }
             //Boton Limpiar Campos de Crear Usuario
         private void btn_agregarUser_limpiar_Click(object sender, RoutedEventArgs e)
         {
-            txtbox_user_password.Text = "";
-            txtbox_user_nombre.Text = "";
-            txtbox_user_rut.Text = "";
-            txtbox_user_apellidop.Text = "";
-            txtbox_user_apellidom.Text = "";
-            txtbox_user_correo.Text = "";
-            txtbox_user_celular.Text = "";
-            cbox_user_negocio.SelectedItem = null;
-            cbox_user_rol.SelectedItem = null;
-            cbox_user_gtrabajo.SelectedItem = null;
+            LimpiarCampos();
         }
-        //Botones Pantalla Listar Usuarios
+            //Botones Pantalla Listar Usuarios
 
 
         private void btn_listarUsuarios_Click(object sender, RoutedEventArgs e)
         {
             CConexion cConexion = new CConexion();
             cConexion.LlamarTabla("usuario", tablaUsuarios);
+            tablaUsuarios.Columns[0].Visibility = Visibility.Collapsed;
+            tablaUsuarios.Columns[8].Visibility = Visibility.Collapsed;
+            //tablaUsuarios.Columns[6].Header = "test123"; Cambia nombre de columna
             /* ACTUALIZAR NOMBRE DE IDS
             foreach (System.Data.DataRowView dr in tablaUsuarios.ItemsSource)
             {
@@ -351,8 +350,6 @@ namespace Control_de_Tareas
                 Pantalla_Editar_Usuario.Visibility = Visibility.Visible;
                 LlenarCamposEditarUser(datosUsuario);
                 CargarComboboxEditar();
-
-
             }
         }
         private void btn_eliminar_usuario_Click(object sender, RoutedEventArgs e)
@@ -373,9 +370,13 @@ namespace Control_de_Tareas
                     cConexion.EstablecerConn();
                     DataRowView row = (DataRowView)tablaUsuarios.SelectedItems[0];
                     string idSelected = row["id"].ToString();
-                    cConexion.DeleteUsuario(idSelected);
+                    cConexion.DeleteRow(idSelected, "usuario");
                     MessageBox.Show("Usuario Eliminado Exitosamente");
                     //Falta Actualizar Tabla
+                    cConexion.CerrarConn();
+                    CConexion ccConexion = new CConexion();
+                    ccConexion.LlamarTabla("usuario", tablaUsuarios);
+                    ccConexion.CerrarConn();
                 }
             }            
         }
@@ -522,7 +523,7 @@ namespace Control_de_Tareas
             CConexion cConexion = new CConexion();
             cConexion.EstablecerConn();
 
-            if(cbox_user_negocio.Items.Count == 0)
+            if (cbox_user_negocio.Items.Count == 0)
             {
                 string[] roles = cConexion.CargarCombobox("rol");
                 foreach (string role in roles)
@@ -540,6 +541,11 @@ namespace Control_de_Tareas
                 foreach(string grupostrabajo in grupotrabajo)
                 {
                     cbox_user_gtrabajo.Items.Add(grupostrabajo);
+                }
+                //Agregar Ninguno cuando no existe Gtrabajo
+                if (cbox_user_gtrabajo.Items.Count == 0)
+                {
+                    cbox_user_gtrabajo.Items.Add("Ninguno");
                 }
             }
 
@@ -588,6 +594,12 @@ namespace Control_de_Tareas
                     cbox_user_gtrabajo.Items.Add(grupostrabajo);
                 }
             }
+            //Agregar Ninguno cuando no existe Gtrabajo
+            if (cbox_user_gtrabajo.Items.Count == 0)
+            {
+                cbox_user_gtrabajo.Items.Add("Ninguno");
+                Console.WriteLine("QQWEA");
+            }
         }
         private void edit_cbox_user_negocio_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -604,6 +616,11 @@ namespace Control_de_Tareas
                     edit_cbox_user_gtrabajo.Items.Add(grupostrabajo);
                 }
             }
+            //Agregar Ninguno cuando no existe Gtrabajo
+            if (cbox_user_gtrabajo.Items.Count == 0)
+            {
+                edit_cbox_user_gtrabajo.Items.Add("Ninguno");
+            }
         }
         //antes de actualizar los combobox es necesario limpiarlos para evitar duplicados
         private void LimpiarCbox()
@@ -617,6 +634,27 @@ namespace Control_de_Tareas
             edit_cbox_user_rol.Items.Clear();
         }
 
+        private void LimpiarCampos()
+        {
+            txtbox_user_password.Text = "";
+            txtbox_user_nombre.Text = "";
+            txtbox_user_rut.Text = "";
+            txtbox_user_apellidop.Text = "";
+            txtbox_user_apellidom.Text = "";
+            txtbox_user_correo.Text = "";
+            txtbox_user_celular.Text = "";
+            cbox_user_negocio.SelectedItem = null;
+            cbox_user_rol.SelectedItem = null;
+            cbox_user_gtrabajo.SelectedItem = null;
+        }
 
+        private void LimpiarCamposNegocio()
+        {
+            txtbox_negocio_nombre.Text = "";
+            txtbox_negocio_encargado.Text = "";
+            txtbox_negocio_correo_encargado.Text = "";
+            txtbox_negocio_rut.Text = "";
+            date_pick.SelectedDate = DateTime.Now.Date;
+        }
     }
 }

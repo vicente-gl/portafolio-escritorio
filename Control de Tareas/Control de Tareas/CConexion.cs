@@ -138,6 +138,7 @@ namespace Control_de_Tareas
             }
         }
 
+        //Llama todos los datos, incluyendo los datos que tengan "deleted" como True
         public void LlamarTablaFull(string tabla, System.Windows.Controls.DataGrid datagridItem)
         {
             EstablecerConn();
@@ -275,21 +276,39 @@ namespace Control_de_Tareas
             var reader = cmd.ExecuteNonQuery();
         }
 
-        public void DeleteUsuario(string idUsuario)
+        public void DeleteRow(string id, string tabla)
         {
-            string query = "UPDATE usuario SET deleted = '1' WHERE id = " + idUsuario + ";";
+            string query = "UPDATE "+tabla+" SET deleted = '1' WHERE id = " + id + ";";
             var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
             var reader = cmd.ExecuteNonQuery();
         }
 
-        public int CantidadRows()
+        public int CantidadRows(string tabla)
         {
             string totalID;
-            string query = "select COUNT(id) FROM usuario;";
+            string query = "select COUNT(id) FROM "+tabla+";";
             var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
             totalID = cmd.ExecuteScalar().ToString();
 
             return Int32.Parse(totalID);
+        }
+
+        public void InsertNegocio(string[] datosNegocio)
+        {
+            string query = "INSERT INTO negocio VALUES ("+datosNegocio[0]+", '" + datosNegocio[1]+"', '"+datosNegocio[2]+"', '"+datosNegocio[4]+"', '"+datosNegocio[3]+"', '"+datosNegocio[5]+"', 0);";
+            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            var reader = cmd.ExecuteNonQuery();
+        }
+
+        public void InsertUsuario(string[] datosUsuario)
+        {
+
+            query = "INSERT INTO usuario VALUES(" + datosUsuario[0] + ", '" + datosUsuario[1] + "', '" + datosUsuario[2] + "', '" + datosUsuario[3] + "', '" + datosUsuario[4] + "', '" + datosUsuario[5] + "', '" + datosUsuario[6] + "', " + datosUsuario[7] + ", " + datosUsuario[8] + ", " + datosUsuario[9] + ", " + datosUsuario[10] + ", " + datosUsuario[11] + ", null);";
+            //query = "INSERT INTO usuario VALUES(6, 'asdasd', 'asdasd', 'asdasd', 'asdasd', 'asd', 'asdasd', 123123, 0, 0, 0, 0, null);";
+
+            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            var reader = cmd.ExecuteNonQuery();
+            cmd.Dispose();
         }
 
     }
