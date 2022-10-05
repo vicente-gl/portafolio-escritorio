@@ -315,7 +315,7 @@ namespace Control_de_Tareas
 
         public void UpdateNegocio(string[] datosNegocio)
         {
-            string query = "UPDATE negocio SET nombre = '" + datosNegocio[0] + "', encargado = '" + datosNegocio[1] + "', fecha_inicio = '" + datosNegocio[2] + "', correo_encargado = '" + datosNegocio[3] + "', rut = '" + datosNegocio[4] + "' WHERE id = " + datosNegocio[5] + ";";
+            string query = "UPDATE negocio SET nombre = '" + datosNegocio[0] + "', encargado = '" + datosNegocio[1] + "', correo_encargado = '" + datosNegocio[3] + "', fecha_ingreso = '" + datosNegocio[2] + "', rut = '" + datosNegocio[4] + "', direccion = '"+datosNegocio[5]+"' WHERE id = " + datosNegocio[6] + ";";
             var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
             var reader = cmd.ExecuteNonQuery();
         }
@@ -347,12 +347,11 @@ namespace Control_de_Tareas
         public void InsertUsuario(string[] datosUsuario)
         {
 
-            query = "INSERT INTO usuario VALUES(" + datosUsuario[0] + ", '" + datosUsuario[1] + "', '" + datosUsuario[2] + "', '" + datosUsuario[3] + "', '" + datosUsuario[4] + "', '" + datosUsuario[5] + "', '" + datosUsuario[6] + "', " + datosUsuario[7] + ", " + datosUsuario[8] + ", " + datosUsuario[9] + ", " + datosUsuario[10] + ", " + datosUsuario[11] + ");";
-            //query = "INSERT INTO usuario VALUES(6, 'asdasd', 'asdasd', 'asdasd', 'asdasd', 'asd', 'asdasd', 123123, 0, 0, 0, 0, null);";
+            string query = "INSERT INTO usuario VALUES(" + datosUsuario[0] + ", '" + datosUsuario[1] + "', '" + datosUsuario[2] + "', '" + datosUsuario[3] + "', '" + datosUsuario[4] + "', '" + datosUsuario[5] + "', '" + datosUsuario[6] + "', " + datosUsuario[7] + ", " + datosUsuario[8] + ", " + datosUsuario[9] + ", " + datosUsuario[10] + ", " + datosUsuario[11] + ");";
 
             var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
             var reader = cmd.ExecuteNonQuery();
-            cmd.Dispose();
+            //cmd.Dispose();
         }
 
     }

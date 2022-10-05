@@ -288,10 +288,11 @@ namespace Control_de_Tareas
                 negocioEditTarget = idSelected;
                 datosNegocio[0] = row["nombre"].ToString();
                 datosNegocio[1] = row["encargado"].ToString();
-                datosNegocio[2] = row["fecha_inicio"].ToString();
+                datosNegocio[2] = row["fecha_ingreso"].ToString();
                 datosNegocio[3] = row["correo_encargado"].ToString();
                 datosNegocio[4] = row["rut"].ToString();
-                
+                datosNegocio[5] = row["direccion"].ToString();
+
 
                 Pantalla_Editar_Negocio.Visibility = Visibility.Visible;
                 LlenarCamposEditarNegocio(datosNegocio);
@@ -312,16 +313,18 @@ namespace Control_de_Tareas
                 CConexion cConexion = new CConexion();
                 cConexion.EstablecerConn();
 
-                string[] datosNegocio = new string[6];
+                string[] datosNegocio = new string[7];
                 datosNegocio[0] = edit_txtbox_negocio_nombre.Text; // Nombre Negocio
                 datosNegocio[1] = edit_txtbox_negocio_encargado.Text; //nombre encargado
                 datosNegocio[2] = myDate2; //fecha
                 datosNegocio[3] = edit_txtbox_negocio_correo_encargado.Text; //correo encargado
                 datosNegocio[4] = edit_txtbox_negocio_rut.Text; //rut
-                datosNegocio[5] = negocioEditTarget;
+                datosNegocio[5] = edit_txtbox_negocio_direccion.Text; //direccion
+                datosNegocio[6] = negocioEditTarget; //ID
 
                 cConexion.UpdateNegocio(datosNegocio);
                 MessageBox.Show("Negocio Modificado Exitosamente");
+                Pantalla_Editar_Negocio.Visibility = Visibility.Hidden;
             }
         }
         //Botonos Pantalla Crear Usuario
@@ -511,6 +514,7 @@ namespace Control_de_Tareas
             edit_date_pick.SelectedDate = DateTime.Parse(datosNegocio[2]);
             edit_txtbox_negocio_correo_encargado.Text= datosNegocio[3];
             edit_txtbox_negocio_rut.Text = datosNegocio[4];
+            edit_txtbox_negocio_direccion.Text = datosNegocio[5];
         }
 
         private void CambiarColorBoton(Button botonObjetivo, string nuevo_color)
