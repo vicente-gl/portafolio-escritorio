@@ -35,12 +35,13 @@ namespace Control_de_Tareas
             CConexion cConexion = new CConexion();
             username = txtBoxUser.Text;
             password = txtBoxPassword.Password;
-            //LoginSinCredencial();
-
+            LoginSinCredencial();
+            /*
             cConexion.EstablecerConn();
             if(cConexion.CheckCredentials(username, password)){
                 this.Close();
             }
+            */
 
         }        
 

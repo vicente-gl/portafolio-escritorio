@@ -210,15 +210,18 @@ namespace Control_de_Tareas
                     CConexion cConexion = new CConexion();
                     cConexion.EstablecerConn();
 
-                    int cantidadNegocios = cConexion.CantidadRows("negocio");
-                    string[] datosNegocio = new string[6];
+                    //int cantidadNegocios = cConexion.CantidadRows("negocio");
+                    string[] datosNegocio = new string[8];
 
-                    datosNegocio[0] = cantidadNegocios.ToString();
+                    //datosNegocio[0] = cantidadNegocios.ToString();
+                    datosNegocio[0] = "0"; // ID
                     datosNegocio[1] = txtbox_negocio_nombre.Text;
                     datosNegocio[2] = txtbox_negocio_encargado.Text;
                     datosNegocio[3] = txtbox_negocio_correo_encargado.Text;
-                    datosNegocio[4] = myDate2;
+                    datosNegocio[4] = myDate2; //ERROR NO LEE FORMATO FECHA
                     datosNegocio[5] = txtbox_negocio_rut.Text;
+                    datosNegocio[6] = txtbox_negocio_direccion.Text;
+                    datosNegocio[7] = "0"; //Deleted
 
                     cConexion.InsertNegocio(datosNegocio);
                     MessageBox.Show("Negocio Agregado Exitosamente");
@@ -336,8 +339,8 @@ namespace Control_de_Tareas
                     CConexion cConexion = new CConexion();
                     cConexion.EstablecerConn();
 
-                    string[] datosUsuario = new string[13];
-                    datosUsuario[0] = cConexion.CantidadRows("usuario").ToString();
+                    string[] datosUsuario = new string[12];
+                    datosUsuario[0] = "0";
                     datosUsuario[1] = txtbox_user_correo.Text;
                     datosUsuario[2] = txtbox_user_password.Text.ToString();
                     datosUsuario[3] = txtbox_user_rut.Text;
@@ -349,7 +352,6 @@ namespace Control_de_Tareas
                     datosUsuario[9] = cConexion.GetIDByName("rol", cbox_user_rol.SelectedItem.ToString());
                     datosUsuario[10] = cConexion.GetIDByName("negocio", cbox_user_negocio.SelectedItem.ToString());
                     datosUsuario[11] = cConexion.GetIDByName("grupotrabajo", cbox_user_gtrabajo.SelectedItem.ToString());
-                    datosUsuario[12] = null;
 
                     Console.WriteLine(datosUsuario[9] + datosUsuario[10] + datosUsuario[11]);
 

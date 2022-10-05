@@ -15,7 +15,7 @@ namespace Control_de_Tareas
         MySqlConnection conex = new MySqlConnection();
 
         static string servidor = "dbcontroltareas.ct2rrxcaxo9w.us-east-1.rds.amazonaws.com";
-        static string bd = "ProcessSa";
+        static string bd = "ProcessSA2";
         static string usuario = "admin";
         static string password = "duoc1234";
         static string puerto = "3306";
@@ -285,7 +285,7 @@ namespace Control_de_Tareas
             }
             reader.Close();
 
-            query = "select nombre FROM grupotrabajo where id_negocio = " + result + ";";
+            query = "select nombre FROM grupotrabajo where negocio_id = " + result + ";";
             cmd = new MySqlCommand(query, conex);
             MySqlDataReader mydr;
             List<string> datosCombo = new List<string>();
@@ -339,7 +339,7 @@ namespace Control_de_Tareas
 
         public void InsertNegocio(string[] datosNegocio)
         {
-            string query = "INSERT INTO negocio VALUES ("+datosNegocio[0]+", '" + datosNegocio[1]+"', '"+datosNegocio[2]+"', '"+datosNegocio[4]+"', '"+datosNegocio[3]+"', '"+datosNegocio[5]+"', 0);";
+            string query = "INSERT INTO negocio VALUES ("+datosNegocio[0]+", '" + datosNegocio[1]+"', '"+datosNegocio[2]+"', '"+datosNegocio[3]+"', '"+datosNegocio[4]+"', '"+datosNegocio[5]+"', '"+datosNegocio[6]+"', "+datosNegocio[7]+");";
             var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
             var reader = cmd.ExecuteNonQuery();
         }
@@ -347,7 +347,7 @@ namespace Control_de_Tareas
         public void InsertUsuario(string[] datosUsuario)
         {
 
-            query = "INSERT INTO usuario VALUES(" + datosUsuario[0] + ", '" + datosUsuario[1] + "', '" + datosUsuario[2] + "', '" + datosUsuario[3] + "', '" + datosUsuario[4] + "', '" + datosUsuario[5] + "', '" + datosUsuario[6] + "', " + datosUsuario[7] + ", " + datosUsuario[8] + ", " + datosUsuario[9] + ", " + datosUsuario[10] + ", " + datosUsuario[11] + ", null);";
+            query = "INSERT INTO usuario VALUES(" + datosUsuario[0] + ", '" + datosUsuario[1] + "', '" + datosUsuario[2] + "', '" + datosUsuario[3] + "', '" + datosUsuario[4] + "', '" + datosUsuario[5] + "', '" + datosUsuario[6] + "', " + datosUsuario[7] + ", " + datosUsuario[8] + ", " + datosUsuario[9] + ", " + datosUsuario[10] + ", " + datosUsuario[11] + ");";
             //query = "INSERT INTO usuario VALUES(6, 'asdasd', 'asdasd', 'asdasd', 'asdasd', 'asd', 'asdasd', 123123, 0, 0, 0, 0, null);";
 
             var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
