@@ -291,7 +291,7 @@
                 <Label Content="Negocio Seleccionado:" VerticalAlignment="Center" Padding="40, 0, 0, 0" Foreground="Black" FontSize="18" FontFamily="Inter Light"></Label>
                 <Grid HorizontalAlignment="Right" Margin="0,0,40,0" Width="400" Height="40">
                     <Rectangle Fill="#1AD49F"></Rectangle>
-                    <Label Content="Ninguno" FontFamily="Inter" Foreground="WhiteSmoke" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" ></Label>
+                    <Button Click="btn_SeleccionarNegocio_Click" Content="Ninguno" x:Name="btn_SeleccionarNegocio" FontFamily="Inter" Width="400" Height="40" Foreground="WhiteSmoke" Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" ></Button>
                 </Grid>
             </Grid>
         </Grid>

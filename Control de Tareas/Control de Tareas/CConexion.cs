@@ -177,6 +177,25 @@ namespace Control_de_Tareas
             }
         }
 
+        public void LlamarTablaSeleccionarNegocio(string tabla, System.Windows.Controls.DataGrid datagridItem)
+        {
+            EstablecerConn();
+            string query = "SELECT nombre, encargado, correo_encargado, rut FROM " + tabla + " where Deleted = 0;";
+            MySqlCommand cmd = new MySqlCommand(query, conex);
+
+            try
+            {
+                MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                adp.Fill(ds, "LoadDataBinding");
+                datagridItem.DataContext = ds;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
         public string GetNameByID(string id, string tabla)
         {
             //EstablecerConn();

@@ -32,6 +32,8 @@ namespace Control_de_Tareas
         private string usuarioEditTarget;
         private string negocioEditTarget;
 
+        public bool seleccionandoNegocio = false;
+
 
         public Dashboard()
         {
@@ -712,6 +714,17 @@ namespace Control_de_Tareas
             txtbox_negocio_correo_encargado.Text = "";
             txtbox_negocio_rut.Text = "";
             date_pick.SelectedDate = DateTime.Now.Date;
+        }
+
+        private void btn_SeleccionarNegocio_Click(object sender, RoutedEventArgs e)
+        {
+            if (!seleccionandoNegocio)
+            {
+                seleccionandoNegocio = true;
+                NegocioSeleccionado negocioSeleccionado = new NegocioSeleccionado();
+                negocioSeleccionado.Show();
+                negocioSeleccionado.NegocioSeleccionadoOK += value => seleccionandoNegocio = value;
+            }
         }
     }
 }
