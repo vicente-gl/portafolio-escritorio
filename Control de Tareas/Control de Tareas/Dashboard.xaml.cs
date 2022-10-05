@@ -375,10 +375,19 @@ namespace Control_de_Tareas
 
         private void btn_listarUsuarios_Click(object sender, RoutedEventArgs e)
         {
-            CConexion cConexion = new CConexion();
-            cConexion.LlamarTabla("usuario", tablaUsuarios);
+            if (idNegocioSeleccionado == null || idNegocioSeleccionado == "0")
+            {
+                CConexion cConexion = new CConexion();
+                cConexion.LlamarTabla("usuario", tablaUsuarios);
+            }
+            else
+            {
+                CConexion cConexion = new CConexion();
+                cConexion.LlamarTablaNegocioSelected("usuario", tablaUsuarios, idNegocioSeleccionado);
+            }
             tablaUsuarios.Columns[0].Visibility = Visibility.Collapsed;
             tablaUsuarios.Columns[8].Visibility = Visibility.Collapsed;
+
         }        
 
         private void btn_editarUsuario_Click(object sender, RoutedEventArgs e)
@@ -395,16 +404,16 @@ namespace Control_de_Tareas
                 string idSelected = row["id"].ToString();
                 string[] datosUsuario = new string[11];
 
-                usuarioEditTarget = idSelected;
-                datosUsuario[1] = row["nombre"].ToString();
-                datosUsuario[2] = row["encargado"].ToString();
-                datosUsuario[3] = row["fechainicio"].ToString();
-                datosUsuario[4] = row["correoencargado"].ToString();
-                datosUsuario[5] = row["rol_id"].ToString(); // transformar a ID
-                datosUsuario[6] = row["nombre"].ToString();
-                datosUsuario[7] = row["apellidop"].ToString();
-                datosUsuario[8] = row["apellidom"].ToString();
-                datosUsuario[9] = row["celular"].ToString();
+                datosUsuario[0] = idSelected;
+                datosUsuario[1] = row["correo"].ToString();
+                datosUsuario[2] = row["password"].ToString();
+                datosUsuario[3] = row["rut"].ToString();
+                datosUsuario[4] = row["nombre"].ToString();
+                datosUsuario[5] = row["apellidop"].ToString();
+                datosUsuario[6] = row["apellidom"].ToString();
+                datosUsuario[7] = row["celular"].ToString();
+                datosUsuario[8] = row["rol_id"].ToString();
+                datosUsuario[9] = row["negocio_id"].ToString();
                 datosUsuario[10] = row["grupotrabajo_id"].ToString();
 
                 Pantalla_Editar_Usuario.Visibility = Visibility.Visible;
@@ -456,8 +465,8 @@ namespace Control_de_Tareas
                 string editNegocio = cConexion.GetIDByName("negocio", edit_cbox_user_negocio.SelectedItem.ToString());
                 string editGrupoTrabajo = cConexion.GetIDByName("grupotrabajo", edit_cbox_user_gtrabajo.SelectedItem.ToString());
 
-                string[] datosUsuario = new string[13];
-                datosUsuario[0]  = usuarioEditTarget; // NADA pq es ID
+                string[] datosUsuario = new string[12];
+                datosUsuario[0]  = usuarioEditTarget;
                 datosUsuario[1]  = edit_txtbox_user_correo.Text; //correo
                 datosUsuario[2]  = edit_txtbox_user_password.Text; //password
                 datosUsuario[3]  = edit_txtbox_user_rut.Text; //rut
@@ -481,16 +490,16 @@ namespace Control_de_Tareas
 
         private void LlenarCamposEditarUser(string[] datosUsuario)
         {
-            edit_cbox_user_negocio.Text = datosUsuario[1];
-            edit_txtbox_user_rut.Text = datosUsuario[2];
-            edit_txtbox_user_correo.Text = datosUsuario[3];
-            edit_txtbox_user_password.Text = datosUsuario[4];
-            edit_cbox_user_rol.Text = datosUsuario[5];
-            edit_txtbox_user_nombre.Text = datosUsuario[6];
-            edit_txtbox_user_apellidop.Text = datosUsuario[7];
-            edit_txtbox_user_apellidom.Text = datosUsuario[8];
-            edit_txtbox_user_celular.Text = datosUsuario[9];
-            edit_cbox_user_gtrabajo.Text = datosUsuario[10];
+            edit_txtbox_user_correo.Text    = datosUsuario[1];
+            edit_txtbox_user_password.Text  = datosUsuario[2];
+            edit_txtbox_user_rut.Text       = datosUsuario[3];
+            edit_txtbox_user_nombre.Text    = datosUsuario[4];
+            edit_txtbox_user_apellidop.Text = datosUsuario[5];
+            edit_txtbox_user_apellidom.Text = datosUsuario[6];
+            edit_txtbox_user_celular.Text   = datosUsuario[7];
+            edit_cbox_user_rol.Text         = datosUsuario[8];
+            edit_cbox_user_negocio.Text     = datosUsuario[9];
+            edit_cbox_user_gtrabajo.Text    = datosUsuario[10];
         }
 
         private void LlenarCamposEditarNegocio(string[] datosNegocio)
