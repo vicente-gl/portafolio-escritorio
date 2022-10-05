@@ -24,7 +24,6 @@ namespace Control_de_Tareas
 
         public string cadenaConexion = "server=" + servidor + ";" + "port=" + puerto + ";" + "uid=" + usuario + ";" + "pwd=" + password + ";" + "database=" + bd + ";";
 
-        string testString;
         public bool EstablecerConn()
         {
             try
@@ -215,7 +214,7 @@ namespace Control_de_Tareas
 
         public string GetIDByName(string tabla, string name)
         {
-            //EstablecerConn();
+            EstablecerConn();
 
             string query = "select id FROM " + tabla + " where nombre = '" + name + "';";
             var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);

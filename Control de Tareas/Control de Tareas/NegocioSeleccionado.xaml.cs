@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,8 @@ namespace Control_de_Tareas
     public partial class NegocioSeleccionado : Window
     {
         public event Action<bool> NegocioSeleccionadoOK;
+        public event Action<string> NegocioSeleccionadoInt;
+        public event Action<string> NegocioSeleccionadoString;
         public NegocioSeleccionado()
         {
             InitializeComponent();
@@ -28,8 +31,7 @@ namespace Control_de_Tareas
 
         private void Btn_SeleccionarNegocio_Volver_Click(object sender, RoutedEventArgs e)
         {
-            if (NegocioSeleccionadoOK != null)
-                NegocioSeleccionadoOK(false);
+            NegocioSeleccionadoOK?.Invoke(false);
             this.Close();
             
         }
@@ -38,13 +40,29 @@ namespace Control_de_Tareas
         {
             CConexion cConexion = new CConexion();
             cConexion.LlamarTablaSeleccionarNegocio("negocio", DataGrid_SeleccionarNegocio);
-            //DataGrid_SeleccionarNegocio.Columns[0].Visibility = Visibility.Collapsed;
         }
 
 
         private void Btn_SeleccionarNegocio_Seleccionar_Click(object sender, RoutedEventArgs e)
         {
+            if (DataGrid_SeleccionarNegocio.SelectedValue == null)
+            {
+                MessageBox.Show("No se ha seleccionado ningún Usuario");
+            }
+            else
+            {
+                //IList rows = tablaUsuarios.SelectedItems;
+                DataRowView row = (DataRowView)DataGrid_SeleccionarNegocio.SelectedItems[0];
+                string nombreNegocio = row["nombre"].ToString();
+                CConexion cConexion = new CConexion();
+                string idNegocio = cConexion.GetIDByName("negocio", nombreNegocio);
 
+                NegocioSeleccionadoString?.Invoke(nombreNegocio);
+                NegocioSeleccionadoInt?.Invoke(idNegocio);
+                NegocioSeleccionadoOK?.Invoke(false);
+
+                this.Close();
+            }
         }
 
         private void DataGrid_SeleccionarNegocio_PreviewMouseWheel(object sender, MouseWheelEventArgs e) //Envia info de mouse wheel a scrollviewer

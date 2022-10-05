@@ -23,8 +23,6 @@ namespace Control_de_Tareas
 
     public partial class MainWindow : Window
     {
-        private string queryResult;
-
         private string username;
         private string password;
         public MainWindow()

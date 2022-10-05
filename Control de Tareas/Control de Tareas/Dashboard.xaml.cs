@@ -20,20 +20,30 @@ namespace Control_de_Tareas
     {
         public int idUsuarioLogeado;
 
-        private string negocioSelected;
-
         string color_menu1_idle = "#FFCFCFCF";
         string color_menu1_pressed = "#EDEDED";
         string color_menu2_idle = "#EDEDED";
         string color_menu2_pressed = "#FFFFFF";
-
-        string queryResult;
 
         private string usuarioEditTarget;
         private string negocioEditTarget;
 
         public bool seleccionandoNegocio = false;
 
+        public string _negocioSelected;
+        public string idNegocioSeleccionado;
+        public string IDNegocioSeleccionado
+        {
+            get
+            {
+                return idNegocioSeleccionado;
+            }
+            set
+            {
+                idNegocioSeleccionado = value;
+                ActualizarNegocioSelected();
+            }
+        }
 
         public Dashboard()
         {
@@ -716,15 +726,29 @@ namespace Control_de_Tareas
             date_pick.SelectedDate = DateTime.Now.Date;
         }
 
+        public void ActualizarNegocioSelected()
+        {
+            btn_SeleccionarNegocio.Content = _negocioSelected;
+        }
+
         private void btn_SeleccionarNegocio_Click(object sender, RoutedEventArgs e)
         {
+            //MessageBox.Show(_negocioSelected, idNegocioSeleccionado);
+            
             if (!seleccionandoNegocio)
             {
                 seleccionandoNegocio = true;
                 NegocioSeleccionado negocioSeleccionado = new NegocioSeleccionado();
                 negocioSeleccionado.Show();
+
                 negocioSeleccionado.NegocioSeleccionadoOK += value => seleccionandoNegocio = value;
+
+                negocioSeleccionado.NegocioSeleccionadoString += value => _negocioSelected = value;
+                negocioSeleccionado.NegocioSeleccionadoInt += value => IDNegocioSeleccionado = value;
             }
+
         }
+
+
     }
 }

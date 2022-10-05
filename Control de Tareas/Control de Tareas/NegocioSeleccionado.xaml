@@ -10,7 +10,7 @@
         Title="NegocioSeleccionado" Height="450" Width="800" MinWidth="800">
     <Grid Background="Gainsboro">
         <Grid Margin="30,30,30,90">
-            <DataGrid x:Name="DataGrid_SeleccionarNegocio" PreviewMouseWheel="DataGrid_SeleccionarNegocio_PreviewMouseWheel" IsReadOnly="True" FontFamily="Inter" FontSize="15" ItemsSource="{Binding Path=LoadDataBinding}" AutoGenerateColumns="True" HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="700" Height="Auto" ></DataGrid>
+            <DataGrid x:Name="DataGrid_SeleccionarNegocio" IsReadOnly="True" FontFamily="Inter" FontSize="15" ItemsSource="{Binding Path=LoadDataBinding}" AutoGenerateColumns="True" HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="700" Height="Auto" MinHeight="300" ></DataGrid>
             <!--
             <ScrollViewer x:Name="ScrollViewer" HorizontalAlignment="Right">
                 <DataGrid x:Name="DataGrid_SeleccionarNegocio" PreviewMouseWheel="DataGrid_SeleccionarNegocio_PreviewMouseWheel" IsReadOnly="True" FontFamily="Inter" FontSize="15" ItemsSource="{Binding Path=LoadDataBinding}" AutoGenerateColumns="True" HorizontalAlignment="Center" VerticalAlignment="Top" Width="700" Height="Auto" ></DataGrid>
