@@ -276,6 +276,13 @@ namespace Control_de_Tareas
             var reader = cmd.ExecuteNonQuery();
         }
 
+        public void UpdateNegocio(string[] datosNegocio)
+        {
+            string query = "UPDATE negocio SET nombre = '" + datosNegocio[0] + "', encargado = '" + datosNegocio[1] + "', fecha_inicio = '" + datosNegocio[2] + "', correo_encargado = '" + datosNegocio[3] + "', rut = '" + datosNegocio[4] + "' WHERE id = " + datosNegocio[5] + ";";
+            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            var reader = cmd.ExecuteNonQuery();
+        }
+
         public void DeleteRow(string id, string tabla)
         {
             string query = "UPDATE "+tabla+" SET deleted = '1' WHERE id = " + id + ";";

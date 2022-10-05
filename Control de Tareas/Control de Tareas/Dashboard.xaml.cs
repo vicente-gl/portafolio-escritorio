@@ -30,6 +30,7 @@ namespace Control_de_Tareas
         string queryResult;
 
         private string usuarioEditTarget;
+        private string negocioEditTarget;
 
 
         public Dashboard()
@@ -190,7 +191,7 @@ namespace Control_de_Tareas
             }
             else
             {
-                string myDate = date_pick.SelectedDate.Value.ToShortDateString();
+                //string myDate = date_pick.SelectedDate.Value.ToShortDateString();
                 string myDate2 = date_pick.SelectedDate.Value.ToString("yyyy-MM-dd");
                 try
                 {
@@ -252,9 +253,64 @@ namespace Control_de_Tareas
                 }
             }
         }
+        //Pantalla Editar Negocio
+        private void btn_listarNegocios_Editar_Click(object sender, RoutedEventArgs e)
+        {
+            Pantalla_Editar_Negocio.Visibility = Visibility.Visible;
 
+            if (tablaNegocios.SelectedValue == null)
+            {
+                MessageBox.Show("No se ha seleccionado ningún Usuario");
+            }
+            else
+            {
+                LimpiarCbox();
+                //IList rows = tablaUsuarios.SelectedItems;
+                DataRowView row = (DataRowView)tablaNegocios.SelectedItems[0];
+                string idSelected = row["id"].ToString();
+                string[] datosNegocio = new string[6];
+
+                negocioEditTarget = idSelected;
+                datosNegocio[0] = row["nombre"].ToString();
+                datosNegocio[1] = row["encargado"].ToString();
+                datosNegocio[2] = row["fecha_inicio"].ToString();
+                datosNegocio[3] = row["correo_encargado"].ToString();
+                datosNegocio[4] = row["rut"].ToString();
+                
+
+                Pantalla_Editar_Negocio.Visibility = Visibility.Visible;
+                LlenarCamposEditarNegocio(datosNegocio);
+            }
+        }
+
+        private void btn_editar_negocio_Click(object sender, RoutedEventArgs e)
+        {
+            if (edit_txtbox_negocio_nombre.Text == "" || edit_txtbox_negocio_encargado.Text == "" || edit_txtbox_negocio_correo_encargado.Text == "" || edit_txtbox_negocio_rut.Text == "")
+            {
+                MessageBox.Show("Debe Ingresar todos los datos requeridos");
+            }
+            else
+            {
+                string myDate = edit_date_pick.SelectedDate.Value.ToShortDateString();
+                string myDate2 = edit_date_pick.SelectedDate.Value.ToString("yyyy-MM-dd");
+
+                CConexion cConexion = new CConexion();
+                cConexion.EstablecerConn();
+
+                string[] datosNegocio = new string[6];
+                datosNegocio[0] = edit_txtbox_negocio_nombre.Text; // Nombre Negocio
+                datosNegocio[1] = edit_txtbox_negocio_encargado.Text; //nombre encargado
+                datosNegocio[2] = myDate2; //fecha
+                datosNegocio[3] = edit_txtbox_negocio_correo_encargado.Text; //correo encargado
+                datosNegocio[4] = edit_txtbox_negocio_rut.Text; //rut
+                datosNegocio[5] = negocioEditTarget;
+
+                cConexion.UpdateNegocio(datosNegocio);
+                MessageBox.Show("Negocio Modificado Exitosamente");
+            }
+        }
         //Botonos Pantalla Crear Usuario
-            //Boton Crear Usuario
+        //Boton Crear Usuario
         private void btn_agregar_usuario_Click(object sender, RoutedEventArgs e)
         {
             if(txtbox_user_correo.Text == "" || txtbox_user_password.Text.ToString() == "" || txtbox_user_rut.Text == "" || txtbox_user_nombre.Text == "" || txtbox_user_apellidop.Text == "" || txtbox_user_apellidom.Text == "" || txtbox_user_celular.Text == "" || cbox_user_rol.SelectedIndex == -1 || cbox_user_negocio.SelectedIndex == -1 || cbox_user_gtrabajo.SelectedIndex == -1)
@@ -311,14 +367,6 @@ namespace Control_de_Tareas
             cConexion.LlamarTabla("usuario", tablaUsuarios);
             tablaUsuarios.Columns[0].Visibility = Visibility.Collapsed;
             tablaUsuarios.Columns[8].Visibility = Visibility.Collapsed;
-            //tablaUsuarios.Columns[6].Header = "test123"; Cambia nombre de columna
-            /* ACTUALIZAR NOMBRE DE IDS
-            foreach (System.Data.DataRowView dr in tablaUsuarios.ItemsSource)
-            {
-                MessageBox.Show(dr[9].ToString());
-
-            }
-            */
         }        
 
         private void btn_editarUsuario_Click(object sender, RoutedEventArgs e)
@@ -336,10 +384,10 @@ namespace Control_de_Tareas
                 string[] datosUsuario = new string[11];
 
                 usuarioEditTarget = idSelected;
-                datosUsuario[1] = row["negocio_id"].ToString();
-                datosUsuario[2] = row["rut"].ToString();
-                datosUsuario[3] = row["correo"].ToString();
-                datosUsuario[4] = row["password"].ToString();
+                datosUsuario[1] = row["nombre"].ToString();
+                datosUsuario[2] = row["encargado"].ToString();
+                datosUsuario[3] = row["fechainicio"].ToString();
+                datosUsuario[4] = row["correoencargado"].ToString();
                 datosUsuario[5] = row["rol_id"].ToString(); // transformar a ID
                 datosUsuario[6] = row["nombre"].ToString();
                 datosUsuario[7] = row["apellidop"].ToString();
@@ -431,6 +479,15 @@ namespace Control_de_Tareas
             edit_txtbox_user_apellidom.Text = datosUsuario[8];
             edit_txtbox_user_celular.Text = datosUsuario[9];
             edit_cbox_user_gtrabajo.Text = datosUsuario[10];
+        }
+
+        private void LlenarCamposEditarNegocio(string[] datosNegocio)
+        {
+            edit_txtbox_negocio_nombre.Text = datosNegocio[0];
+            edit_txtbox_negocio_encargado.Text = datosNegocio[1];
+            edit_date_pick.SelectedDate = DateTime.Parse(datosNegocio[2]);
+            edit_txtbox_negocio_correo_encargado.Text= datosNegocio[3];
+            edit_txtbox_negocio_rut.Text = datosNegocio[4];
         }
 
         private void CambiarColorBoton(Button botonObjetivo, string nuevo_color)
