@@ -20,8 +20,6 @@ namespace Control_de_Tareas
         static string password = "duoc1234";
         static string puerto = "3306";
 
-        string query = "SELECT * FROM usuario where id = 1;";
-
         public string cadenaConexion = "server=" + servidor + ";" + "port=" + puerto + ";" + "uid=" + usuario + ";" + "pwd=" + password + ";" + "database=" + bd + ";";
 
         public bool EstablecerConn()
@@ -216,8 +214,6 @@ namespace Control_de_Tareas
 
         public string GetNameByID(string id, string tabla)
         {
-            //EstablecerConn();
-
             string query = "select nombre FROM " + tabla + " where id = " + id + ";";
             var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
             var reader = cmd.ExecuteReader();
@@ -233,8 +229,6 @@ namespace Control_de_Tareas
 
         public string GetIDByName(string tabla, string name)
         {
-            EstablecerConn();
-
             string query = "select id FROM " + tabla + " where nombre = '" + name + "';";
             var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
             var reader = cmd.ExecuteReader();
@@ -250,7 +244,7 @@ namespace Control_de_Tareas
 
         public string[] CargarCombobox(string tabla)
         {
-            string query = "SELECT nombre FROM " + tabla + ";";
+            string query = "SELECT nombre FROM " + tabla + " where deleted = 0;";
             MySqlCommand cmd = new MySqlCommand(query, conex);
             MySqlDataReader mydr;
             List<string> datosCombo = new List<string>();
@@ -274,7 +268,7 @@ namespace Control_de_Tareas
         public string[] CargarComboboxNegocio(string negocio)
         {
 
-            string query = "SELECT id FROM negocio WHERE nombre = '" + negocio + "';";
+            string query = "SELECT id FROM negocio WHERE nombre = '" + negocio + "' where deleted = 0;";
             var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
             var reader = cmd.ExecuteReader();
             string result = "";
@@ -348,10 +342,8 @@ namespace Control_de_Tareas
         {
 
             string query = "INSERT INTO usuario VALUES(" + datosUsuario[0] + ", '" + datosUsuario[1] + "', '" + datosUsuario[2] + "', '" + datosUsuario[3] + "', '" + datosUsuario[4] + "', '" + datosUsuario[5] + "', '" + datosUsuario[6] + "', " + datosUsuario[7] + ", " + datosUsuario[8] + ", " + datosUsuario[9] + ", " + datosUsuario[10] + ", " + datosUsuario[11] + ");";
-
             var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
             var reader = cmd.ExecuteNonQuery();
-            //cmd.Dispose();
         }
 
     }

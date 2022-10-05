@@ -203,17 +203,14 @@ namespace Control_de_Tareas
             }
             else
             {
-                //string myDate = date_pick.SelectedDate.Value.ToShortDateString();
                 string myDate2 = date_pick.SelectedDate.Value.ToString("yyyy-MM-dd");
                 try
                 {
                     CConexion cConexion = new CConexion();
                     cConexion.EstablecerConn();
 
-                    //int cantidadNegocios = cConexion.CantidadRows("negocio");
                     string[] datosNegocio = new string[8];
 
-                    //datosNegocio[0] = cantidadNegocios.ToString();
                     datosNegocio[0] = "0"; // ID
                     datosNegocio[1] = txtbox_negocio_nombre.Text;
                     datosNegocio[2] = txtbox_negocio_encargado.Text;
@@ -356,8 +353,6 @@ namespace Control_de_Tareas
                     datosUsuario[10] = cConexion.GetIDByName("negocio", cbox_user_negocio.SelectedItem.ToString());
                     datosUsuario[11] = cConexion.GetIDByName("grupotrabajo", cbox_user_gtrabajo.SelectedItem.ToString());
 
-                    Console.WriteLine(datosUsuario[9] + datosUsuario[10] + datosUsuario[11]);
-
                     cConexion.InsertUsuario(datosUsuario);
 
                     LimpiarCbox();
@@ -408,7 +403,7 @@ namespace Control_de_Tareas
                 DataRowView row = (DataRowView)tablaUsuarios.SelectedItems[0];
                 string idSelected = row["id"].ToString();
                 string[] datosUsuario = new string[11];
-
+                usuarioEditTarget = idSelected;
                 datosUsuario[0] = idSelected;
                 datosUsuario[1] = row["correo"].ToString();
                 datosUsuario[2] = row["password"].ToString();
@@ -479,7 +474,7 @@ namespace Control_de_Tareas
                 datosUsuario[5]  = edit_txtbox_user_apellidop.Text; //apellidop
                 datosUsuario[6]  = edit_txtbox_user_apellidom.Text; //apellidom
                 datosUsuario[7]  = edit_txtbox_user_celular.Text; //celular
-                datosUsuario[8]  = ""; //deleted
+                datosUsuario[8]  = "0"; //deleted
                 datosUsuario[9]  = editRol; //rol_id
                 datosUsuario[10] = editNegocio;//negocio_id
                 datosUsuario[11] = editGrupoTrabajo;//grupotrabajo_id
