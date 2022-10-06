@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MySql.Data.MySqlClient;
 using System.Data;
+using System.Text.RegularExpressions;
 
 namespace Control_de_Tareas
 {
@@ -149,6 +150,23 @@ namespace Control_de_Tareas
             {
                 Pantalla_Administrar_Roles.Visibility = Visibility.Hidden;
                 CambiarColorBoton(btn_admin_rol, color_menu2_idle);
+            }
+        }
+
+        private void btn_gptrabajo_crear_Click(object sender, RoutedEventArgs e)
+        {
+            ApagarBotonesMenu2();
+            OcultarOtrasPantallas(Pantalla_Agregar_GP);
+            if (Pantalla_Administrar_Roles.Visibility.Equals(Visibility.Hidden))
+            {
+               // date_pick.SelectedDate = DateTime.Now;
+                Pantalla_Agregar_GP.Visibility = Visibility.Visible;
+                CambiarColorBoton(btn_gptrabajo_crear, color_menu2_pressed);
+            }
+            else
+            {
+                Pantalla_Administrar_Roles.Visibility = Visibility.Hidden;
+                CambiarColorBoton(btn_gptrabajo_crear, color_menu2_idle);
             }
         }
 
@@ -375,7 +393,7 @@ namespace Control_de_Tareas
 
         private void btn_listarUsuarios_Click(object sender, RoutedEventArgs e)
         {
-            if (idNegocioSeleccionado == null || idNegocioSeleccionado == "0")
+            if (idNegocioSeleccionado == null || idNegocioSeleccionado == "1")
             {
                 CConexion cConexion = new CConexion();
                 cConexion.LlamarTabla("usuario", tablaUsuarios);
@@ -757,6 +775,12 @@ namespace Control_de_Tareas
                 negocioSeleccionado.NegocioSeleccionadoInt += value => IDNegocioSeleccionado = value;
             }
 
+        }
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
 
 

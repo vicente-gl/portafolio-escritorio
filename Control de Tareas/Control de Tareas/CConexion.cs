@@ -229,6 +229,7 @@ namespace Control_de_Tareas
 
         public string GetIDByName(string tabla, string name)
         {
+            //EstablecerConn(); // para evitar error al seleccionar negocio
             string query = "select id FROM " + tabla + " where nombre = '" + name + "';";
             var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
             var reader = cmd.ExecuteReader();
@@ -268,7 +269,7 @@ namespace Control_de_Tareas
         public string[] CargarComboboxNegocio(string negocio)
         {
 
-            string query = "SELECT id FROM negocio WHERE nombre = '" + negocio + "' where deleted = 0;";
+            string query = "SELECT id FROM negocio WHERE nombre = '" + negocio + "' and deleted = 0;";
             var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
             var reader = cmd.ExecuteReader();
             string result = "";

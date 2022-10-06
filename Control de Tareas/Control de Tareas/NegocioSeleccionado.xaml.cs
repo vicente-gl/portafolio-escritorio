@@ -55,6 +55,7 @@ namespace Control_de_Tareas
                 DataRowView row = (DataRowView)DataGrid_SeleccionarNegocio.SelectedItems[0];
                 string nombreNegocio = row["nombre"].ToString();
                 CConexion cConexion = new CConexion();
+                cConexion.EstablecerConn();
                 string idNegocio = cConexion.GetIDByName("negocio", nombreNegocio);
 
                 NegocioSeleccionadoString?.Invoke(nombreNegocio);
