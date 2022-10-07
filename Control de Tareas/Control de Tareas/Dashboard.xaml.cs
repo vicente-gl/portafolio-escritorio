@@ -368,14 +368,17 @@ namespace Control_de_Tareas
         //Boton Crear Grupo de Trabajo
         private void btn_agregarGP_Click(object sender, RoutedEventArgs e)
         {
-            int totalUsers = ListBoxUsuariosGP.Items.Count;
-            for(int i = 0; i < totalUsers; i++)
+            CConexion cConexion = new CConexion();
+            cConexion.EstablecerConn();
+            List<string> listaIDUsuarios = new List<string>();
+            foreach (CheckBox cb in ListBoxUsuariosGP.Items)
             {
-                Console.WriteLine(ListBoxUsuariosGP.Items[i].ToString());
-                //ListBoxUsuariosGP.Items[i].ToString();
+                if(cb.IsChecked == true)
+                {
+                    listaIDUsuarios.Add(cb.Tag.ToString());
+                }
             }
-            //Agregar limite que no puede ejecutarse si idnegocioSelected == null || idnegocioselected == 0
-
+            cConexion.AgregarGrupoNegocio(txtBox_CrearGP.Text, idNegocioSeleccionado, listaIDUsuarios);
         }
 
         //Botonos Pantalla Crear Usuario
@@ -654,7 +657,7 @@ namespace Control_de_Tareas
         {
             CConexion cConexion = new CConexion();
             cConexion.EstablecerConn();
-
+            ListBoxUsuariosGP.Items.Clear();
             string[] listaUsuarios = cConexion.GetUsuariosFromNegocio(idNegocioSeleccionado);
             idListaUsuariosCrearGP = cConexion.GetUserIDFromNegocio(idNegocioSeleccionado);
             CheckBox box;

@@ -392,30 +392,31 @@ namespace Control_de_Tareas
             var reader = cmd.ExecuteNonQuery();
         }
 
-        public void AgregarGrupoNegocio(string nombreGP, string idNegocio, string[] listaUsuarios)
+        public void AgregarGrupoNegocio(string nombreGP, string idNegocio, List<string> listaUsuarios)
         {
-            //Ingresar nuevo Grupo de Trabajo
-            string query = "INSERT INTO grupotrabajo VALUES (null, '" + nombreGP + "', 0, "+ idNegocio + ");";
-            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
-            var reader = cmd.ExecuteNonQuery();
-            //Obtener ID de grupo de trabajo creado
-            /*
             string idGP = "";
-            string query2 = "SELECT id FROM grupotrabajo where nombre = '" + nombreGP + "';";
-            cmd = new MySql.Data.MySqlClient.MySqlCommand(query2, conex);
-            var reader2 = cmd.ExecuteReader();
-            while (reader2.Read())
+            //Ingresar nuevo Grupo de Trabajo
+            string query = "INSERT INTO grupotrabajo VALUES (null, '" + nombreGP + "', 0, "+ idNegocio + "); \n";
+            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            var reader = cmd.ExecuteReader();
+            reader.Close();
+            //Obtener ID de grupo de trabajo creado            
+            query = "SELECT id FROM grupotrabajo where nombre = '" + nombreGP + "';";
+            cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            reader = cmd.ExecuteReader();
+            while (reader.Read())
             {
-                idGP = reader2.GetString("id");
+                idGP = reader.GetString("id");
             }
-            // Cambiar usuarios a nuevo GP
-            for(int i = 0; i < listaUsuarios.Length; i++)
+            reader.Close();
+            query = "";
+            for(int i = 0; i < listaUsuarios.Count; i++)
             {
-                string query3 = "UPDATE usuario SET grupotrabajo_id = " + idGP + "WHERE id = "+ listaUsuarios[i];
-                cmd = new MySql.Data.MySqlClient.MySqlCommand(query3, conex);
-                reader = cmd.ExecuteNonQuery();
+                query += "UPDATE usuario SET grupotrabajo_id = " + idGP + " WHERE id = "+ listaUsuarios[i] + "; \n" ;
             }
-            */
+            cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            var reader2 = cmd.ExecuteNonQuery();
+            
         }
 
     }
