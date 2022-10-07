@@ -33,6 +33,8 @@ namespace Control_de_Tareas
 
         public string _negocioSelected;
         public string idNegocioSeleccionado;
+
+        public string[] idListaUsuariosCrearGP;
         public string IDNegocioSeleccionado
         {
             get
@@ -156,17 +158,35 @@ namespace Control_de_Tareas
         private void btn_gptrabajo_crear_Click(object sender, RoutedEventArgs e)
         {
             ApagarBotonesMenu2();
+            OcultarOtrasPantallas(Pantalla_SinNegocio);
             OcultarOtrasPantallas(Pantalla_Agregar_GP);
-            if (Pantalla_Administrar_Roles.Visibility.Equals(Visibility.Hidden))
+            if(idNegocioSeleccionado == null || idNegocioSeleccionado == "1")
             {
-               // date_pick.SelectedDate = DateTime.Now;
-                Pantalla_Agregar_GP.Visibility = Visibility.Visible;
-                CambiarColorBoton(btn_gptrabajo_crear, color_menu2_pressed);
+                if (Pantalla_SinNegocio.Visibility.Equals(Visibility.Hidden))
+                {
+                    Console.WriteLine("q xuxa pasa");
+                    Pantalla_SinNegocio.Visibility = Visibility.Visible;
+                    CambiarColorBoton(btn_gptrabajo_crear, color_menu2_pressed);
+                }
+                else
+                {
+                    Pantalla_SinNegocio.Visibility = Visibility.Hidden;
+                    CambiarColorBoton(btn_gptrabajo_crear, color_menu2_idle);
+                }
             }
             else
             {
-                Pantalla_Administrar_Roles.Visibility = Visibility.Hidden;
-                CambiarColorBoton(btn_gptrabajo_crear, color_menu2_idle);
+                if (Pantalla_Administrar_Roles.Visibility.Equals(Visibility.Hidden))
+                {
+                    Pantalla_Agregar_GP.Visibility = Visibility.Visible;
+                    CambiarColorBoton(btn_gptrabajo_crear, color_menu2_pressed);
+                }
+                else
+                {
+                    Pantalla_Agregar_GP.Visibility = Visibility.Hidden;
+                    CambiarColorBoton(btn_gptrabajo_crear, color_menu2_idle);
+                }
+                CargarUsuariosCrearGP();
             }
         }
 
@@ -342,6 +362,22 @@ namespace Control_de_Tareas
                 Pantalla_Editar_Negocio.Visibility = Visibility.Hidden;
             }
         }
+        //Botones Roles
+
+        //Botones Grupos de Trabajo
+        //Boton Crear Grupo de Trabajo
+        private void btn_agregarGP_Click(object sender, RoutedEventArgs e)
+        {
+            int totalUsers = ListBoxUsuariosGP.Items.Count;
+            for(int i = 0; i < totalUsers; i++)
+            {
+                Console.WriteLine(ListBoxUsuariosGP.Items[i].ToString());
+                //ListBoxUsuariosGP.Items[i].ToString();
+            }
+            //Agregar limite que no puede ejecutarse si idnegocioSelected == null || idnegocioselected == 0
+
+        }
+
         //Botonos Pantalla Crear Usuario
         //Boton Crear Usuario
         private void btn_agregar_usuario_Click(object sender, RoutedEventArgs e)
@@ -595,7 +631,8 @@ namespace Control_de_Tareas
                 Pantalla_Administrar_Roles,
                 Pantalla_Agregar_Usuario,
                 Pantalla_Listar_Usuarios,
-                Pantalla_Editar_Usuario
+                Pantalla_Editar_Usuario,
+                Pantalla_Agregar_GP
             };
             //opcion5
 
@@ -609,6 +646,26 @@ namespace Control_de_Tareas
                 {
                     selectedGrid.Visibility = Visibility.Hidden;
                 }
+            }
+        }
+
+        //Carga datos para creacion de Grupo de Trabajo
+        private void CargarUsuariosCrearGP()
+        {
+            CConexion cConexion = new CConexion();
+            cConexion.EstablecerConn();
+
+            string[] listaUsuarios = cConexion.GetUsuariosFromNegocio(idNegocioSeleccionado);
+            idListaUsuariosCrearGP = cConexion.GetUserIDFromNegocio(idNegocioSeleccionado);
+            CheckBox box;
+            for(int i = 0; i < listaUsuarios.Length; i++)
+            {
+                box = new CheckBox();
+                box.Tag = idListaUsuariosCrearGP[i];
+                box.Content = listaUsuarios[i];
+                box.Name = "checkboxUser" + i;
+
+                ListBoxUsuariosGP.Items.Add(box);
             }
         }
 
@@ -783,6 +840,6 @@ namespace Control_de_Tareas
             e.Handled = regex.IsMatch(e.Text);
         }
 
-
+ 
     }
 }

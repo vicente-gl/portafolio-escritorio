@@ -12,7 +12,7 @@
             <Rectangle Fill="#CFCFCF"></Rectangle>
             <StackPanel HorizontalAlignment="Left" Margin="15,30,0,0">
                 <Button x:Name="mainMenuNegocios" Click="mainMenuNegocios_Click" Content="Negocios" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#FFCFCFCF" BorderBrush="{x:Null}"></Button>
-                <Button x:Name="mainMenuGruposTrabajo" Click="mainMenuGruposTrabajo_Click" Content="Grupos de Trabajo" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#FFCFCFCF" Margin="0,0,0,0" BorderBrush="{x:Null}"></Button>
+                <Button x:Name="mainMenuGruposTrabajo" Click="mainMenuGruposTrabajo_Click" Content="Grupos de Trabajo y Roles" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#FFCFCFCF" Margin="0,0,0,0" BorderBrush="{x:Null}"></Button>
                 <Button x:Name="mainMenuFlujosTarea" Click="mainMenuFlujosTarea_Click"  Content="Flujos de Tarea" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#FFCFCFCF" BorderBrush="{x:Null}"></Button>
                 <Button x:Name="mainMenuUsuarios" Click="mainMenuUsuarios_Click" Content="Usuarios" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#FFCFCFCF" BorderBrush="{x:Null}"></Button>
                 <Button x:Name="mainMenuPerfilesNegocio" Content="Perfiles de Negocio" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#FFCFCFCF" BorderBrush="{x:Null}"></Button>
@@ -56,6 +56,12 @@
             </StackPanel>
         </Grid>
         <!--PANTALLAS-->
+        <!--PANTALLA FALTA SELECCIONAR NEGOCIO-->
+        <Grid Name="Pantalla_SinNegocio" Margin="509,80,0,0" Height='800' VerticalAlignment="Top" HorizontalAlignment="Center" Width="1398" Visibility="Hidden">
+            <Rectangle Fill="#FFFFFF"></Rectangle>
+            <Label Content="Primero Debe Seleccionar un Negocio" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Inter" FontSize="25"></Label>
+
+        </Grid>
         <!--PANTALLAS NEGOCIO-->
             <!--PANTALLA AGREGAR NEGOCIOS-->
         <Grid Name="Pantalla_Agregar_Negocio" Margin="509,80,0,0" Height='800' VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden">
@@ -101,9 +107,9 @@
         <Grid Name="Pantalla_Listar_Negocio" Margin="509,80,0,0" Height='800' VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden">
             <Rectangle Margin="509,0,0,0" Width="1500" Fill="#FFFFFF"></Rectangle>
             <Rectangle Fill="#FFFFFF"></Rectangle>
-            <Button x:Name="btn_listarNegocios" Click="btn_listarNegocios_Click"  FontFamily="Inter" FontSize="15" HorizontalAlignment="Left" Background="GreenYellow" VerticalAlignment="Top" Content="Cargar Negocios" Margin="40,40,0,20"></Button>
+            <Button x:Name="btn_listarNegocios" Click="btn_listarNegocios_Click"  FontFamily="Inter" FontSize="15" HorizontalAlignment="Left" Background="LightYellow" BorderThickness="0" VerticalAlignment="Top" Content="Cargar Negocios" Margin="40,40,0,20"></Button>
             <Label HorizontalAlignment="Center" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="30" Content="Lista de Negocios"></Label>
-            <DataGrid x:Name="tablaNegocios" IsReadOnly="True" FontFamily="Inter" FontSize="15" ItemsSource="{Binding Path=LoadDataBinding}" AutoGenerateColumns="True" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,100,0,0" Width="1100" Height="500"/>
+            <DataGrid x:Name="tablaNegocios" MinWidth="600" IsReadOnly="True" FontFamily="Inter" FontSize="15" ItemsSource="{Binding Path=LoadDataBinding}" AutoGenerateColumns="True" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,100,0,0" Width="Auto" MaxHeight="500" Height="500"/>
             <Button FontFamily="Inter" x:Name="btn_listarNegocios_Editar" Click="btn_listarNegocios_Editar_Click" FontSize="20" Content="Editar Negocio" Margin="0,40,0,80" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="40" Width="250"></Button>
             <Button Width="250" Click="btn_listarNegocios_Eliminar_Click" x:Name="btn_listarNegocios_Eliminar" BorderThickness="0" Background="Red" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Inter" FontSize="20" Margin="0,40,0,10" Content="Eliminar Negocio"></Button>
         </Grid>
@@ -150,7 +156,6 @@
         <!--PANTALLAS GRUPOS DE TRABAJO-->
             <!--PANTALLA ADMINISTRAR ROLES-->
         <Grid Name="Pantalla_Administrar_Roles" Margin="509,80,0,0" Height='800' VerticalAlignment="Top" HorizontalAlignment="Center" Width="1398" Visibility="Hidden">
-            <Rectangle Fill="#FFFFFF"></Rectangle>            
         </Grid>
             <!--PANTALLA AGREGAR GRUPO DE TRABAJO-->
         <Grid Name="Pantalla_Agregar_GP" Margin="509,80,0,0" Height="1000" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden">
@@ -161,28 +166,28 @@
             </Grid>            
             <Grid Name="Pantalla_Agregar_GP_SiNegocio" Background="#FFFF">
                 <Label HorizontalAlignment="Center" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="30" Content="Agregar Grupo de Trabajo"></Label>
-                <StackPanel Margin="0,100,0,0" Orientation="Horizontal">
-                    <Grid>
+                <StackPanel Margin="0,100,0,0" HorizontalAlignment="Center" Orientation="Horizontal">
+                    <Border Margin="20"></Border>
+                    <Grid HorizontalAlignment="Center">
                         <StackPanel>
-                            <Label HorizontalAlignment="Center" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="30" Content="Grupos de Trabajo"></Label>
+                            <Label HorizontalAlignment="Left" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="23" Content="Nombre"></Label>
                             <Border Margin="10"></Border>
-                            <Label HorizontalAlignment="Left" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="25" Content="Nombre"></Label>
-                            <Border Margin="10"></Border>
-                            <TextBox></TextBox>
-                            <Border Margin="20"></Border>
-                        </StackPanel>
-                        
-                    </Grid>
-                    <Border Width="300"></Border>
-                    <Grid>
-                        <StackPanel>
-                            <Label HorizontalAlignment="Center" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="30" Content="Integrantes"></Label>
-                            <Border Margin="20"></Border>
-                            <DataGrid></DataGrid>
+                            <TextBox HorizontalAlignment="Center" FontFamily="Inter" FontSize="23" Width="300"></TextBox>
+                            <Border Margin="0"></Border>
+                            <Border Width="300"></Border>
+                            <Label HorizontalAlignment="Left" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="23" Content="Integrantes"></Label>
+                            <Border Margin="0"></Border>
+                            <StackPanel x:Name="GP_add_checkbox">
+                                <ListBox x:Name="ListBoxUsuariosGP" MaxHeight="300" Width="Auto" MinWidth="600">
+                                </ListBox>                                
+                                <Border Margin="0,0,0,30"></Border>
+                                <Button x:Name="btn_agregarGP" Click="btn_agregarGP_Click" Grid.Column="1" Grid.Row="14" Width="350" HorizontalAlignment="Center" FontFamily="Inter" FontSize="20" Content="Agregar Grupo de Trabajo"></Button>
+                            </StackPanel>
                         </StackPanel>
                     </Grid>
+                    <Border Margin="20"></Border>
+
                 </StackPanel>
-                <Button Grid.Column="1" Grid.Row="14" Width="250" HorizontalAlignment="Center" Click="btn_agregar_usuario_Click" FontFamily="Inter" FontSize="20" Content="Agregar Usuario"></Button>
             </Grid>
         </Grid>
         <!--PANTALLAS USUARIO-->
@@ -252,7 +257,7 @@
             <Rectangle Fill="#FFFFFF"></Rectangle>
             <Button x:Name="btn_listarUsuarios" Click="btn_listarUsuarios_Click" FontFamily="Inter" FontSize="15" HorizontalAlignment="Left" Background="LightYellow" BorderThickness="0" VerticalAlignment="Top" Content="Cargar Usuarios" Margin="160,40,0,20"></Button>
             <Label HorizontalAlignment="Center" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="30" Content="Lista de Usuarios"></Label>
-            <DataGrid x:Name="tablaUsuarios" SelectionUnit="FullRow" SelectionMode="Extended" IsReadOnly="True" FontFamily="Inter" FontSize="15" ItemsSource="{Binding Path=LoadDataBinding}" AutoGenerateColumns="True" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,100,0,0" Width="1100" Height="500"/>
+            <DataGrid x:Name="tablaUsuarios" MinWidth="600" SelectionUnit="FullRow" SelectionMode="Extended" IsReadOnly="True" FontFamily="Inter" FontSize="15" ItemsSource="{Binding Path=LoadDataBinding}" AutoGenerateColumns="True" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,100,0,0" Width="Auto" Height="500"/>
             <Button x:Name="btn_editarUsuario" Click="btn_editarUsuario_Click" FontFamily="Inter" FontSize="20" VerticalAlignment="Bottom" Content="Editar Usuario" Margin="0,40,0,50" Height="40" Width="250"></Button>
             <Button Width="250" Click="btn_eliminar_usuario_Click"  x:Name="btn_eliminar_usuario" BorderThickness="0" Background="Red" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Inter" FontSize="20" Margin="0,40,0,10" Content="Eliminar Usuario"></Button>
 

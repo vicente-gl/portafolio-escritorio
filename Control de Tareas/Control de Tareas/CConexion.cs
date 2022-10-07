@@ -243,6 +243,51 @@ namespace Control_de_Tareas
             return result;
         }
 
+        public string[] GetUsuariosFromNegocio(string id_negocio )
+        {
+            string query = "SELECT CONCAT(nombre, ' ', apellidop, ' ', apellidom) AS nombrecompleto FROM usuario WHERE negocio_id = " + id_negocio + " AND grupotrabajo_id = 1;";
+            MySqlCommand cmd = new MySqlCommand(query, conex);
+            MySqlDataReader mydr;
+            List<string> usuariosNegocio = new List<string>();
+            try
+            {
+                mydr = cmd.ExecuteReader();
+                while (mydr.Read())
+                {
+                    string subj = mydr.GetString("nombrecompleto");
+                    usuariosNegocio.Add(subj);
+                }
+                mydr.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return usuariosNegocio.ToArray();
+        }
+        public string[] GetUserIDFromNegocio(string id_negocio)
+        {
+            string query = "SELECT id FROM usuario WHERE negocio_id = " + id_negocio + " AND grupotrabajo_id = 1;";
+            MySqlCommand cmd = new MySqlCommand(query, conex);
+            MySqlDataReader mydr;
+            List<string> usuariosNegocio = new List<string>();
+            try
+            {
+                mydr = cmd.ExecuteReader();
+                while (mydr.Read())
+                {
+                    string subj = mydr.GetString("id");
+                    usuariosNegocio.Add(subj);
+                }
+                mydr.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return usuariosNegocio.ToArray();
+        }
+
         public string[] CargarCombobox(string tabla)
         {
             string query = "SELECT nombre FROM " + tabla + " where deleted = 0;";
@@ -345,6 +390,32 @@ namespace Control_de_Tareas
             string query = "INSERT INTO usuario VALUES(" + datosUsuario[0] + ", '" + datosUsuario[1] + "', '" + datosUsuario[2] + "', '" + datosUsuario[3] + "', '" + datosUsuario[4] + "', '" + datosUsuario[5] + "', '" + datosUsuario[6] + "', " + datosUsuario[7] + ", " + datosUsuario[8] + ", " + datosUsuario[9] + ", " + datosUsuario[10] + ", " + datosUsuario[11] + ");";
             var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
             var reader = cmd.ExecuteNonQuery();
+        }
+
+        public void AgregarGrupoNegocio(string nombreGP, string idNegocio, string[] listaUsuarios)
+        {
+            //Ingresar nuevo Grupo de Trabajo
+            string query = "INSERT INTO grupotrabajo VALUES (null, '" + nombreGP + "', 0, "+ idNegocio + ");";
+            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            var reader = cmd.ExecuteNonQuery();
+            //Obtener ID de grupo de trabajo creado
+            /*
+            string idGP = "";
+            string query2 = "SELECT id FROM grupotrabajo where nombre = '" + nombreGP + "';";
+            cmd = new MySql.Data.MySqlClient.MySqlCommand(query2, conex);
+            var reader2 = cmd.ExecuteReader();
+            while (reader2.Read())
+            {
+                idGP = reader2.GetString("id");
+            }
+            // Cambiar usuarios a nuevo GP
+            for(int i = 0; i < listaUsuarios.Length; i++)
+            {
+                string query3 = "UPDATE usuario SET grupotrabajo_id = " + idGP + "WHERE id = "+ listaUsuarios[i];
+                cmd = new MySql.Data.MySqlClient.MySqlCommand(query3, conex);
+                reader = cmd.ExecuteNonQuery();
+            }
+            */
         }
 
     }
