@@ -164,7 +164,6 @@ namespace Control_de_Tareas
             {
                 if (Pantalla_SinNegocio.Visibility.Equals(Visibility.Hidden))
                 {
-                    Console.WriteLine("q xuxa pasa");
                     Pantalla_SinNegocio.Visibility = Visibility.Visible;
                     CambiarColorBoton(btn_gptrabajo_crear, color_menu2_pressed);
                 }
@@ -414,6 +413,7 @@ namespace Control_de_Tareas
 
                     LimpiarCbox();
                     LimpiarCampos();
+                    CargarComboboxCrear();
                     MessageBox.Show("Usuario Agregado Exitosamente");
                 }
                 catch (Exception ex)
@@ -659,14 +659,21 @@ namespace Control_de_Tareas
             cConexion.EstablecerConn();
             ListBoxUsuariosGP.Items.Clear();
             string[] listaUsuarios = cConexion.GetUsuariosFromNegocio(idNegocioSeleccionado);
+            string[] listaNombreRol = cConexion.GetRolFromUsuarios(idNegocioSeleccionado);
             idListaUsuariosCrearGP = cConexion.GetUserIDFromNegocio(idNegocioSeleccionado);
             CheckBox box;
             for(int i = 0; i < listaUsuarios.Length; i++)
             {
                 box = new CheckBox();
                 box.Tag = idListaUsuariosCrearGP[i];
-                box.Content = listaUsuarios[i];
+                box.Content = listaUsuarios[i] + " - " + listaNombreRol[i];
+                if (box.Content.ToString().Contains("Admin"))
+                {
+                    box.FontWeight = FontWeights.Bold;
+                }
                 box.Name = "checkboxUser" + i;
+                box.FontFamily = new FontFamily("Inter");
+                box.FontSize = 18;
 
                 ListBoxUsuariosGP.Items.Add(box);
             }
@@ -682,6 +689,11 @@ namespace Control_de_Tareas
 
             if (cbox_user_negocio.Items.Count == 0)
             {
+                //Agregar Ninguno cuando no existe Gtrabajo
+                if (cbox_user_gtrabajo.Items.Count == 0)
+                {
+                    cbox_user_gtrabajo.Items.Add("Ninguno");
+                }
                 string[] roles = cConexion.CargarCombobox("rol");
                 foreach (string role in roles)
                 {
@@ -698,11 +710,6 @@ namespace Control_de_Tareas
                 foreach(string grupostrabajo in grupotrabajo)
                 {
                     cbox_user_gtrabajo.Items.Add(grupostrabajo);
-                }
-                //Agregar Ninguno cuando no existe Gtrabajo
-                if (cbox_user_gtrabajo.Items.Count == 0)
-                {
-                    cbox_user_gtrabajo.Items.Add("Ninguno");
                 }
             }
 
@@ -741,6 +748,7 @@ namespace Control_de_Tareas
             if (cbox_user_negocio.Items.Count > 0)
             {
                 cbox_user_gtrabajo.Items.Clear();
+                cbox_user_gtrabajo.Items.Add("Ninguno");
                 CConexion cconexion = new CConexion();
                 cconexion.EstablecerConn();
                 string negocio = cbox_user_negocio.SelectedValue.ToString(); //Da error cuando entro a crear seleciono negocio, salgo y vuelvo de pantalla de Crear Usuario
@@ -755,7 +763,6 @@ namespace Control_de_Tareas
             if (cbox_user_gtrabajo.Items.Count == 0)
             {
                 cbox_user_gtrabajo.Items.Add("Ninguno");
-                Console.WriteLine("QQWEA");
             }
         }
         private void edit_cbox_user_negocio_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -817,6 +824,13 @@ namespace Control_de_Tareas
         public void ActualizarNegocioSelected()
         {
             btn_SeleccionarNegocio.Content = _negocioSelected;
+            if(Pantalla_SinNegocio.Visibility == Visibility.Visible)
+            {
+                Pantalla_SinNegocio.Visibility = Visibility.Hidden;
+                Pantalla_Agregar_GP.Visibility = Visibility.Visible;
+                CargarUsuariosCrearGP();
+            }
+            CargarUsuariosCrearGP();
         }
 
         private void btn_SeleccionarNegocio_Click(object sender, RoutedEventArgs e)

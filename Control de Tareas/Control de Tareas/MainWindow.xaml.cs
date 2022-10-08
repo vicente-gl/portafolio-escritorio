@@ -32,16 +32,17 @@ namespace Control_de_Tareas
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            CConexion cConexion = new CConexion();
             username = txtBoxUser.Text;
             password = txtBoxPassword.Password;
             LoginSinCredencial();
             /*
+            CConexion cConexion = new CConexion();
             cConexion.EstablecerConn();
             if(cConexion.CheckCredentials(username, password)){
                 this.Close();
             }
             */
+            
 
         }        
 

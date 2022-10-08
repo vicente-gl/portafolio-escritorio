@@ -288,6 +288,29 @@ namespace Control_de_Tareas
             return usuariosNegocio.ToArray();
         }
 
+        public string[] GetRolFromUsuarios(string id_negocio)
+        {
+            string query = "SELECT *, rol.nombre AS nombrerol FROM usuario INNER JOIN rol ON usuario.rol_id = rol.id WHERE negocio_id = " + id_negocio + ";";
+            MySqlCommand cmd = new MySqlCommand(query, conex);
+            MySqlDataReader mydr;
+            List<string> usuariosNegocio = new List<string>();
+            try
+            {
+                mydr = cmd.ExecuteReader();
+                while (mydr.Read())
+                {
+                    string subj = mydr.GetString("nombrerol");
+                    usuariosNegocio.Add(subj);
+                }
+                mydr.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return usuariosNegocio.ToArray();
+        }
+
         public string[] CargarCombobox(string tabla)
         {
             string query = "SELECT nombre FROM " + tabla + " where deleted = 0;";

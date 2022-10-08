@@ -328,7 +328,7 @@
                     <ImageBrush ImageSource="/Iconos/WIN_20220921_11_50_38_Pro (2).jpg" RenderOptions.BitmapScalingMode="HighQuality" />
                 </Ellipse.Fill>
             </Ellipse>
-            <Label x:Name="label_logedUser" x:FieldModifier="public" Content="PLACEHOLDER" Foreground="WhiteSmoke" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="360, 0, 0, 0" FontSize="20" FontFamily="Inter Light"></Label>
+            <Label x:Name="label_logedUser" x:FieldModifier="public" Content="LOGEADO SIN CREDENCIALES" Foreground="WhiteSmoke" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="360, 0, 0, 0" FontSize="20" FontFamily="Inter Light"></Label>
             <Grid Name="GridNegocioSeleccionado" Margin="400,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="700" Height="55">
                 <Rectangle Fill="#EFEFEF"></Rectangle>
                 <Label Content="Negocio Seleccionado:" VerticalAlignment="Center" Padding="40, 0, 0, 0" Foreground="Black" FontSize="18" FontFamily="Inter Light"></Label>
