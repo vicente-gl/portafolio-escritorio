@@ -34,7 +34,7 @@
             <StackPanel HorizontalAlignment="Left" Margin="0,50,0,0">
                 <Button x:Name="btn_admin_rol" Click="btn_admin_rol_Click" Content="Administrar Roles" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
                 <Button x:Name="btn_gptrabajo_crear" Click="btn_gptrabajo_crear_Click" Content="Agregar Grupo de Trabajo" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
-                <Button x:Name="btn_gptrabajo_listar" Content="Listar Grupos de Trabajo" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
+                <Button x:Name="btn_gptrabajo_listar" Click="btn_gptrabajo_listar_Click" Content="Listar Grupos de Trabajo" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
             </StackPanel>
         </Grid>
         <!--MENU FLUJOS-->
@@ -189,6 +189,29 @@
 
                 </StackPanel>
             </Grid>
+        </Grid>
+            <!--PANTALLA LISTAR GRUPOS DE TRABAJO-->
+        <Grid Name="Pantalla_ListarGP" Margin="509,80,0,0" Height="1000" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden">
+            <Rectangle Fill="#FFFFFF"></Rectangle>
+            <Label HorizontalAlignment="Center" Margin="60,20,60,60" FontFamily="Inter Light" FontSize="30" Content="Listas de Grupos de Trabajo"></Label>
+            <StackPanel Margin="90">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Label HorizontalAlignment="Left" FontFamily="Inter Light" FontSize="25" Content="Grupos de Trabajo"></Label>
+                    <Border Margin="50,60,50,20"></Border>
+                    <Label HorizontalAlignment="Right" FontFamily="Inter Light" FontSize="25" Content="Integrantes"></Label>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <DataGrid x:Name="tabla_listaGP" IsReadOnly="True"  FontFamily="Intern" ItemsSource="{Binding Path=LoadDataBinding}" MinHeight="400" MinWidth="300"></DataGrid>
+                    <Border Margin="30"></Border>
+                    <DataGrid x:Name="tabla_usuariosGPSelected" MinHeight="400"  IsReadOnly="True" FontFamily="Intern" ItemsSource="{Binding Path=LoadDataBinding}" MinWidth="300"></DataGrid>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <Button Content="Editar Grupo" FontFamily="Inter" FontSize="20" FontWeight="ExtraLight" Height="Auto" Width="Auto" Foreground="White" BorderBrush="Transparent"></Button>
+                    <Border Margin="50,0,50,0"></Border>
+                    <Button Content="Eliminar Grupo" Background="Red" FontFamily="Inter" FontSize="20" FontWeight="ExtraLight" Height="Auto" Width="Auto" Foreground="White" BorderBrush="Transparent"></Button>
+                </StackPanel>
+            </StackPanel>
+
         </Grid>
         <!--PANTALLAS USUARIO-->
             <!--PANTALLAS AGREGAR USUARIO-->

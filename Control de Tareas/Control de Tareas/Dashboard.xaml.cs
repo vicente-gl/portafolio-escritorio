@@ -155,6 +155,24 @@ namespace Control_de_Tareas
             }
         }
 
+        private void btn_gptrabajo_listar_Click(object sender, RoutedEventArgs e)
+        {
+            ApagarBotonesMenu2();
+            OcultarOtrasPantallas(Pantalla_ListarGP);
+            if (Pantalla_ListarGP.Visibility.Equals(Visibility.Hidden))
+            {
+                date_pick.SelectedDate = DateTime.Now;
+                Pantalla_ListarGP.Visibility = Visibility.Visible;
+                CambiarColorBoton(btn_gptrabajo_listar, color_menu2_pressed);
+                CargarListaGP();
+            }
+            else
+            {
+                Pantalla_ListarGP.Visibility = Visibility.Hidden;
+                CambiarColorBoton(btn_gptrabajo_listar, color_menu2_idle);
+            }
+        }
+
         private void btn_gptrabajo_crear_Click(object sender, RoutedEventArgs e)
         {
             ApagarBotonesMenu2();
@@ -635,7 +653,8 @@ namespace Control_de_Tareas
                 Pantalla_Agregar_Usuario,
                 Pantalla_Listar_Usuarios,
                 Pantalla_Editar_Usuario,
-                Pantalla_Agregar_GP
+                Pantalla_Agregar_GP,
+                Pantalla_ListarGP
             };
             //opcion5
 
@@ -676,6 +695,20 @@ namespace Control_de_Tareas
                 box.FontSize = 18;
 
                 ListBoxUsuariosGP.Items.Add(box);
+            }
+        }
+
+        //Carga datos para listar los grupos de trabajo
+        private void CargarListaGP()
+        {
+            CConexion cConexion = new CConexion();
+            if(idNegocioSeleccionado == null || idNegocioSeleccionado == "1")
+            {
+                cConexion.LlamarTabla("grupotrabajo", tabla_listaGP);
+            }
+            else
+            {
+                cConexion.LlamarTablaNegocioSelected("grupotrabajo", tabla_listaGP, idNegocioSeleccionado);
             }
         }
 
@@ -830,7 +863,14 @@ namespace Control_de_Tareas
                 Pantalla_Agregar_GP.Visibility = Visibility.Visible;
                 CargarUsuariosCrearGP();
             }
-            CargarUsuariosCrearGP();
+            if (Pantalla_Agregar_GP.Visibility == Visibility.Visible)
+            {
+                CargarUsuariosCrearGP();
+            }
+            if(Pantalla_ListarGP.Visibility == Visibility.Visible)
+            {
+                //CargarListaGP();
+            }
         }
 
         private void btn_SeleccionarNegocio_Click(object sender, RoutedEventArgs e)
@@ -857,6 +897,6 @@ namespace Control_de_Tareas
             e.Handled = regex.IsMatch(e.Text);
         }
 
- 
+
     }
 }
