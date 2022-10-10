@@ -174,6 +174,25 @@ namespace Control_de_Tareas
             }
         }
 
+        public void LlamarTablaUsuariosGP(string tabla, System.Windows.Controls.DataGrid datagridItem, string idGP)
+        {
+            EstablecerConn();
+            string query = "SELECT * FROM " + tabla + " where grupotrabajo_id = "+idGP+";";
+            MySqlCommand cmd = new MySqlCommand(query, conex);
+
+            try
+            {
+                MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                adp.Fill(ds, "LoadDataBinding");
+                datagridItem.DataContext = ds;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
         public void LlamarTablaNegocioSelected(string tabla, System.Windows.Controls.DataGrid datagridItem, string negocioID)
         {
             EstablecerConn();
@@ -192,6 +211,8 @@ namespace Control_de_Tareas
                 MessageBox.Show(ex.ToString());
             }
         }
+
+
 
         public void LlamarTablaSeleccionarNegocio(string tabla, System.Windows.Controls.DataGrid datagridItem)
         {

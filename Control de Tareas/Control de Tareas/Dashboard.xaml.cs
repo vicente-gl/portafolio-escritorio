@@ -701,6 +701,7 @@ namespace Control_de_Tareas
         //Carga datos para listar los grupos de trabajo
         private void CargarListaGP()
         {
+            tabla_listaGP.Items.Clear();
             CConexion cConexion = new CConexion();
             if(idNegocioSeleccionado == null || idNegocioSeleccionado == "1")
             {
@@ -710,6 +711,17 @@ namespace Control_de_Tareas
             {
                 cConexion.LlamarTablaNegocioSelected("grupotrabajo", tabla_listaGP, idNegocioSeleccionado);
             }
+        }
+
+        // Llenar lista de integrantes
+        private void tabla_listaGP_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            CConexion cConexion = new CConexion();
+            DataRowView row = (DataRowView)tabla_listaGP.SelectedItems[0];
+            string idSelected = row["id"].ToString();
+            Console.WriteLine(idSelected);
+            cConexion.LlamarTablaUsuariosGP("usuario", tabla_usuariosGPSelected, idSelected);
+
         }
 
         //Carga los Combobox de la pantalla Crear Usuario
@@ -896,7 +908,5 @@ namespace Control_de_Tareas
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
-
-
     }
 }

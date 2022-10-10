@@ -43,6 +43,8 @@ namespace Control_de_Tareas
         }
 
 
+
+
         private void Btn_SeleccionarNegocio_Seleccionar_Click(object sender, RoutedEventArgs e)
         {
             if (DataGrid_SeleccionarNegocio.SelectedValue == null)

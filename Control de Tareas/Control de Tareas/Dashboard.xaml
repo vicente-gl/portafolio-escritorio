@@ -201,7 +201,7 @@
                     <Label HorizontalAlignment="Right" FontFamily="Inter Light" FontSize="25" Content="Integrantes"></Label>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <DataGrid x:Name="tabla_listaGP" IsReadOnly="True"  FontFamily="Intern" ItemsSource="{Binding Path=LoadDataBinding}" MinHeight="400" MinWidth="300"></DataGrid>
+                    <DataGrid x:Name="tabla_listaGP" SelectedCellsChanged="tabla_listaGP_SelectedCellsChanged" IsReadOnly="True" FontFamily="Intern" ItemsSource="{Binding Path=LoadDataBinding}" MinHeight="400" MinWidth="300"></DataGrid>
                     <Border Margin="30"></Border>
                     <DataGrid x:Name="tabla_usuariosGPSelected" MinHeight="400"  IsReadOnly="True" FontFamily="Intern" ItemsSource="{Binding Path=LoadDataBinding}" MinWidth="300"></DataGrid>
                 </StackPanel>
