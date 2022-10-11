@@ -156,6 +156,32 @@
         <!--PANTALLAS GRUPOS DE TRABAJO-->
             <!--PANTALLA ADMINISTRAR ROLES-->
         <Grid Name="Pantalla_Administrar_Roles" Margin="509,80,0,0" Height='800' VerticalAlignment="Top" HorizontalAlignment="Center" Width="1398" Visibility="Hidden">
+            <Rectangle Fill="#FFFFFF"></Rectangle>
+            <Label HorizontalAlignment="Center" Margin="60,20,60,60" FontFamily="Inter Light" FontSize="30" Content="Roles de Negocio"></Label>
+            <StackPanel Margin="0,90,0,0" HorizontalAlignment="Center" Orientation="Horizontal">
+                <StackPanel>
+                    <Label HorizontalAlignment="Center" Margin="60,20,60,60" FontFamily="Inter Light" FontSize="30" Content="Agregar Rol"></Label>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel>
+                            <Label Content="Nombre Rol" FontFamily="Inter" FontSize="16"></Label>
+                        </StackPanel>
+                        <Border Margin="20,0,0,0"></Border>
+                        <StackPanel>
+                            <TextBox Width="250"></TextBox>
+                            <Border Margin="0,20,0,20"></Border>
+                            <Button FontFamily="Inter" Foreground="White" Content="Agregar Rol"></Button>
+                        </StackPanel>                        
+                    </StackPanel>
+                </StackPanel>
+                <Border Margin="20,0,20,0"></Border>
+                <StackPanel>
+                    <Label HorizontalAlignment="Center" Margin="60,20,60,60" FontFamily="Inter Light" FontSize="30" Content="Lista de Roles"></Label>
+                    <DataGrid MinHeight="300" MaxHeight="500"></DataGrid>
+                    <Border></Border>
+                </StackPanel>
+                
+            </StackPanel>
+
         </Grid>
             <!--PANTALLA AGREGAR GRUPO DE TRABAJO-->
         <Grid Name="Pantalla_Agregar_GP" Margin="509,80,0,0" Height="1000" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden">
@@ -203,7 +229,7 @@
                 <StackPanel Orientation="Horizontal">
                     <DataGrid x:Name="tabla_listaGP" SelectedCellsChanged="tabla_listaGP_SelectedCellsChanged" IsReadOnly="True" FontFamily="Intern" ItemsSource="{Binding Path=LoadDataBinding}" MinHeight="400" MinWidth="300"></DataGrid>
                     <Border Margin="30"></Border>
-                    <DataGrid x:Name="tabla_usuariosGPSelected" MinHeight="400"  IsReadOnly="True" FontFamily="Intern" ItemsSource="{Binding Path=LoadDataBinding}" MinWidth="300"></DataGrid>
+                    <DataGrid x:Name="tabla_usuariosGPSelected" MinHeight="400" IsReadOnly="True" FontFamily="Intern" ItemsSource="{Binding Path=LoadDataBinding}" MinWidth="300"></DataGrid>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                     <Button Content="Editar Grupo" FontFamily="Inter" FontSize="20" FontWeight="ExtraLight" Height="Auto" Width="Auto" Foreground="White" BorderBrush="Transparent"></Button>

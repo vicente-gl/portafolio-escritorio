@@ -396,6 +396,7 @@ namespace Control_de_Tareas
                 }
             }
             cConexion.AgregarGrupoNegocio(txtBox_CrearGP.Text, idNegocioSeleccionado, listaIDUsuarios);
+
         }
 
         //Botonos Pantalla Crear Usuario
@@ -653,6 +654,7 @@ namespace Control_de_Tareas
                 Pantalla_Agregar_Usuario,
                 Pantalla_Listar_Usuarios,
                 Pantalla_Editar_Usuario,
+                Pantalla_Administrar_Roles,
                 Pantalla_Agregar_GP,
                 Pantalla_ListarGP
             };
@@ -701,7 +703,6 @@ namespace Control_de_Tareas
         //Carga datos para listar los grupos de trabajo
         private void CargarListaGP()
         {
-            tabla_listaGP.Items.Clear();
             CConexion cConexion = new CConexion();
             if(idNegocioSeleccionado == null || idNegocioSeleccionado == "1")
             {
@@ -711,16 +712,34 @@ namespace Control_de_Tareas
             {
                 cConexion.LlamarTablaNegocioSelected("grupotrabajo", tabla_listaGP, idNegocioSeleccionado);
             }
+            tabla_listaGP.Columns[0].Visibility = Visibility.Collapsed;
+            tabla_listaGP.Columns[1].Header = "Nombre de Grupo de Trabajo";
+            tabla_listaGP.Columns[3].Header = "ID de Grupo de Trabajo";
+            tabla_listaGP.Columns[2].Visibility = Visibility.Collapsed;
         }
 
         // Llenar lista de integrantes
         private void tabla_listaGP_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
+            if(tabla_listaGP.Items.Count == 0) tabla_listaGP.Items.Clear();
             CConexion cConexion = new CConexion();
             DataRowView row = (DataRowView)tabla_listaGP.SelectedItems[0];
             string idSelected = row["id"].ToString();
             Console.WriteLine(idSelected);
             cConexion.LlamarTablaUsuariosGP("usuario", tabla_usuariosGPSelected, idSelected);
+            tabla_usuariosGPSelected.Columns[0].Visibility = Visibility.Collapsed;
+            tabla_usuariosGPSelected.Columns[2].Visibility = Visibility.Collapsed;
+            tabla_usuariosGPSelected.Columns[8].Visibility = Visibility.Collapsed;
+            tabla_usuariosGPSelected.Columns[9].Visibility = Visibility.Collapsed;
+            tabla_usuariosGPSelected.Columns[10].Visibility = Visibility.Collapsed;
+            tabla_usuariosGPSelected.Columns[11].Visibility = Visibility.Collapsed;
+
+            tabla_usuariosGPSelected.Columns[1].Header = "Correo Electrónico";
+            tabla_usuariosGPSelected.Columns[3].Header = "RUT";
+            tabla_usuariosGPSelected.Columns[4].Header = "Nombre";
+            tabla_usuariosGPSelected.Columns[5].Header = "Apellido Paterno";
+            tabla_usuariosGPSelected.Columns[6].Header = "Apellido Materno";
+            tabla_usuariosGPSelected.Columns[7].Header = "Celular";
 
         }
 
