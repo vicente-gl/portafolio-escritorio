@@ -411,6 +411,13 @@ namespace Control_de_Tareas
             var reader = cmd.ExecuteNonQuery();
         }
 
+        public void ResetGPUsuarios(string idgp_eliminado)
+        {
+            string query = "UPDATE usuario SET grupotrabajo_id = 1 WHERE grupotrabajo_id = "+idgp_eliminado+";";
+            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            var reader = cmd.ExecuteNonQuery();
+        }
+
         public int CantidadRows(string tabla)
         {
             string totalID;

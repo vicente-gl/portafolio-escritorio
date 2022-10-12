@@ -397,6 +397,40 @@ namespace Control_de_Tareas
             cConexion.AgregarGrupoNegocio(txtBox_CrearGP.Text, idNegocioSeleccionado, listaIDUsuarios);
 
         }
+        //Botones pantalla Listar GP
+            //Boton Emilinar GP
+        private void btn_eliminar_GP_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CConexion cConexion = new CConexion();
+                cConexion.EstablecerConn();
+                DataRowView row = (DataRowView)tabla_listaGP.SelectedItems[0];
+                string idSelected = row["id"].ToString();
+                string nombreGP = row["nombre"].ToString();
+                int cantUsuarios = tabla_usuariosGPSelected.Items.Count;
+                string mensaje;
+                cConexion.DeleteRow(idSelected, "grupotrabajo");
+                cConexion.ResetGPUsuarios(idSelected);
+                cConexion.CerrarConn();
+                if(tabla_usuariosGPSelected.Items.Count == 1)
+                {
+                    mensaje = cantUsuarios + " Usuario del Grupo de Trabajo: " + nombreGP + " se actualizó correctamente a Ninguno";
+                }
+                else
+                {
+                    mensaje = cantUsuarios + " Usuarios del Grupo de Trabajo: " + nombreGP + " se actualizaron correctamente a Ninguno";
+                }
+                MessageBox.Show("Grupo de Trabajo Eliminado Exitosamente.\n "+ mensaje);
+            }catch (Exception ex)
+            {
+                MessageBox.Show("Error, no se pudo eliminar el Grupo de Trabajo: "+ex.Message);
+            }
+
+            //tabla_usuariosGPSelected.Items.Clear();
+            CargarListaGP();
+
+        }
 
         //Botonos Pantalla Crear Usuario
         //Boton Crear Usuario
@@ -929,5 +963,6 @@ namespace Control_de_Tareas
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
+
     }
 }
