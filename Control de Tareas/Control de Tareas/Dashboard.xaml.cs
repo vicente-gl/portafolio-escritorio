@@ -161,7 +161,6 @@ namespace Control_de_Tareas
             OcultarOtrasPantallas(Pantalla_ListarGP);
             if (Pantalla_ListarGP.Visibility.Equals(Visibility.Hidden))
             {
-                date_pick.SelectedDate = DateTime.Now;
                 Pantalla_ListarGP.Visibility = Visibility.Visible;
                 CambiarColorBoton(btn_gptrabajo_listar, color_menu2_pressed);
                 CargarListaGP();
@@ -712,34 +711,37 @@ namespace Control_de_Tareas
             {
                 cConexion.LlamarTablaNegocioSelected("grupotrabajo", tabla_listaGP, idNegocioSeleccionado);
             }
-            tabla_listaGP.Columns[0].Visibility = Visibility.Collapsed;
+            tabla_listaGP.Columns[0].Header = "ID de Grupo de Trabajo";
             tabla_listaGP.Columns[1].Header = "Nombre de Grupo de Trabajo";
-            tabla_listaGP.Columns[3].Header = "ID de Grupo de Trabajo";
+            tabla_listaGP.Columns[3].Visibility = Visibility.Collapsed;
             tabla_listaGP.Columns[2].Visibility = Visibility.Collapsed;
         }
 
         // Llenar lista de integrantes
         private void tabla_listaGP_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            if(tabla_listaGP.Items.Count == 0) tabla_listaGP.Items.Clear();
-            CConexion cConexion = new CConexion();
-            DataRowView row = (DataRowView)tabla_listaGP.SelectedItems[0];
-            string idSelected = row["id"].ToString();
-            Console.WriteLine(idSelected);
-            cConexion.LlamarTablaUsuariosGP("usuario", tabla_usuariosGPSelected, idSelected);
-            tabla_usuariosGPSelected.Columns[0].Visibility = Visibility.Collapsed;
-            tabla_usuariosGPSelected.Columns[2].Visibility = Visibility.Collapsed;
-            tabla_usuariosGPSelected.Columns[8].Visibility = Visibility.Collapsed;
-            tabla_usuariosGPSelected.Columns[9].Visibility = Visibility.Collapsed;
-            tabla_usuariosGPSelected.Columns[10].Visibility = Visibility.Collapsed;
-            tabla_usuariosGPSelected.Columns[11].Visibility = Visibility.Collapsed;
 
-            tabla_usuariosGPSelected.Columns[1].Header = "Correo Electrónico";
-            tabla_usuariosGPSelected.Columns[3].Header = "RUT";
-            tabla_usuariosGPSelected.Columns[4].Header = "Nombre";
-            tabla_usuariosGPSelected.Columns[5].Header = "Apellido Paterno";
-            tabla_usuariosGPSelected.Columns[6].Header = "Apellido Materno";
-            tabla_usuariosGPSelected.Columns[7].Header = "Celular";
+            if (tabla_listaGP.SelectedItems.Count != 0) // Evita bug extraño
+            {
+                CConexion cConexion = new CConexion();
+                DataRowView row = (DataRowView)tabla_listaGP.SelectedItems[0];
+                string idSelected = row["id"].ToString();
+                Console.WriteLine(idSelected);
+                cConexion.LlamarTablaUsuariosGP("usuario", tabla_usuariosGPSelected, idSelected);
+                tabla_usuariosGPSelected.Columns[0].Visibility = Visibility.Collapsed;
+                tabla_usuariosGPSelected.Columns[2].Visibility = Visibility.Collapsed;
+                tabla_usuariosGPSelected.Columns[8].Visibility = Visibility.Collapsed;
+                tabla_usuariosGPSelected.Columns[9].Visibility = Visibility.Collapsed;
+                tabla_usuariosGPSelected.Columns[10].Visibility = Visibility.Collapsed;
+                tabla_usuariosGPSelected.Columns[11].Visibility = Visibility.Collapsed;         
+                tabla_usuariosGPSelected.Columns[1].Header = "Correo Electrónico";
+                tabla_usuariosGPSelected.Columns[3].Header = "RUT";
+                tabla_usuariosGPSelected.Columns[4].Header = "Nombre";
+                tabla_usuariosGPSelected.Columns[5].Header = "Apellido Paterno";
+                tabla_usuariosGPSelected.Columns[6].Header = "Apellido Materno";
+                tabla_usuariosGPSelected.Columns[7].Header = "Celular";
+            }
+
 
         }
 
