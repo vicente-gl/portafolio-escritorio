@@ -172,39 +172,38 @@ namespace Control_de_Tareas
             }
         }
 
+        //Oracle OK
         //Llama todos los datos, incluyendo los datos que tengan "deleted" como True
         public void LlamarTablaFull(string tabla, System.Windows.Controls.DataGrid datagridItem)
         {
             EstablecerConn();
             string query = "SELECT * FROM " + tabla + ";";
-            MySqlCommand cmd = new MySqlCommand(query, conex);
+            OracleCommand cmd = new OracleCommand(query, conn);
 
             try
             {
-                MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
+                OracleDataAdapter adp = new OracleDataAdapter(cmd);
                 DataSet ds = new DataSet();
                 adp.Fill(ds, "LoadDataBinding");
                 datagridItem.DataContext = ds;
             }
-            catch (MySqlException ex)
+            catch (OracleException ex)
             {
                 MessageBox.Show(ex.ToString());
             }
         }
 
+        //Oracle OK
         public void LlamarTabla(string tabla, System.Windows.Controls.DataGrid datagridItem)
         {
             EstablecerConn();
-            string query = "SELECT * FROM " + tabla + " where Deleted = 0;";
+            string query = "SELECT * FROM " + tabla + " where Deleted = 0";
             OracleCommand cmd = new OracleCommand(query, conn);
-            //MySqlCommand cmd = new MySqlCommand(query, conex);
 
             try
             {
-                //MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
                 OracleDataAdapter adp = new OracleDataAdapter(cmd);
                 DataSet ds = new DataSet();
-                MessageBox.Show(ds.ToString());
                 adp.Fill(ds, "LoadDataBinding");
                 datagridItem.DataContext = ds;
             }
@@ -217,110 +216,117 @@ namespace Control_de_Tareas
         public void LlamarTablaUsuariosGP(string tabla, System.Windows.Controls.DataGrid datagridItem, string idGP)
         {
             EstablecerConn();
-            string query = "SELECT * FROM " + tabla + " where grupotrabajo_id = "+idGP+";";
-            MySqlCommand cmd = new MySqlCommand(query, conex);
+            string query = "SELECT * FROM " + tabla + " where grupotrabajo_id = "+idGP+"";
+            OracleCommand cmd = new OracleCommand(query, conn);
 
             try
             {
-                MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
+                OracleDataAdapter adp = new OracleDataAdapter(cmd);
                 DataSet ds = new DataSet();
                 adp.Fill(ds, "LoadDataBinding");
                 datagridItem.DataContext = ds;
             }
-            catch (MySqlException ex)
+            catch (OracleException ex)
             {
                 MessageBox.Show(ex.ToString());
             }
         }
+
+        //Oracle OK
 
         public void LlamarTablaNegocioSelected(string tabla, System.Windows.Controls.DataGrid datagridItem, string negocioID)
         {
             EstablecerConn();
-            string query = "SELECT * FROM " + tabla + " where Deleted = 0 and negocio_id = "+negocioID+";";
-            MySqlCommand cmd = new MySqlCommand(query, conex);
+            string query = "SELECT * FROM " + tabla + " where Deleted = 0 and negocio_id = "+negocioID+"";
+            OracleCommand cmd = new OracleCommand(query, conn);
 
             try
             {
-                MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
+                OracleDataAdapter adp = new OracleDataAdapter(cmd);
                 DataSet ds = new DataSet();
                 adp.Fill(ds, "LoadDataBinding");
                 datagridItem.DataContext = ds;
             }
-            catch (MySqlException ex)
+            catch (OracleException ex)
             {
                 MessageBox.Show(ex.ToString());
             }
         }
 
 
-
+        //Oracle OK
         public void LlamarTablaSeleccionarNegocio(string tabla, System.Windows.Controls.DataGrid datagridItem)
         {
             EstablecerConn();
-            string query = "SELECT nombre, encargado, correo_encargado, rut FROM " + tabla + " where Deleted = 0;";
-            MySqlCommand cmd = new MySqlCommand(query, conex);
+            string query = "SELECT nombre, encargado, correo_encargado, rut FROM " + tabla + " where Deleted = 0";
+            OracleCommand cmd = new OracleCommand(query, conn);
 
             try
             {
-                MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
+                OracleDataAdapter adp = new OracleDataAdapter(cmd);
                 DataSet ds = new DataSet();
                 adp.Fill(ds, "LoadDataBinding");
                 datagridItem.DataContext = ds;
             }
-            catch (MySqlException ex)
+            catch (OracleException ex)
             {
                 MessageBox.Show(ex.ToString());
             }
+            CerrarConn2();
         }
 
+        //Oracle OK
         public string GetNameByID(string id, string tabla)
         {
             string query = "select nombre FROM " + tabla + " where id = " + id + ";";
-            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            OracleCommand cmd = new OracleCommand(query, conn);
             var reader = cmd.ExecuteReader();
             string result = "";
 
             while (reader.Read())
             {
-                result = reader.GetString("nombre");
+                result = reader.GetString(1);
             }
 
             return result;
         }
 
+        //Oracle OK
         public string GetIDByName(string tabla, string name)
         {
             //EstablecerConn(); // para evitar error al seleccionar negocio
-            string query = "select id FROM " + tabla + " where nombre = '" + name + "';";
-            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            string query = "select id FROM " + tabla + " where nombre = '" + name + "'";
+            OracleCommand cmd = new OracleCommand(query, conn);
             var reader = cmd.ExecuteReader();
             string result = "";
 
             while (reader.Read())
             {
-                result = reader.GetString("id");
+                result = reader.GetString(0);
             }
             reader.Close();
             return result;
         }
 
+
+        //ORACLE OK????
         public string[] GetUsuariosFromNegocio(string id_negocio )
         {
-            string query = "SELECT CONCAT(nombre, ' ', apellidop, ' ', apellidom) AS nombrecompleto FROM usuario WHERE negocio_id = " + id_negocio + " AND grupotrabajo_id = 1;";
-            MySqlCommand cmd = new MySqlCommand(query, conex);
-            MySqlDataReader mydr;
+            string query = "SELECT nombre || ' ' || apellidop || ' ' || apellidom AS nombrecompleto FROM usuario WHERE negocio_id = " + id_negocio + " AND grupotrabajo_id = 1";
+            OracleCommand cmd = new OracleCommand(query, conn);
+            OracleDataReader mydr;
             List<string> usuariosNegocio = new List<string>();
             try
             {
                 mydr = cmd.ExecuteReader();
                 while (mydr.Read())
                 {
-                    string subj = mydr.GetString("nombrecompleto");
+                    string subj = mydr.GetString(0);
                     usuariosNegocio.Add(subj);
                 }
                 mydr.Close();
             }
-            catch (Exception ex)
+            catch (OracleException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -328,21 +334,21 @@ namespace Control_de_Tareas
         }
         public string[] GetUserIDFromNegocio(string id_negocio)
         {
-            string query = "SELECT id FROM usuario WHERE negocio_id = " + id_negocio + " AND grupotrabajo_id = 1;";
-            MySqlCommand cmd = new MySqlCommand(query, conex);
-            MySqlDataReader mydr;
+            string query = "SELECT id FROM usuario WHERE negocio_id = " + id_negocio + " AND grupotrabajo_id = 1";
+            OracleCommand cmd = new OracleCommand(query, conn);
+            OracleDataReader mydr;
             List<string> usuariosNegocio = new List<string>();
             try
             {
                 mydr = cmd.ExecuteReader();
                 while (mydr.Read())
                 {
-                    string subj = mydr.GetString("id");
+                    string subj = mydr.GetString(0);
                     usuariosNegocio.Add(subj);
                 }
                 mydr.Close();
             }
-            catch (Exception ex)
+            catch (OracleException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -351,74 +357,76 @@ namespace Control_de_Tareas
 
         public string[] GetRolFromUsuarios(string id_negocio)
         {
-            string query = "SELECT *, rol.nombre AS nombrerol FROM usuario INNER JOIN rol ON usuario.rol_id = rol.id WHERE negocio_id = " + id_negocio + ";";
-            MySqlCommand cmd = new MySqlCommand(query, conex);
-            MySqlDataReader mydr;
+            string query = "SELECT *, rol.nombre AS nombrerol FROM usuario INNER JOIN rol ON usuario.rol_id = rol.id WHERE negocio_id = " + id_negocio + "";
+            OracleCommand cmd = new OracleCommand(query, conn);
+            OracleDataReader mydr;
             List<string> usuariosNegocio = new List<string>();
             try
             {
                 mydr = cmd.ExecuteReader();
                 while (mydr.Read())
                 {
-                    string subj = mydr.GetString("nombrerol");
+                    string subj = mydr.GetString(0);
                     usuariosNegocio.Add(subj);
                 }
                 mydr.Close();
             }
-            catch (Exception ex)
+            catch (OracleException ex)
             {
                 MessageBox.Show(ex.Message);
             }
             return usuariosNegocio.ToArray();
         }
 
+        //ORACLE
         public string[] CargarCombobox(string tabla)
         {
-            string query = "SELECT nombre FROM " + tabla + " where deleted = 0;";
-            MySqlCommand cmd = new MySqlCommand(query, conex);
-            MySqlDataReader mydr;
+            string query = "SELECT nombre FROM " + tabla + " where deleted = 0";
+            OracleCommand cmd = new OracleCommand(query, conn);
+            OracleDataReader mydr;
             List<string> datosCombo = new List<string>();
             try
             {
                 mydr = cmd.ExecuteReader();
                 while (mydr.Read())
                 {
-                    string subj = mydr.GetString("nombre");
+                    string subj = mydr.GetString(0);
                     datosCombo.Add(subj);
                 }
                 mydr.Close();
             }
-            catch (Exception ex)
+            catch (OracleException ex)
             {
                 MessageBox.Show(ex.Message);
             }
             return datosCombo.ToArray();
         }
 
+        //ORACLE OK
         public string[] CargarComboboxNegocio(string negocio)
         {
 
-            string query = "SELECT id FROM negocio WHERE nombre = '" + negocio + "' and deleted = 0;";
-            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
-            var reader = cmd.ExecuteReader();
+            string query = "SELECT id FROM negocio WHERE nombre = '" + negocio + "' and deleted = 0";
+            OracleCommand cmd = new OracleCommand(query, conn);
+            OracleDataReader mydr;
+            mydr = cmd.ExecuteReader();
             string result = "";
 
-            while (reader.Read())
+            while (mydr.Read())
             {
-                result = reader.GetString("id");
+                result = mydr.GetString(0);
             }
-            reader.Close();
+            mydr.Close();
 
-            query = "select nombre FROM grupotrabajo where negocio_id = " + result + ";";
-            cmd = new MySqlCommand(query, conex);
-            MySqlDataReader mydr;
+            query = "select nombre FROM grupotrabajo where negocio_id = " + result + "";
+            cmd = new OracleCommand(query, conn);
             List<string> datosCombo = new List<string>();
             try
             {
                 mydr = cmd.ExecuteReader();
                 while (mydr.Read())
                 {
-                    string subj = mydr.GetString("nombre");
+                    string subj = mydr.GetString(0);
                     datosCombo.Add(subj);
                 }
                 mydr.Close();
@@ -432,29 +440,29 @@ namespace Control_de_Tareas
 
         public void UpdateUsuario (string[] datosUsuario)
         {
-            string query = "UPDATE usuario SET correo = '"+datosUsuario[1]+"', password = '"+datosUsuario[2]+"', rut = '"+datosUsuario[3]+"', nombre = '"+datosUsuario[4]+"', apellidop = '"+datosUsuario[5]+"', apellidom = '"+datosUsuario[6]+"', celular = "+datosUsuario[7]+", rol_id = "+datosUsuario[9]+", negocio_id = "+datosUsuario[10]+", grupotrabajo_id = "+datosUsuario[11]+" WHERE id = "+datosUsuario[0]+";";
-            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            string query = "UPDATE usuario SET correo = '"+datosUsuario[1]+"', password = '"+datosUsuario[2]+"', rut = '"+datosUsuario[3]+"', nombre = '"+datosUsuario[4]+"', apellidop = '"+datosUsuario[5]+"', apellidom = '"+datosUsuario[6]+"', celular = "+datosUsuario[7]+", rol_id = "+datosUsuario[9]+", negocio_id = "+datosUsuario[10]+", grupotrabajo_id = "+datosUsuario[11]+" WHERE id = "+datosUsuario[0]+"";
+            OracleCommand cmd = new OracleCommand(query, conn);
             var reader = cmd.ExecuteNonQuery();
         }
-
+        //Oracle OK
         public void UpdateNegocio(string[] datosNegocio)
         {
-            string query = "UPDATE negocio SET nombre = '" + datosNegocio[0] + "', encargado = '" + datosNegocio[1] + "', correo_encargado = '" + datosNegocio[3] + "', fecha_ingreso = '" + datosNegocio[2] + "', rut = '" + datosNegocio[4] + "', direccion = '"+datosNegocio[5]+"' WHERE id = " + datosNegocio[6] + ";";
-            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            string query = "UPDATE negocio SET nombre = '" + datosNegocio[0] + "', encargado = '" + datosNegocio[1] + "', correo_encargado = '" + datosNegocio[3] + "', fecha_ingreso = TO_DATE('"+ datosNegocio[2] + "', 'yyyy-MM-dd'), rut = '" + datosNegocio[4] + "', direccion = '"+datosNegocio[5]+"' WHERE id = " + datosNegocio[6] + "";
+            OracleCommand cmd = new OracleCommand(query, conn);
             var reader = cmd.ExecuteNonQuery();
         }
-
+        //Oracle OK
         public void DeleteRow(string id, string tabla)
         {
-            string query = "UPDATE "+tabla+" SET deleted = '1' WHERE id = " + id + ";";
-            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            string query = "UPDATE "+tabla+" SET deleted = '1' WHERE id = " + id + "";
+            OracleCommand cmd = new OracleCommand(query, conn);
             var reader = cmd.ExecuteNonQuery();
         }
 
         public void ResetGPUsuarios(string idgp_eliminado)
         {
-            string query = "UPDATE usuario SET grupotrabajo_id = 1 WHERE grupotrabajo_id = "+idgp_eliminado+";";
-            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            string query = "UPDATE usuario SET grupotrabajo_id = 1 WHERE grupotrabajo_id = "+idgp_eliminado+"";
+            OracleCommand cmd = new OracleCommand(query, conn);
             var reader = cmd.ExecuteNonQuery();
         }
 
@@ -462,24 +470,25 @@ namespace Control_de_Tareas
         {
             string totalID;
             string query = "select COUNT(id) FROM "+tabla+";";
-            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            OracleCommand cmd = new OracleCommand(query, conn);
             totalID = cmd.ExecuteScalar().ToString();
 
             return Int32.Parse(totalID);
         }
 
+        //ORACLE OK
         public void InsertNegocio(string[] datosNegocio)
         {
-            string query = "INSERT INTO negocio VALUES ("+datosNegocio[0]+", '" + datosNegocio[1]+"', '"+datosNegocio[2]+"', '"+datosNegocio[3]+"', '"+datosNegocio[4]+"', '"+datosNegocio[5]+"', '"+datosNegocio[6]+"', "+datosNegocio[7]+");";
-            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            string query = "INSERT INTO NEGOCIO (ID, NOMBRE, ENCARGADO, CORREO_ENCARGADO, FECHA_INGRESO, RUT, DIRECCION, DELETED) VALUES( NEGOCIO_SEQUENCE.NEXTVAL, '"+datosNegocio[1]+ "', '" + datosNegocio[2] + "', '" + datosNegocio[3] + "', TO_DATE('"+ datosNegocio[4] + "', 'yyyy-MM-dd'), '"+datosNegocio[5]+"', '"+datosNegocio[6]+"',0 )";
+            OracleCommand cmd = new OracleCommand(query, conn);
             var reader = cmd.ExecuteNonQuery();
         }
 
         public void InsertUsuario(string[] datosUsuario)
         {
 
-            string query = "INSERT INTO usuario VALUES(" + datosUsuario[0] + ", '" + datosUsuario[1] + "', '" + datosUsuario[2] + "', '" + datosUsuario[3] + "', '" + datosUsuario[4] + "', '" + datosUsuario[5] + "', '" + datosUsuario[6] + "', " + datosUsuario[7] + ", " + datosUsuario[8] + ", " + datosUsuario[9] + ", " + datosUsuario[10] + ", " + datosUsuario[11] + ");";
-            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            string query = "INSERT INTO USUARIO (ID, CORREO, PASSWORD, RUT, NOMBRE, APELLIDOP, APELLIDOM, CELULAR, DELETED, ROL_ID, NEGOCIO_ID, GRUPOTRABAJO_ID) VALUES(USUARIO_SEQUENCE.NEXTVAL, '" + datosUsuario[1] + "', '" + datosUsuario[2] + "', '" + datosUsuario[3] + "', '" + datosUsuario[4] + "', '" + datosUsuario[5] + "', '" + datosUsuario[6] + "', " + datosUsuario[7] + ", " + datosUsuario[8] + ", " + datosUsuario[9] + ", " + datosUsuario[10] + ", " + datosUsuario[11] + ")";
+            OracleCommand cmd = new OracleCommand(query, conn);
             var reader = cmd.ExecuteNonQuery();
         }
 

@@ -110,8 +110,8 @@
             <Button x:Name="btn_listarNegocios" Click="btn_listarNegocios_Click"  FontFamily="Inter" FontSize="15" HorizontalAlignment="Left" Background="LightYellow" BorderThickness="0" VerticalAlignment="Top" Content="Cargar Negocios" Margin="40,40,0,20"></Button>
             <Label HorizontalAlignment="Center" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="30" Content="Lista de Negocios"></Label>
             <DataGrid x:Name="tablaNegocios" MinWidth="600" IsReadOnly="True" FontFamily="Inter" FontSize="15" ItemsSource="{Binding Path=LoadDataBinding}" AutoGenerateColumns="True" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,100,0,0" Width="Auto" MaxHeight="500" Height="500"/>
-            <Button FontFamily="Inter" x:Name="btn_listarNegocios_Editar" Click="btn_listarNegocios_Editar_Click" FontSize="20" Content="Editar Negocio" Margin="0,40,0,80" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="40" Width="250"></Button>
-            <Button Width="250" Click="btn_listarNegocios_Eliminar_Click" x:Name="btn_listarNegocios_Eliminar" BorderThickness="0" Background="Red" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Inter" FontSize="20" Margin="0,40,0,10" Content="Eliminar Negocio"></Button>
+            <Button FontFamily="Inter" x:Name="btn_listarNegocios_Editar" Click="btn_listarNegocios_Editar_Click" FontSize="20" Content="Editar Negocio" Margin="0,40,0,150" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="40" Width="250"></Button>
+            <Button Width="250" Click="btn_listarNegocios_Eliminar_Click" x:Name="btn_listarNegocios_Eliminar" BorderThickness="0" Background="Red" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Inter" FontSize="20" Margin="0,40,0,110" Content="Eliminar Negocio"></Button>
         </Grid>
             <!--PANTALLA EDITAR NEGOCIO-->
         <Grid Name="Pantalla_Editar_Negocio" Margin="509,80,0,0" Height='800' VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden">
