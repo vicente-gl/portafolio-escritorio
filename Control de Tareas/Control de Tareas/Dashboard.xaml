@@ -239,6 +239,30 @@
             </StackPanel>
 
         </Grid>
+        <!--PANTALLAS FLUJOS DE TAREA-->
+            <!--PANTALLA CREAR FLUJO DE TAREA-->
+        <Grid Name="Pantalla_Crear_FlujoTarea" Margin="509,80,0,0" Height='800' VerticalAlignment="Top" HorizontalAlignment="Center" Width="1398" Visibility="Visible">
+            <Rectangle Fill="#FFFFFF"></Rectangle>
+            <Label HorizontalAlignment="Center" Margin="60,20,60,60" VerticalAlignment="Top" FontFamily="Inter Light" FontSize="30" Content="Crear Flujo de Tarea"></Label>
+            <Grid HorizontalAlignment="Center" Height="100" VerticalAlignment="Top" Margin="0,100,0,0">
+                <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+            
+                <Label Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Content="Nombre" FontFamily="Inter" FontSize="20"></Label>
+                <Label Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Content="Cantidad de Subflujos        " FontFamily="Inter" FontSize="20"></Label>
+
+                <Label Grid.Column="2" Grid.Row="1"  Content="{Binding ElementName=SliderSubFlujo, Path=Value}" HorizontalContentAlignment="Center" FontSize="20" FontFamily="Inter" VerticalAlignment="Center" Width="100" />
+                <TextBox Grid.Column="1" Grid.Row="0" FontFamily="Inter" FontSize="20" VerticalAlignment="Center" Width="250"></TextBox>
+                <Slider Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Name="SliderSubFlujo" Minimum="1" Maximum="10" Width="250" Value="1" IsSnapToTickEnabled="True" TickFrequency="1"></Slider>
+            </Grid>            
+        </Grid>
         <!--PANTALLAS USUARIO-->
             <!--PANTALLAS AGREGAR USUARIO-->
         <Grid Name="Pantalla_Agregar_Usuario" Margin="509,80,0,0" Height="1000" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden">
