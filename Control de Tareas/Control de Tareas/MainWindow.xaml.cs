@@ -57,6 +57,7 @@ namespace Control_de_Tareas
         {
             CConexion objConexion = new CConexion();
             objConexion.EstablecerConn();
+            objConexion.TestStringQuery();
         }
     }
 }

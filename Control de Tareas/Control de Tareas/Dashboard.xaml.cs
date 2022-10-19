@@ -288,8 +288,8 @@ namespace Control_de_Tareas
         {
             CConexion cConexion = new CConexion();
             cConexion.LlamarTabla("negocio", tablaNegocios);
-            tablaNegocios.Columns[0].Visibility = Visibility.Collapsed;
-            tablaNegocios.Columns[6].Visibility = Visibility.Collapsed;
+            //tablaNegocios.Columns[0].Visibility = Visibility.Collapsed;
+            //tablaNegocios.Columns[6].Visibility = Visibility.Collapsed;
         }
         //Eliminar Negocio
         private void btn_listarNegocios_Eliminar_Click(object sender, RoutedEventArgs e)

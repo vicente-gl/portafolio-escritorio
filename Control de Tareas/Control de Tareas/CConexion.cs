@@ -7,12 +7,18 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using System.Windows.Data;
 using System.Windows;
+using Oracle;
+using Oracle.ManagedDataAccess.Client;
+using Oracle.ManagedDataAccess.Types;
 
 namespace Control_de_Tareas
 {
     internal class CConexion
     {
         MySqlConnection conex = new MySqlConnection();
+
+        OracleConnection conn = new OracleConnection();
+
 
         static string servidor = "dbcontroltareas.ct2rrxcaxo9w.us-east-1.rds.amazonaws.com";
         static string bd = "ProcessSA2";
@@ -21,23 +27,54 @@ namespace Control_de_Tareas
         static string puerto = "3306";
 
         public string cadenaConexion = "server=" + servidor + ";" + "port=" + puerto + ";" + "uid=" + usuario + ";" + "pwd=" + password + ";" + "database=" + bd + ";";
+        //public string cadenaConexion2 = "Data Source = (DESCRIPTION = (ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = adb.sa-santiago-1.oraclecloud.com)(PORT = 1521)))(CONNECT_DATA = (SERVICE_NAME = g52de4c04e63870_processsa_high.adb.oraclecloud.com))); User ID = ADMIN / Schema; Password= Duoc12345678;";
+        public string cadenaConexion2 = "User ID = ADMIN; Password = Duoc12345678; Data Source = processsa_high";
+
 
         public bool EstablecerConn()
         {
             try
             {
+                /*
                 conex.ConnectionString = cadenaConexion;
                 conex.Open();
                 return true;
+                */
+                conn.ConnectionString = cadenaConexion2;
+                conn.Open();
+                return true;
 
             }
-            catch (MySqlException e)
+            catch (OracleException e)
             {
+                
                 System.Windows.MessageBox.Show("No se pudo establecer conexion, Error: " + e);
                 return false;
             }
         }
 
+        public void CerrarConn2()
+        {
+            conn.Close();
+        }
+
+        public void TestStringQuery()
+        {
+
+            string query = "select nombre FROM negocio where id = 21";
+            OracleCommand cmd = new OracleCommand(query, conn);
+            OracleDataReader oraReader;
+            oraReader = cmd.ExecuteReader();
+
+            while (oraReader.Read())
+            {
+                MessageBox.Show(oraReader.GetString(0));
+            }
+            oraReader.Close();
+            conn.Close();
+
+
+        }
 
         public string NombreUsuarioLogeado(int idUsuario)
         {
@@ -159,16 +196,19 @@ namespace Control_de_Tareas
         {
             EstablecerConn();
             string query = "SELECT * FROM " + tabla + " where Deleted = 0;";
-            MySqlCommand cmd = new MySqlCommand(query, conex);
+            OracleCommand cmd = new OracleCommand(query, conn);
+            //MySqlCommand cmd = new MySqlCommand(query, conex);
 
             try
             {
-                MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
+                //MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
+                OracleDataAdapter adp = new OracleDataAdapter(cmd);
                 DataSet ds = new DataSet();
+                MessageBox.Show(ds.ToString());
                 adp.Fill(ds, "LoadDataBinding");
                 datagridItem.DataContext = ds;
             }
-            catch (MySqlException ex)
+            catch (OracleException ex)
             {
                 MessageBox.Show(ex.ToString());
             }
