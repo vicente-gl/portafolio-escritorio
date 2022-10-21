@@ -197,7 +197,7 @@ namespace Control_de_Tareas
         public void LlamarTabla(string tabla, System.Windows.Controls.DataGrid datagridItem)
         {
             EstablecerConn();
-            string query = "SELECT * FROM " + tabla + " where Deleted = 0";
+            string query = "SELECT * FROM " + tabla + " where Deleted = 0 ORDER BY ID";
             OracleCommand cmd = new OracleCommand(query, conn);
 
             try
@@ -353,11 +353,11 @@ namespace Control_de_Tareas
                 MessageBox.Show(ex.Message);
             }
             return usuariosNegocio.ToArray();
-        }
+            }
 
         public string[] GetRolFromUsuarios(string id_negocio)
         {
-            string query = "SELECT *, rol.nombre AS nombrerol FROM usuario INNER JOIN rol ON usuario.rol_id = rol.id WHERE negocio_id = " + id_negocio + "";
+            string query = "SELECT * FROM USUARIO INNER JOIN ROL ON USUARIO.ROL_ID = ROL.ID WHERE NEGOCIO_ID = " + id_negocio + "";
             OracleCommand cmd = new OracleCommand(query, conn);
             OracleDataReader mydr;
             List<string> usuariosNegocio = new List<string>();
@@ -366,7 +366,7 @@ namespace Control_de_Tareas
                 mydr = cmd.ExecuteReader();
                 while (mydr.Read())
                 {
-                    string subj = mydr.GetString(0);
+                    string subj = mydr.GetString(13);
                     usuariosNegocio.Add(subj);
                 }
                 mydr.Close();
@@ -479,7 +479,14 @@ namespace Control_de_Tareas
         //ORACLE OK
         public void InsertNegocio(string[] datosNegocio)
         {
-            string query = "INSERT INTO NEGOCIO (ID, NOMBRE, ENCARGADO, CORREO_ENCARGADO, FECHA_INGRESO, RUT, DIRECCION, DELETED) VALUES( NEGOCIO_SEQUENCE.NEXTVAL, '"+datosNegocio[1]+ "', '" + datosNegocio[2] + "', '" + datosNegocio[3] + "', TO_DATE('"+ datosNegocio[4] + "', 'yyyy-MM-dd'), '"+datosNegocio[5]+"', '"+datosNegocio[6]+"',0 )";
+            string query = "INSERT INTO NEGOCIO (ID, NOMBRE, ENCARGADO, CORREO_ENCARGADO, FECHA_INGRESO, RUT, DIRECCION, DELETED) VALUES( NEGOCIO_ID_SEQ.NEXTVAL, '"+datosNegocio[1]+ "', '" + datosNegocio[2] + "', '" + datosNegocio[3] + "', TO_DATE('"+ datosNegocio[4] + "', 'yyyy-MM-dd'), '"+datosNegocio[5]+"', '"+datosNegocio[6]+"',0 )";
+            OracleCommand cmd = new OracleCommand(query, conn);
+            var reader = cmd.ExecuteNonQuery();
+        }
+
+        public void InsertRol(string nombreRol)
+        {
+            string query = "INSERT INTO ROL (ID, NOMBRE, DELETED) VALUES( ROL_ID_SEQ.NEXTVAL, '" + nombreRol + "',0 )";
             OracleCommand cmd = new OracleCommand(query, conn);
             var reader = cmd.ExecuteNonQuery();
         }
@@ -487,7 +494,7 @@ namespace Control_de_Tareas
         public void InsertUsuario(string[] datosUsuario)
         {
 
-            string query = "INSERT INTO USUARIO (ID, CORREO, PASSWORD, RUT, NOMBRE, APELLIDOP, APELLIDOM, CELULAR, DELETED, ROL_ID, NEGOCIO_ID, GRUPOTRABAJO_ID) VALUES(USUARIO_SEQUENCE.NEXTVAL, '" + datosUsuario[1] + "', '" + datosUsuario[2] + "', '" + datosUsuario[3] + "', '" + datosUsuario[4] + "', '" + datosUsuario[5] + "', '" + datosUsuario[6] + "', " + datosUsuario[7] + ", " + datosUsuario[8] + ", " + datosUsuario[9] + ", " + datosUsuario[10] + ", " + datosUsuario[11] + ")";
+            string query = "INSERT INTO USUARIO (ID, CORREO, PASSWORD, RUT, NOMBRE, APELLIDOP, APELLIDOM, CELULAR, DELETED, ROL_ID, NEGOCIO_ID, GRUPOTRABAJO_ID) VALUES(USUARIO_ID_SEQ.NEXTVAL, '" + datosUsuario[1] + "', '" + datosUsuario[2] + "', '" + datosUsuario[3] + "', '" + datosUsuario[4] + "', '" + datosUsuario[5] + "', '" + datosUsuario[6] + "', " + datosUsuario[7] + ", " + datosUsuario[8] + ", " + datosUsuario[9] + ", " + datosUsuario[10] + ", " + datosUsuario[11] + ")";
             OracleCommand cmd = new OracleCommand(query, conn);
             var reader = cmd.ExecuteNonQuery();
         }

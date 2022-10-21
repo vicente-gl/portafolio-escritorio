@@ -144,9 +144,10 @@ namespace Control_de_Tareas
             OcultarOtrasPantallas(Pantalla_Administrar_Roles);
             if (Pantalla_Administrar_Roles.Visibility.Equals(Visibility.Hidden))
             {
-                date_pick.SelectedDate = DateTime.Now;
                 Pantalla_Administrar_Roles.Visibility = Visibility.Visible;
                 CambiarColorBoton(btn_admin_rol, color_menu2_pressed);
+                CConexion cConexion = new CConexion();
+                cConexion.LlamarTabla("rol", datagrid_Rol);
             }
             else
             {
@@ -379,6 +380,29 @@ namespace Control_de_Tareas
             }
         }
         //Botones Roles
+        private void btn_AgregarRol_Click(object sender, RoutedEventArgs e)
+        {
+            if (txtbox_rolNombre.Text == "")
+            {
+                MessageBox.Show("Debes ingresar todos los campos.");
+            }
+            else
+            {
+                try
+                {
+                    CConexion cConexion = new CConexion();
+                    cConexion.EstablecerConn();
+
+                    string nombreRol = txtbox_rolNombre.Text;
+                    cConexion.InsertRol(nombreRol);
+                    MessageBox.Show("Rol Agregado Exitosamente");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("No se pudo agregar rol. Error: " + ex.Message);
+                }
+            }
+        }
 
         //Botones Grupos de Trabajo
         //Boton Crear Grupo de Trabajo
@@ -963,6 +987,52 @@ namespace Control_de_Tareas
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
+
+        //Cambiar cantidad de objetos en Crear Flujo de Tarea
+        private void flujoTareaSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+        }
+
+        private void flujo_btnConfirmar_Click(object sender, RoutedEventArgs e)
+        {
+            subflujoLabel.Children.Clear();
+            subflujoTxtBox.Children.Clear();
+            subflujoLabel2.Children.Clear();
+            subflujoTxtBox2.Children.Clear();
+            int totalSubFlujo = Int32.Parse(SliderSubFlujo.Value.ToString());
+
+            for(int i = 0; i < totalSubFlujo; i++)
+            {
+                //Crear Labels
+                Label label = new Label();
+                label.Name = "Paso" + i + 1;
+                label.Content = "Paso " + (i + 1);
+                label.Width = 150;
+                //label.FontFamily = "Inter";
+                label.FontSize = 15;
+                label.Margin = new Thickness(5);
+                label.HorizontalContentAlignment = HorizontalAlignment.Center;
+
+                if(i <= 5) subflujoLabel.Children.Add(label);
+                if(i > 5) subflujoLabel2.Children.Add(label);
+
+                //Crear txtbox
+                TextBox textBox = new TextBox();
+                textBox.FontSize = 15;
+                textBox.Name = "subflujo" + (i + 1);
+                textBox.Width = 150;
+                textBox.Margin = new Thickness(5);
+                textBox.Background = new SolidColorBrush(Colors.LightGray);
+                textBox.Foreground = new SolidColorBrush(Colors.White);
+
+                if(i <= 5) subflujoTxtBox.Children.Add(textBox);
+                if(i > 5) subflujoTxtBox2.Children.Add(textBox);
+
+            }
+
+        }
+
 
     }
 }

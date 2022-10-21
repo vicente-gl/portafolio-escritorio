@@ -167,16 +167,16 @@
                         </StackPanel>
                         <Border Margin="20,0,0,0"></Border>
                         <StackPanel>
-                            <TextBox Width="250"></TextBox>
+                            <TextBox x:Name="txtbox_rolNombre" Width="250"></TextBox>
                             <Border Margin="0,20,0,20"></Border>
-                            <Button FontFamily="Inter" Foreground="White" Content="Agregar Rol"></Button>
+                            <Button x:Name="btn_AgregarRol" Click="btn_AgregarRol_Click" FontFamily="Inter" Foreground="White" Content="Agregar Rol"></Button>
                         </StackPanel>                        
                     </StackPanel>
                 </StackPanel>
                 <Border Margin="20,0,20,0"></Border>
                 <StackPanel>
                     <Label HorizontalAlignment="Center" Margin="60,20,60,60" FontFamily="Inter Light" FontSize="30" Content="Lista de Roles"></Label>
-                    <DataGrid MinHeight="300" MaxHeight="500"></DataGrid>
+                    <DataGrid x:Name="datagrid_Rol" ItemsSource="{Binding Path=LoadDataBinding}" MinHeight="300" MaxHeight="500"></DataGrid>
                     <Border></Border>
                 </StackPanel>
                 
@@ -241,27 +241,46 @@
         </Grid>
         <!--PANTALLAS FLUJOS DE TAREA-->
             <!--PANTALLA CREAR FLUJO DE TAREA-->
-        <Grid Name="Pantalla_Crear_FlujoTarea" Margin="509,80,0,0" Height='800' VerticalAlignment="Top" HorizontalAlignment="Center" Width="1398" Visibility="Visible">
+        <Grid Name="Pantalla_Crear_FlujoTarea" Margin="509,80,0,0" Height='800' VerticalAlignment="Top" HorizontalAlignment="Center" Width="1398" Visibility="Hidden">
             <Rectangle Fill="#FFFFFF"></Rectangle>
             <Label HorizontalAlignment="Center" Margin="60,20,60,60" VerticalAlignment="Top" FontFamily="Inter Light" FontSize="30" Content="Crear Flujo de Tarea"></Label>
-            <Grid HorizontalAlignment="Center" Height="100" VerticalAlignment="Top" Margin="0,100,0,0">
-                <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-            
-                <Label Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Content="Nombre" FontFamily="Inter" FontSize="20"></Label>
-                <Label Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Content="Cantidad de Subflujos        " FontFamily="Inter" FontSize="20"></Label>
+            <StackPanel>
+                <Grid HorizontalAlignment="Center" Height="100" VerticalAlignment="Top" Margin="0,100,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="2" Grid.Row="1"  Content="{Binding ElementName=SliderSubFlujo, Path=Value}" HorizontalContentAlignment="Center" FontSize="20" FontFamily="Inter" VerticalAlignment="Center" Width="100" />
-                <TextBox Grid.Column="1" Grid.Row="0" FontFamily="Inter" FontSize="20" VerticalAlignment="Center" Width="250"></TextBox>
-                <Slider Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Name="SliderSubFlujo" Minimum="1" Maximum="10" Width="250" Value="1" IsSnapToTickEnabled="True" TickFrequency="1"></Slider>
-            </Grid>            
+                    <Label Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Content="Nombre" FontFamily="Inter" FontSize="20"></Label>
+                    <Label Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Content="Cantidad de Subflujos        " FontFamily="Inter" FontSize="20"></Label>
+
+                    <Label Grid.Column="2" Grid.Row="1"  Content="{Binding ElementName=SliderSubFlujo, Path=Value}" HorizontalContentAlignment="Center" FontSize="20" FontFamily="Inter" VerticalAlignment="Center" Width="100" />
+                    <TextBox Grid.Column="1" Grid.Row="0" FontFamily="Inter" FontSize="20" VerticalAlignment="Center" Width="250"></TextBox>
+                    <Slider x:Name="SliderSubFlujo" ValueChanged="flujoTareaSlider_ValueChanged" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Minimum="1" Maximum="10" Width="250" Value="1" IsSnapToTickEnabled="True" TickFrequency="1"></Slider>
+                </Grid>
+                
+                <Border Margin="20"></Border>
+                
+                <Button x:Name="flujo_btnConfirmar" Click="flujo_btnConfirmar_Click" Width="150" Content="Confirmar" FontFamily="Inter" Foreground="White"></Button>
+                <Border Margin="20"></Border>
+                <StackPanel x:Name="subflujoLabel" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Label Width="150" Name="Paso1" Margin="5" FontSize="15" Content="Paso 1" HorizontalContentAlignment="Center"></Label>          
+                </StackPanel>
+                <StackPanel x:Name="subflujoTxtBox" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBox Width="150" FontFamily="Inter" FontSize="15" Foreground="White" Background="LightGray" ></TextBox>
+                </StackPanel>
+                <Border Margin="10"></Border>
+                <StackPanel x:Name="subflujoLabel2" Orientation="Horizontal" HorizontalAlignment="Center">
+                </StackPanel>
+                <StackPanel x:Name="subflujoTxtBox2" Orientation="Horizontal" HorizontalAlignment="Center">
+                </StackPanel>
+
+            </StackPanel>
         </Grid>
         <!--PANTALLAS USUARIO-->
             <!--PANTALLAS AGREGAR USUARIO-->
