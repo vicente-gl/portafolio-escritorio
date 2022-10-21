@@ -49,13 +49,13 @@ namespace Control_de_Tareas
         {
             if (DataGrid_SeleccionarNegocio.SelectedValue == null)
             {
-                MessageBox.Show("No se ha seleccionado ningún Usuario");
+                MessageBox.Show("No se ha seleccionado ningún Negocio");
             }
             else
             {
                 //IList rows = tablaUsuarios.SelectedItems;
                 DataRowView row = (DataRowView)DataGrid_SeleccionarNegocio.SelectedItems[0];
-                string nombreNegocio = row["nombre"].ToString();
+                string nombreNegocio = row[0].ToString();
                 CConexion cConexion = new CConexion();
                 cConexion.EstablecerConn();
                 string idNegocio = cConexion.GetIDByName("negocio", nombreNegocio);

@@ -35,6 +35,9 @@ namespace Control_de_Tareas
         public string idNegocioSeleccionado;
 
         public string[] idListaUsuariosCrearGP;
+
+        //Variables subflujos
+        string[] subflujotxt = new string[15];
         public string IDNegocioSeleccionado
         {
             get
@@ -202,6 +205,41 @@ namespace Control_de_Tareas
                 {
                     Pantalla_Agregar_GP.Visibility = Visibility.Hidden;
                     CambiarColorBoton(btn_gptrabajo_crear, color_menu2_idle);
+                }
+                CargarUsuariosCrearGP();
+            }
+        }
+
+        //Botones Flujos de Tarea
+        private void btn_flujos_crear_Click(object sender, RoutedEventArgs e)
+        {
+            ApagarBotonesMenu2();
+            OcultarOtrasPantallas(Pantalla_SinNegocio);
+            OcultarOtrasPantallas(Pantalla_Crear_FlujoTarea);
+            if (idNegocioSeleccionado == null || idNegocioSeleccionado == "1")
+            {
+                if (Pantalla_SinNegocio.Visibility.Equals(Visibility.Hidden))
+                {
+                    Pantalla_SinNegocio.Visibility = Visibility.Visible;
+                    CambiarColorBoton(btn_flujos_crear, color_menu2_pressed);
+                }
+                else
+                {
+                    Pantalla_SinNegocio.Visibility = Visibility.Hidden;
+                    CambiarColorBoton(btn_flujos_crear, color_menu2_idle);
+                }
+            }
+            else
+            {
+                if (Pantalla_Crear_FlujoTarea.Visibility.Equals(Visibility.Hidden))
+                {
+                    Pantalla_Crear_FlujoTarea.Visibility = Visibility.Visible;
+                    CambiarColorBoton(btn_flujos_crear, color_menu2_pressed);
+                }
+                else
+                {
+                    Pantalla_Crear_FlujoTarea.Visibility = Visibility.Hidden;
+                    CambiarColorBoton(btn_flujos_crear, color_menu2_idle);
                 }
                 CargarUsuariosCrearGP();
             }
@@ -454,6 +492,35 @@ namespace Control_de_Tareas
             //tabla_usuariosGPSelected.Items.Clear();
             CargarListaGP();
 
+        }
+
+        //Botones Flujo de Tareas
+            //Crear Flujo de Tarea
+        private void btn_agregarFlujo_Click(object sender, RoutedEventArgs e)
+        {
+            bool camposLlenos = true;
+            
+            foreach(TextBox textbox in subflujoTxtBox.Children)
+            {
+                if (textbox.Text == "") camposLlenos=false;
+            }
+            if(subflujoTxtBox2.Children.Count > 0)
+            {
+                foreach(TextBox textBox in subflujoTxtBox2.Children)
+                {
+                    if (textBox.Text == "") camposLlenos = false;
+                }
+            }
+            if (txtBoxNombreFlujo.Text == "") camposLlenos = false;
+            if (!camposLlenos)
+            {
+                MessageBox.Show("Debes ingresar todos los campos");
+
+            }
+            else
+            {
+                //Query
+            }
         }
 
         //Botonos Pantalla Crear Usuario
@@ -713,7 +780,8 @@ namespace Control_de_Tareas
                 Pantalla_Editar_Usuario,
                 Pantalla_Administrar_Roles,
                 Pantalla_Agregar_GP,
-                Pantalla_ListarGP
+                Pantalla_ListarGP,
+                Pantalla_Crear_FlujoTarea
             };
             //opcion5
 
@@ -947,7 +1015,9 @@ namespace Control_de_Tareas
 
         public void ActualizarNegocioSelected()
         {
+            
             btn_SeleccionarNegocio.Content = _negocioSelected;
+            /*
             if(Pantalla_SinNegocio.Visibility == Visibility.Visible)
             {
                 Pantalla_SinNegocio.Visibility = Visibility.Hidden;
@@ -962,6 +1032,7 @@ namespace Control_de_Tareas
             {
                 //CargarListaGP();
             }
+            */
         }
 
         private void btn_SeleccionarNegocio_Click(object sender, RoutedEventArgs e)
@@ -991,45 +1062,60 @@ namespace Control_de_Tareas
         //Cambiar cantidad de objetos en Crear Flujo de Tarea
         private void flujoTareaSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            if(Pantalla_Crear_FlujoTarea.Visibility == Visibility.Visible)
+            {
+                int j = 0;
+                foreach(TextBox textBox in subflujoTxtBox.Children)
+                {
+                    subflujotxt[j] = textBox.Text;
+                    j++;
+                }
+                foreach (TextBox textBox in subflujoTxtBox2.Children)
+                {
+                    subflujotxt[j] = textBox.Text;
+                    j++;
+                }
+                subflujoLabel.Children.Clear();
+                subflujoTxtBox.Children.Clear();
+                subflujoLabel2.Children.Clear();
+                subflujoTxtBox2.Children.Clear();
+                int totalSubFlujo = Int32.Parse(SliderSubFlujo.Value.ToString());
 
+                for (int i = 0; i < totalSubFlujo; i++)
+                {
+                    //Crear Labels
+                    Label label = new Label();
+                    label.Name = "Paso" + i + 1;
+                    label.Content = "Paso " + (i + 1);
+                    label.Width = 150;
+                    //label.FontFamily = "Inter";
+                    label.FontSize = 15;
+                    label.Margin = new Thickness(5);
+                    label.HorizontalContentAlignment = HorizontalAlignment.Center;
+
+                    if (i <= 5) subflujoLabel.Children.Add(label);
+                    if (i > 5) subflujoLabel2.Children.Add(label);
+
+                    //Crear txtbox
+                    TextBox textBox = new TextBox();
+                    textBox.FontSize = 15;
+                    textBox.Name = "subflujo" + (i + 1);
+                    textBox.Width = 150;
+                    textBox.Margin = new Thickness(5);
+                    textBox.Background = new SolidColorBrush(Colors.LightGray);
+                    textBox.Foreground = new SolidColorBrush(Colors.White);
+                    textBox.Text = subflujotxt[i];
+
+                    if (i <= 5) subflujoTxtBox.Children.Add(textBox);
+                    if (i > 5) subflujoTxtBox2.Children.Add(textBox);
+
+                }
+            }
         }
 
         private void flujo_btnConfirmar_Click(object sender, RoutedEventArgs e)
         {
-            subflujoLabel.Children.Clear();
-            subflujoTxtBox.Children.Clear();
-            subflujoLabel2.Children.Clear();
-            subflujoTxtBox2.Children.Clear();
-            int totalSubFlujo = Int32.Parse(SliderSubFlujo.Value.ToString());
-
-            for(int i = 0; i < totalSubFlujo; i++)
-            {
-                //Crear Labels
-                Label label = new Label();
-                label.Name = "Paso" + i + 1;
-                label.Content = "Paso " + (i + 1);
-                label.Width = 150;
-                //label.FontFamily = "Inter";
-                label.FontSize = 15;
-                label.Margin = new Thickness(5);
-                label.HorizontalContentAlignment = HorizontalAlignment.Center;
-
-                if(i <= 5) subflujoLabel.Children.Add(label);
-                if(i > 5) subflujoLabel2.Children.Add(label);
-
-                //Crear txtbox
-                TextBox textBox = new TextBox();
-                textBox.FontSize = 15;
-                textBox.Name = "subflujo" + (i + 1);
-                textBox.Width = 150;
-                textBox.Margin = new Thickness(5);
-                textBox.Background = new SolidColorBrush(Colors.LightGray);
-                textBox.Foreground = new SolidColorBrush(Colors.White);
-
-                if(i <= 5) subflujoTxtBox.Children.Add(textBox);
-                if(i > 5) subflujoTxtBox2.Children.Add(textBox);
-
-            }
+            
 
         }
 
