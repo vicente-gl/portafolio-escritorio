@@ -309,7 +309,7 @@ namespace Control_de_Tareas
         }
 
 
-        //ORACLE OK????
+        //ORACLE OK
         public string[] GetUsuariosFromNegocio(string id_negocio )
         {
             string query = "SELECT nombre || ' ' || apellidop || ' ' || apellidom AS nombrecompleto FROM usuario WHERE negocio_id = " + id_negocio + " AND grupotrabajo_id = 1";
@@ -491,6 +491,27 @@ namespace Control_de_Tareas
             var reader = cmd.ExecuteNonQuery();
         }
 
+        public int GetFlujoTareaCount(string negocioID)
+        {
+            string query = "select count(gt.negocio_id) from flujoproceso fp join detalleflujo df on fp.id = df.flujoproceso_id join grupotrabajo gt on df.grupotrabajo_id = gt.id where gt.negocio_id = " + negocioID;
+            OracleCommand cmd = new OracleCommand(query, conn);
+            int reader = cmd.ExecuteNonQuery();
+            return reader;
+        }
+        public void InsertFlujoTarea(string nombre, int orden, int plantilla)
+        {
+            string query = "INSERT INTO FLUJOPROCESO (ID, ORDEN, NOMBRE, ESPLANTILLA, DELETED VALUES (FLUJOPROCESO_ID_SEQ.NEXTVAL, "+orden+", '"+nombre+"', "+plantilla+", 0";
+            OracleCommand cmd = new OracleCommand(query, conn);
+            var reader = cmd.ExecuteNonQuery();
+        }
+
+        public void InsertSubFlujo(string nombre)
+        {
+            string query = "aaa";
+            OracleCommand cmd = new OracleCommand(query, conn);
+            var reader = cmd.ExecuteNonQuery();
+        }
+
         public void InsertUsuario(string[] datosUsuario)
         {
 
@@ -499,8 +520,11 @@ namespace Control_de_Tareas
             var reader = cmd.ExecuteNonQuery();
         }
 
+        //CAMBIAR A ORACLE
+        URGENTE
         public void AgregarGrupoNegocio(string nombreGP, string idNegocio, List<string> listaUsuarios)
         {
+            
             string idGP = "";
             //Ingresar nuevo Grupo de Trabajo
             string query = "INSERT INTO grupotrabajo VALUES (null, '" + nombreGP + "', 0, "+ idNegocio + "); \n";

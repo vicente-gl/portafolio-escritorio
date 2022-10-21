@@ -234,7 +234,9 @@ namespace Control_de_Tareas
                 if (Pantalla_Crear_FlujoTarea.Visibility.Equals(Visibility.Hidden))
                 {
                     Pantalla_Crear_FlujoTarea.Visibility = Visibility.Visible;
+                    CargarCboxFlujo();
                     CambiarColorBoton(btn_flujos_crear, color_menu2_pressed);
+
                 }
                 else
                 {
@@ -242,6 +244,7 @@ namespace Control_de_Tareas
                     CambiarColorBoton(btn_flujos_crear, color_menu2_idle);
                 }
                 CargarUsuariosCrearGP();
+
             }
         }
 
@@ -460,7 +463,7 @@ namespace Control_de_Tareas
 
         }
         //Botones pantalla Listar GP
-            //Boton Emilinar GP
+            //Boton Eliminar GP
         private void btn_eliminar_GP_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -517,9 +520,16 @@ namespace Control_de_Tareas
                 MessageBox.Show("Debes ingresar todos los campos");
 
             }
-            else
+            else //Ejecutar Query
             {
-                //Query
+                CConexion cConexion = new CConexion();
+                cConexion.EstablecerConn();
+                int plantilla = 0;
+                if((bool)CheckBoxFlujoTarea.IsChecked == true) plantilla = 1;
+
+                int orden = cConexion.GetFlujoTareaCount(idNegocioSeleccionado) + 1; //obtiene cantidad de flujos en negocio para deifinir ultimo en la lista en el orden
+                cConexion.InsertFlujoTarea(txtBoxNombreFlujo.Text, orden, plantilla); //inserta flujo de negocio
+                //obtiene ID de tarea recien creada
             }
         }
 
@@ -1111,6 +1121,19 @@ namespace Control_de_Tareas
 
                 }
             }
+        }
+
+        private void CargarCboxFlujo()
+        {
+            string negocio = btn_SeleccionarNegocio.Content.ToString();
+            CConexion cConexion = new CConexion();
+            cConexion.EstablecerConn();
+            string[] grupotrabajo = cConexion.CargarComboboxNegocio(negocio);
+            foreach (string grupostrabajo in grupotrabajo)
+            {
+                cboxGrupoTrabajoCrearFlujo.Items.Add(grupostrabajo);
+            }
+            cConexion.CerrarConn();
         }
 
         private void flujo_btnConfirmar_Click(object sender, RoutedEventArgs e)

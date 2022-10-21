@@ -245,8 +245,10 @@
             <Rectangle Fill="#FFFFFF"></Rectangle>
             <Label HorizontalAlignment="Center" Margin="60,20,60,60" VerticalAlignment="Top" FontFamily="Inter Light" FontSize="30" Content="Crear Flujo de Tarea"></Label>
             <StackPanel>
-                <Grid HorizontalAlignment="Center" Height="100" VerticalAlignment="Top" Margin="0,100,0,0">
+                <Grid HorizontalAlignment="Center" Height="200" VerticalAlignment="Top" Margin="0,100,0,0">
                     <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
@@ -258,7 +260,11 @@
 
                     <Label Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Content="Nombre" FontFamily="Inter" FontSize="20"></Label>
                     <Label Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Content="Cantidad de Subflujos        " FontFamily="Inter" FontSize="20"></Label>
+                    <Label Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Content="Es Plantilla        " FontFamily="Inter" FontSize="20"></Label>
+                    <Label Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" Content="Grupo de Trabajo" FontFamily="Inter" FontSize="20"></Label>
 
+                    <ComboBox Grid.Column="1" Grid.Row="3" x:Name="cboxGrupoTrabajoCrearFlujo"></ComboBox>
+                    <CheckBox x:Name="CheckBoxFlujoTarea" Grid.Column="1" Grid.Row="2"></CheckBox>
                     <Label Grid.Column="2" Grid.Row="1"  Content="{Binding ElementName=SliderSubFlujo, Path=Value}" HorizontalContentAlignment="Center" FontSize="20" FontFamily="Inter" VerticalAlignment="Center" Width="100" />
                     <TextBox x:Name="txtBoxNombreFlujo" Grid.Column="1" Grid.Row="0" FontFamily="Inter" FontSize="20" VerticalAlignment="Center" Width="250"></TextBox>
                     <Slider x:Name="SliderSubFlujo" ValueChanged="flujoTareaSlider_ValueChanged" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Minimum="1" Maximum="10" Width="250" Value="1" IsSnapToTickEnabled="True" TickFrequency="1"></Slider>
