@@ -310,9 +310,9 @@ namespace Control_de_Tareas
 
 
         //ORACLE OK
-        public string[] GetUsuariosFromNegocio(string id_negocio )
+        public string[] GetUsuariosFromNegocio(string id_negocio, string gt_ninguno)
         {
-            string query = "SELECT nombre || ' ' || apellidop || ' ' || apellidom AS nombrecompleto FROM usuario WHERE negocio_id = " + id_negocio + " AND grupotrabajo_id = 1";
+            string query = "SELECT nombre || ' ' || apellidop || ' ' || apellidom AS nombrecompleto FROM usuario WHERE negocio_id = " + id_negocio + " AND grupotrabajo_id = " + gt_ninguno;
             OracleCommand cmd = new OracleCommand(query, conn);
             OracleDataReader mydr;
             List<string> usuariosNegocio = new List<string>();
@@ -332,9 +332,9 @@ namespace Control_de_Tareas
             }
             return usuariosNegocio.ToArray();
         }
-        public string[] GetUserIDFromNegocio(string id_negocio)
+        public string[] GetUserIDFromNegocio(string id_negocio, string gt_ninguno)
         {
-            string query = "SELECT id FROM usuario WHERE negocio_id = " + id_negocio + " AND grupotrabajo_id = 1";
+            string query = "SELECT id FROM usuario WHERE negocio_id = " + id_negocio + " AND grupotrabajo_id = "+ gt_ninguno;
             OracleCommand cmd = new OracleCommand(query, conn);
             OracleDataReader mydr;
             List<string> usuariosNegocio = new List<string>();
@@ -418,7 +418,7 @@ namespace Control_de_Tareas
             }
             mydr.Close();
 
-            query = "select nombre FROM grupotrabajo where negocio_id = " + result + "";
+            query = "select nombre FROM grupotrabajo where negocio_id = " + result + " and deleted = 0";
             cmd = new OracleCommand(query, conn);
             List<string> datosCombo = new List<string>();
             try
@@ -459,9 +459,9 @@ namespace Control_de_Tareas
             var reader = cmd.ExecuteNonQuery();
         }
 
-        public void ResetGPUsuarios(string idgp_eliminado)
+        public void ResetGPUsuarios(string idgp_eliminado, string gt_ninguno)
         {
-            string query = "UPDATE usuario SET grupotrabajo_id = 1 WHERE grupotrabajo_id = "+idgp_eliminado+"";
+            string query = "UPDATE usuario SET grupotrabajo_id = "+ gt_ninguno + " WHERE grupotrabajo_id = "+idgp_eliminado+"";
             OracleCommand cmd = new OracleCommand(query, conn);
             var reader = cmd.ExecuteNonQuery();
         }
@@ -545,7 +545,7 @@ namespace Control_de_Tareas
             {
                 query += "UPDATE usuario SET grupotrabajo_id = " + idGP + " WHERE id = "+ listaUsuarios[i];
                 cmd = new OracleCommand(query, conn);
-                var reader2 = cmd.ExecuteNonQuery();
+                var reader2 = cmd.ExecuteNonQuery(); //BUG cuando se agregan mas de 1 usuario
             }
         }
 

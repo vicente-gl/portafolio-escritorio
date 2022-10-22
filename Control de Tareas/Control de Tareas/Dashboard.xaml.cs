@@ -476,7 +476,8 @@ namespace Control_de_Tareas
                 int cantUsuarios = tabla_usuariosGPSelected.Items.Count;
                 string mensaje;
                 cConexion.DeleteRow(idSelected, "grupotrabajo");
-                cConexion.ResetGPUsuarios(idSelected);
+                string gt_ninguno = cConexion.GetIDByName("grupotrabajo", "Ninguno");
+                cConexion.ResetGPUsuarios(idSelected, gt_ninguno);
                 cConexion.CerrarConn();
                 if(tabla_usuariosGPSelected.Items.Count == 1)
                 {
@@ -501,49 +502,7 @@ namespace Control_de_Tareas
             //Crear Flujo de Tarea
         private void btn_agregarFlujo_Click(object sender, RoutedEventArgs e)
         {
-            bool camposLlenos = true;
-            
-            foreach(TextBox textbox in subflujoTxtBox.Children)
-            {
-                if (textbox.Text == "") camposLlenos=false;
-            }
-            if(subflujoTxtBox2.Children.Count > 0)
-            {
-                foreach(TextBox textBox in subflujoTxtBox2.Children)
-                {
-                    if (textBox.Text == "") camposLlenos = false;
-                }
-            }
-            if (txtBoxNombreFlujo.Text == "") camposLlenos = false;
-            if (!camposLlenos)
-            {
-                MessageBox.Show("Debes ingresar todos los campos");
-
-            }
-            else //Ejecutar Query
-            {
-                CConexion cConexion = new CConexion();
-                cConexion.EstablecerConn();
-                int plantilla = 0;
-                if((bool)CheckBoxFlujoTarea.IsChecked == true) plantilla = 1;
-
-                int orden = cConexion.GetFlujoTareaCount(idNegocioSeleccionado) + 1; //obtiene cantidad de flujos en negocio para deifinir ultimo en la lista en el orden
-                cConexion.InsertFlujoTarea(txtBoxNombreFlujo.Text, orden, plantilla); //inserta flujo de negocio
-                
-                //obtiene ID de tarea recien creada
-                //Obtener cantidad de subflujos
-                int totalSubflujos = subflujoTxtBox.Children.Count + subflujoTxtBox2.Children.Count;
-                int i = 0;
-                foreach(TextBox txtBox in subflujoTxtBox.Children)
-                {
-                    cConexion.InsertSubFlujo(txtBox.Text, i);
-                }
-                if(totalSubflujos > 5)
-                {
-                    //foreach
-                }
-                
-            }
+           
         }
 
         //Botonos Pantalla Crear Usuario
@@ -827,9 +786,10 @@ namespace Control_de_Tareas
             CConexion cConexion = new CConexion();
             cConexion.EstablecerConn();
             ListBoxUsuariosGP.Items.Clear();
-            string[] listaUsuarios = cConexion.GetUsuariosFromNegocio(idNegocioSeleccionado);
+            string gt_ninguno = cConexion.GetIDByName("grupotrabajo", "Ninguno");
+            string[] listaUsuarios = cConexion.GetUsuariosFromNegocio(idNegocioSeleccionado, gt_ninguno);
             string[] listaNombreRol = cConexion.GetRolFromUsuarios(idNegocioSeleccionado);
-            idListaUsuariosCrearGP = cConexion.GetUserIDFromNegocio(idNegocioSeleccionado);
+            idListaUsuariosCrearGP = cConexion.GetUserIDFromNegocio(idNegocioSeleccionado, gt_ninguno);
             CheckBox box;
             for(int i = 0; i < listaUsuarios.Length; i++)
             {
@@ -926,6 +886,7 @@ namespace Control_de_Tareas
                 {
                     cbox_user_gtrabajo.Items.Add(grupostrabajo);
                 }
+                if (cbox_user_gtrabajo.Items.Count <= 0) cbox_user_gtrabajo.Items.Add("Ninguno");
             }
 
         }
@@ -954,6 +915,7 @@ namespace Control_de_Tareas
             {
                 edit_cbox_user_gtrabajo.Items.Add(grupostrabajo);
             }
+            if (edit_cbox_user_gtrabajo.Items.Count <= 0) edit_cbox_user_gtrabajo.Items.Add("Ninguno");
 
         }
 
@@ -1085,6 +1047,7 @@ namespace Control_de_Tareas
         //Cambiar cantidad de objetos en Crear Flujo de Tarea
         private void flujoTareaSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            /*
             if(Pantalla_Crear_FlujoTarea.Visibility == Visibility.Visible)
             {
                 int j = 0;
@@ -1134,10 +1097,12 @@ namespace Control_de_Tareas
 
                 }
             }
+            */
         }
 
         private void CargarCboxFlujo()
         {
+            /*
             string negocio = btn_SeleccionarNegocio.Content.ToString();
             CConexion cConexion = new CConexion();
             cConexion.EstablecerConn();
@@ -1147,6 +1112,7 @@ namespace Control_de_Tareas
                 cboxGrupoTrabajoCrearFlujo.Items.Add(grupostrabajo);
             }
             cConexion.CerrarConn();
+            */
         }
 
         private void flujo_btnConfirmar_Click(object sender, RoutedEventArgs e)
@@ -1155,6 +1121,57 @@ namespace Control_de_Tareas
 
         }
 
+
+
+        //Codigos Antiguos
+        /*
+        private void AgregarFlujoKanban()
+        {
+            bool camposLlenos = true;
+
+            foreach (TextBox textbox in subflujoTxtBox.Children)
+            {
+                if (textbox.Text == "") camposLlenos = false;
+            }
+            if (subflujoTxtBox2.Children.Count > 0)
+            {
+                foreach (TextBox textBox in subflujoTxtBox2.Children)
+                {
+                    if (textBox.Text == "") camposLlenos = false;
+                }
+            }
+            if (txtBoxNombreFlujo.Text == "") camposLlenos = false;
+            if (!camposLlenos)
+            {
+                MessageBox.Show("Debes ingresar todos los campos");
+
+            }
+            else //Ejecutar Query
+            {
+                CConexion cConexion = new CConexion();
+                cConexion.EstablecerConn();
+                int plantilla = 0;
+                if ((bool)CheckBoxFlujoTarea.IsChecked == true) plantilla = 1;
+
+                int orden = cConexion.GetFlujoTareaCount(idNegocioSeleccionado) + 1; //obtiene cantidad de flujos en negocio para deifinir ultimo en la lista en el orden
+                cConexion.InsertFlujoTarea(txtBoxNombreFlujo.Text, orden, plantilla); //inserta flujo de negocio
+
+                //obtiene ID de tarea recien creada
+                //Obtener cantidad de subflujos
+                int totalSubflujos = subflujoTxtBox.Children.Count + subflujoTxtBox2.Children.Count;
+                int i = 0;
+                foreach (TextBox txtBox in subflujoTxtBox.Children)
+                {
+                    cConexion.InsertSubFlujo(txtBox.Text, i);
+                }
+                if (totalSubflujos > 5)
+                {
+                    //foreach
+                }
+
+            }
+        }
+        */
 
     }
 }
