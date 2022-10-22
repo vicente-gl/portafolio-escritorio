@@ -505,7 +505,7 @@ namespace Control_de_Tareas
             var reader = cmd.ExecuteNonQuery();
         }
 
-        public void InsertSubFlujo(string nombre)
+        public void InsertSubFlujo(string nombre, int orden)
         {
             string query = "aaa";
             OracleCommand cmd = new OracleCommand(query, conn);
@@ -521,33 +521,32 @@ namespace Control_de_Tareas
         }
 
         //CAMBIAR A ORACLE
-        URGENTE
+        //URGENTE
         public void AgregarGrupoNegocio(string nombreGP, string idNegocio, List<string> listaUsuarios)
         {
             
             string idGP = "";
             //Ingresar nuevo Grupo de Trabajo
-            string query = "INSERT INTO grupotrabajo VALUES (null, '" + nombreGP + "', 0, "+ idNegocio + "); \n";
-            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            string query = "INSERT INTO grupotrabajo VALUES (GRUPOTRABAJO_ID_SEQ.NEXTVAL, '" + nombreGP + "', 0, "+ idNegocio + ")";
+            OracleCommand cmd = new OracleCommand(query, conn);
             var reader = cmd.ExecuteReader();
             reader.Close();
             //Obtener ID de grupo de trabajo creado            
-            query = "SELECT id FROM grupotrabajo where nombre = '" + nombreGP + "';";
-            cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            query = "SELECT id FROM grupotrabajo where nombre = '" + nombreGP + "'";
+            cmd = new OracleCommand(query, conn);
             reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                idGP = reader.GetString("id");
+                idGP = reader.GetString(0); //Tiene que devolver columna ID
             }
             reader.Close();
             query = "";
             for(int i = 0; i < listaUsuarios.Count; i++)
             {
-                query += "UPDATE usuario SET grupotrabajo_id = " + idGP + " WHERE id = "+ listaUsuarios[i] + "; \n" ;
+                query += "UPDATE usuario SET grupotrabajo_id = " + idGP + " WHERE id = "+ listaUsuarios[i];
+                cmd = new OracleCommand(query, conn);
+                var reader2 = cmd.ExecuteNonQuery();
             }
-            cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
-            var reader2 = cmd.ExecuteNonQuery();
-            
         }
 
     }

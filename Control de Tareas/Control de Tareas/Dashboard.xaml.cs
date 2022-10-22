@@ -529,7 +529,20 @@ namespace Control_de_Tareas
 
                 int orden = cConexion.GetFlujoTareaCount(idNegocioSeleccionado) + 1; //obtiene cantidad de flujos en negocio para deifinir ultimo en la lista en el orden
                 cConexion.InsertFlujoTarea(txtBoxNombreFlujo.Text, orden, plantilla); //inserta flujo de negocio
+                
                 //obtiene ID de tarea recien creada
+                //Obtener cantidad de subflujos
+                int totalSubflujos = subflujoTxtBox.Children.Count + subflujoTxtBox2.Children.Count;
+                int i = 0;
+                foreach(TextBox txtBox in subflujoTxtBox.Children)
+                {
+                    cConexion.InsertSubFlujo(txtBox.Text, i);
+                }
+                if(totalSubflujos > 5)
+                {
+                    //foreach
+                }
+                
             }
         }
 
