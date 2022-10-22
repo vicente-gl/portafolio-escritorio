@@ -176,7 +176,7 @@
                 <Border Margin="20,0,20,0"></Border>
                 <StackPanel>
                     <Label HorizontalAlignment="Center" Margin="60,20,60,60" FontFamily="Inter Light" FontSize="30" Content="Lista de Roles"></Label>
-                    <DataGrid x:Name="datagrid_Rol" ItemsSource="{Binding Path=LoadDataBinding}" MinHeight="300" MaxHeight="500"></DataGrid>
+                    <DataGrid x:Name="datagrid_Rol" FontFamily="Inter" ItemsSource="{Binding Path=LoadDataBinding}" MinHeight="300" MaxHeight="500"></DataGrid>
                     <Border></Border>
                 </StackPanel>
                 
