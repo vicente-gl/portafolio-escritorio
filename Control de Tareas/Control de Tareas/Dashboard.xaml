@@ -244,7 +244,7 @@
         <Grid Name="Pantalla_Crear_FlujoTarea" Margin="509,80,0,0" Height='800' VerticalAlignment="Top" HorizontalAlignment="Center" Width="1398" Visibility="Hidden">
             <Rectangle Fill="#FFFFFF"></Rectangle>
             <Label HorizontalAlignment="Center" Margin="60,20,60,60" VerticalAlignment="Top" FontFamily="Inter Light" FontSize="30" Content="Crear Flujo de Tarea"></Label>
-            <StackPanel>
+            <StackPanel FlowDirection="LeftToRight">
                 <Grid HorizontalAlignment="Center" Height="auto" VerticalAlignment="Top" Margin="0,100,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
@@ -265,32 +265,38 @@
                 <Label FontFamily="Inter" Content="Lista de Tareas" HorizontalAlignment="Center" FontSize="25"></Label>
                 <Border Margin="10"></Border>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <StackPanel Orientation="Vertical">
-                        <Label Content="Nombre Tarea" FontSize="20" FontFamily="Inter"></Label>
+                    <StackPanel x:Name="StackFlujoLabelTarea" Orientation="Vertical">
+                        <Label Content="Nombre Tarea: " FontSize="20" FontFamily="Inter" Height="30"></Label>
                     </StackPanel>
                     <Border Margin="10"></Border>
-                    <StackPanel Orientation="Vertical">
-                        <TextBox Width="200" FontSize="20" FontFamily="Inter"></TextBox>
+                    <StackPanel x:Name="StackFlujotxtBox" Orientation="Vertical">
+                        <TextBox Width="200" FontSize="20" FontFamily="Inter" Height="30"></TextBox>
                     </StackPanel>
                     <Border Margin="10"></Border>
-                    <StackPanel  Orientation="Vertical">
-                        <TextBox Width="50" FontSize="20" FontFamily="Inter"></TextBox>
+                    <StackPanel x:Name="StackFlujoDias" Orientation="Vertical">
+                        <TextBox Width="50" FontSize="20" FontFamily="Inter" Height="30"></TextBox>
                     </StackPanel>
-                    <StackPanel  Orientation="Vertical">
-                        <Label Content="Dia(s)" FontSize="20" FontFamily="Inter"></Label>
-                    </StackPanel>
-                    <Border Margin="10"></Border>
-                    <StackPanel  Orientation="Vertical">
-                        <CheckBox Content="Subtarea de Anterior" FontFamily="Inter" FontSize="15" Visibility="Visible" VerticalContentAlignment="Bottom"></CheckBox>
+                    <StackPanel x:Name="StackFlujoDiasLabel"  Orientation="Vertical">
+                        <Label Content="Dia(s)" FontSize="20" FontFamily="Inter" Height="30"></Label>
                     </StackPanel>
                     <Border Margin="10"></Border>
-                    <StackPanel  Orientation="Vertical">
-                        <ComboBox FontFamily="Inter" FontSize="20" Width="150" Visibility="Visible"></ComboBox>
+                    <StackPanel x:Name="StackFlujoSubtarea" Orientation="Vertical">                        
+                        <Border Height="30"></Border>
+                    </StackPanel>
+                    <Border Margin="10"></Border>
+                    <StackPanel x:Name="StackFlujoPredecedorLabel"  Orientation="Vertical">
+                        <Border Height="30"></Border>
+                    </StackPanel>
+                    <StackPanel x:Name="StackFlujoPredecedora"  Orientation="Vertical">
+                        <Border Height="30"></Border>
+                    </StackPanel>
+                    <StackPanel x:Name="stackFlujoDeleteTask"  Orientation="Vertical">
+                        <Border Height="30"></Border> 
                     </StackPanel>
                     
                 </StackPanel>
                 <Border Margin="15"></Border>
-                <Button Width="150" FontFamily="Inter" FontSize="15" Content="Agregar Tarea" Foreground="White"></Button>
+                <Button x:Name="btn_flujotarea_addTarea" Click="btn_flujotarea_addTarea_Click" Width="150" FontFamily="Inter" FontSize="15" Content="Agregar Tarea" Foreground="White"></Button>
 
             </StackPanel>
         </Grid>

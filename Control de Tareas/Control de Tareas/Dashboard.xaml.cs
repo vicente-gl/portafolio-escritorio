@@ -48,6 +48,7 @@ namespace Control_de_Tareas
             {
                 idNegocioSeleccionado = value;
                 ActualizarNegocioSelected();
+                //falta por agregar Pantalla visible preseleccionada 
             }
         }
 
@@ -1119,6 +1120,77 @@ namespace Control_de_Tareas
         {
             
 
+        }
+
+        private void btn_flujotarea_addTarea_Click(object sender, RoutedEventArgs e)
+        {
+            //Border border = new Border();
+            //border.Margin = new Thickness(10, 0, 10, 0);
+            int altura = 31;
+            //combobox predecedora
+            ComboBox comboBox = new ComboBox();
+            foreach(Label labelCbox in StackFlujoLabelTarea.Children)
+            {
+                comboBox.Items.Add(labelCbox.Content);
+                comboBox.FontSize = 20;
+                comboBox.FontFamily = new FontFamily("Inter");
+                comboBox.Width = 150;
+            }
+            StackFlujoPredecedora.Children.Add(comboBox);
+            int cantTareasFlujo = StackFlujoLabelTarea.Children.Count;
+            //Nombre Tarea: 
+            Label label = new Label();
+            label.Height = altura;
+            label.Content = "Nombre Tarea "+ cantTareasFlujo + ": ";
+            label.FontSize = 20;
+            label.FontFamily = new FontFamily("Inter");
+            StackFlujoLabelTarea.Children.Add(label);
+            // txtbox
+            TextBox textBox = new TextBox();
+            textBox.Height = altura;
+            textBox.FontSize = 20;
+            textBox.FontFamily = new FontFamily("Inter");
+            textBox.Width = 200;
+            StackFlujotxtBox.Children.Add(textBox);
+            // cantidad de dias
+            textBox = new TextBox();
+            textBox.Height = altura;
+            textBox.FontSize = 20;
+            textBox.FontFamily = new FontFamily("Inter");
+            textBox.Width = 50;
+            StackFlujoDias.Children.Add(textBox);
+            //Dia(s)
+            label = new Label();
+            label.Height = altura;
+            label.Content = "Dia(s)";
+            label.FontSize = 20;
+            label.FontFamily = new FontFamily("Inter");
+            StackFlujoDiasLabel.Children.Add(label);
+            //Subtearea de Anterior
+            CheckBox checkBox = new CheckBox();
+            checkBox.Height = altura;
+            checkBox.Content = "Subtarea de Anterior";
+            checkBox.FontSize = 20;
+            checkBox.FontFamily = new FontFamily("Inter");
+            StackFlujoSubtarea.Children.Add(checkBox);
+            //Label Predecedora
+            label = new Label();
+            label.Height = altura;
+            label.Content = "Predecedor: ";
+            label.FontSize = 20;
+            label.FontFamily = new FontFamily("Inter");
+            label.Visibility = Visibility.Visible;
+            StackFlujoPredecedorLabel.Children.Add(label);
+            //delete task
+            Button button = new Button();
+            button.Height = altura;
+            button.Content = "X";
+            button.FontSize = 20;
+            button.FontFamily = new FontFamily("Inter");
+            button.Foreground = new SolidColorBrush(Colors.White);
+            button.Background = new SolidColorBrush(Colors.Red);
+            button.BorderBrush = new SolidColorBrush(Colors.Transparent);
+            stackFlujoDeleteTask.Children.Add(button);
         }
 
 
