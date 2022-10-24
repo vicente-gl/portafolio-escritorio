@@ -55,7 +55,7 @@ namespace Control_de_Tareas
         public Dashboard()
         {
             InitializeComponent();
-            WindowState = WindowState.Maximized;            
+            WindowState = WindowState.Maximized;
         }
 
         //Botones Main Menú
@@ -182,7 +182,7 @@ namespace Control_de_Tareas
             ApagarBotonesMenu2();
             OcultarOtrasPantallas(Pantalla_SinNegocio);
             OcultarOtrasPantallas(Pantalla_Agregar_GP);
-            if(idNegocioSeleccionado == null || idNegocioSeleccionado == "1")
+            if (idNegocioSeleccionado == null || idNegocioSeleccionado == "1")
             {
                 if (Pantalla_SinNegocio.Visibility.Equals(Visibility.Hidden))
                 {
@@ -284,17 +284,17 @@ namespace Control_de_Tareas
                 CambiarColorBoton(btn_usuarios_listar, color_menu2_idle);
             }
         }
-        
+
         //Botones Pantalla Crear Negocio
-            //Boton Limpiar campos de negocio
+        //Boton Limpiar campos de negocio
         private void btn_crearNegocio_limpiar_Click(object sender, RoutedEventArgs e)
         {
             LimpiarCamposNegocio();
         }
-            //Boton Agregar Negocio
+        //Boton Agregar Negocio
         private void btn_agregarNegocio_Click(object sender, RoutedEventArgs e)
         {
-            if(txtbox_negocio_nombre.Text == "" || txtbox_negocio_encargado.Text == "" || txtbox_negocio_correo_encargado.Text == "" || txtbox_negocio_rut.Text == "")
+            if (txtbox_negocio_nombre.Text == "" || txtbox_negocio_encargado.Text == "" || txtbox_negocio_correo_encargado.Text == "" || txtbox_negocio_rut.Text == "")
             {
                 MessageBox.Show("Debes ingresar todos los campos.");
             }
@@ -319,11 +319,11 @@ namespace Control_de_Tareas
 
                     cConexion.InsertNegocio(datosNegocio);
                     MessageBox.Show("Negocio Agregado Exitosamente");
-                }catch(Exception ex)
+                } catch (Exception ex)
                 {
-                    MessageBox.Show("No se pudo agregar negocio. Error: " +ex.Message);
+                    MessageBox.Show("No se pudo agregar negocio. Error: " + ex.Message);
                 }
-            }            
+            }
         }
 
         //Botones Pantalla Listar Negocios
@@ -455,7 +455,7 @@ namespace Control_de_Tareas
             List<string> listaIDUsuarios = new List<string>();
             foreach (CheckBox cb in ListBoxUsuariosGP.Items)
             {
-                if(cb.IsChecked == true)
+                if (cb.IsChecked == true)
                 {
                     listaIDUsuarios.Add(cb.Tag.ToString());
                 }
@@ -464,7 +464,7 @@ namespace Control_de_Tareas
 
         }
         //Botones pantalla Listar GP
-            //Boton Eliminar GP
+        //Boton Eliminar GP
         private void btn_eliminar_GP_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -480,7 +480,7 @@ namespace Control_de_Tareas
                 string gt_ninguno = cConexion.GetIDByName("grupotrabajo", "Ninguno");
                 cConexion.ResetGPUsuarios(idSelected, gt_ninguno);
                 cConexion.CerrarConn();
-                if(tabla_usuariosGPSelected.Items.Count == 1)
+                if (tabla_usuariosGPSelected.Items.Count == 1)
                 {
                     mensaje = cantUsuarios + " Usuario del Grupo de Trabajo: " + nombreGP + " se actualizó correctamente a Ninguno";
                 }
@@ -488,10 +488,10 @@ namespace Control_de_Tareas
                 {
                     mensaje = cantUsuarios + " Usuarios del Grupo de Trabajo: " + nombreGP + " se actualizaron correctamente a Ninguno";
                 }
-                MessageBox.Show("Grupo de Trabajo Eliminado Exitosamente.\n "+ mensaje);
-            }catch (Exception ex)
+                MessageBox.Show("Grupo de Trabajo Eliminado Exitosamente.\n " + mensaje);
+            } catch (Exception ex)
             {
-                MessageBox.Show("Error, no se pudo eliminar el Grupo de Trabajo: "+ex.Message);
+                MessageBox.Show("Error, no se pudo eliminar el Grupo de Trabajo: " + ex.Message);
             }
 
             //tabla_usuariosGPSelected.Items.Clear();
@@ -500,17 +500,17 @@ namespace Control_de_Tareas
         }
 
         //Botones Flujo de Tareas
-            //Crear Flujo de Tarea
+        //Crear Flujo de Tarea
         private void btn_agregarFlujo_Click(object sender, RoutedEventArgs e)
         {
-           
+
         }
 
         //Botonos Pantalla Crear Usuario
         //Boton Crear Usuario
         private void btn_agregar_usuario_Click(object sender, RoutedEventArgs e)
         {
-            if(txtbox_user_correo.Text == "" || txtbox_user_password.Text.ToString() == "" || txtbox_user_rut.Text == "" || txtbox_user_nombre.Text == "" || txtbox_user_apellidop.Text == "" || txtbox_user_apellidom.Text == "" || txtbox_user_celular.Text == "" || cbox_user_rol.SelectedIndex == -1 || cbox_user_negocio.SelectedIndex == -1 || cbox_user_gtrabajo.SelectedIndex == -1)
+            if (txtbox_user_correo.Text == "" || txtbox_user_password.Text.ToString() == "" || txtbox_user_rut.Text == "" || txtbox_user_nombre.Text == "" || txtbox_user_apellidop.Text == "" || txtbox_user_apellidom.Text == "" || txtbox_user_celular.Text == "" || cbox_user_rol.SelectedIndex == -1 || cbox_user_negocio.SelectedIndex == -1 || cbox_user_gtrabajo.SelectedIndex == -1)
             {
                 MessageBox.Show("Debes ingresar todos los campos");
             }
@@ -544,16 +544,16 @@ namespace Control_de_Tareas
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("No se pudo Agregar al usuario. Error: "+ex.Message);
+                    MessageBox.Show("No se pudo Agregar al usuario. Error: " + ex.Message);
                 }
             }
         }
-            //Boton Limpiar Campos de Crear Usuario
+        //Boton Limpiar Campos de Crear Usuario
         private void btn_agregarUser_limpiar_Click(object sender, RoutedEventArgs e)
         {
             LimpiarCampos();
         }
-            //Botones Pantalla Listar Usuarios
+        //Botones Pantalla Listar Usuarios
 
 
         private void btn_listarUsuarios_Click(object sender, RoutedEventArgs e)
@@ -571,11 +571,11 @@ namespace Control_de_Tareas
             tablaUsuarios.Columns[0].Visibility = Visibility.Collapsed;
             tablaUsuarios.Columns[8].Visibility = Visibility.Collapsed;
 
-        }        
+        }
 
         private void btn_editarUsuario_Click(object sender, RoutedEventArgs e)
         {
-            if(tablaUsuarios.SelectedValue == null)
+            if (tablaUsuarios.SelectedValue == null)
             {
                 MessageBox.Show("No se ha seleccionado ningún Usuario");
             }
@@ -605,7 +605,7 @@ namespace Control_de_Tareas
             }
         }
         private void btn_eliminar_usuario_Click(object sender, RoutedEventArgs e)
-        {            
+        {
             if (tablaUsuarios.SelectedValue == null)
             {
                 MessageBox.Show("No se ha seleccionado ningún Usuario");
@@ -630,12 +630,12 @@ namespace Control_de_Tareas
                     ccConexion.LlamarTabla("usuario", tablaUsuarios);
                     ccConexion.CerrarConn();
                 }
-            }            
+            }
         }
 
         private void edit_btn_editar_usuario_Click(object sender, RoutedEventArgs e)
         {
-            if(edit_cbox_user_negocio.SelectedItem == null || edit_cbox_user_rol.SelectedItem == null || edit_cbox_user_gtrabajo.SelectedItem == null)
+            if (edit_cbox_user_negocio.SelectedItem == null || edit_cbox_user_rol.SelectedItem == null || edit_cbox_user_gtrabajo.SelectedItem == null)
             {
                 MessageBox.Show("Debe Ingresar todos los datos requeridos");
             }
@@ -649,16 +649,16 @@ namespace Control_de_Tareas
                 string editGrupoTrabajo = cConexion.GetIDByName("grupotrabajo", edit_cbox_user_gtrabajo.SelectedItem.ToString());
 
                 string[] datosUsuario = new string[12];
-                datosUsuario[0]  = usuarioEditTarget;
-                datosUsuario[1]  = edit_txtbox_user_correo.Text; //correo
-                datosUsuario[2]  = edit_txtbox_user_password.Text; //password
-                datosUsuario[3]  = edit_txtbox_user_rut.Text; //rut
-                datosUsuario[4]  = edit_txtbox_user_nombre.Text; //nombre
-                datosUsuario[5]  = edit_txtbox_user_apellidop.Text; //apellidop
-                datosUsuario[6]  = edit_txtbox_user_apellidom.Text; //apellidom
-                datosUsuario[7]  = edit_txtbox_user_celular.Text; //celular
-                datosUsuario[8]  = "0"; //deleted
-                datosUsuario[9]  = editRol; //rol_id
+                datosUsuario[0] = usuarioEditTarget;
+                datosUsuario[1] = edit_txtbox_user_correo.Text; //correo
+                datosUsuario[2] = edit_txtbox_user_password.Text; //password
+                datosUsuario[3] = edit_txtbox_user_rut.Text; //rut
+                datosUsuario[4] = edit_txtbox_user_nombre.Text; //nombre
+                datosUsuario[5] = edit_txtbox_user_apellidop.Text; //apellidop
+                datosUsuario[6] = edit_txtbox_user_apellidom.Text; //apellidom
+                datosUsuario[7] = edit_txtbox_user_celular.Text; //celular
+                datosUsuario[8] = "0"; //deleted
+                datosUsuario[9] = editRol; //rol_id
                 datosUsuario[10] = editNegocio;//negocio_id
                 datosUsuario[11] = editGrupoTrabajo;//grupotrabajo_id
 
@@ -673,16 +673,16 @@ namespace Control_de_Tareas
 
         private void LlenarCamposEditarUser(string[] datosUsuario)
         {
-            edit_txtbox_user_correo.Text    = datosUsuario[1];
-            edit_txtbox_user_password.Text  = datosUsuario[2];
-            edit_txtbox_user_rut.Text       = datosUsuario[3];
-            edit_txtbox_user_nombre.Text    = datosUsuario[4];
+            edit_txtbox_user_correo.Text = datosUsuario[1];
+            edit_txtbox_user_password.Text = datosUsuario[2];
+            edit_txtbox_user_rut.Text = datosUsuario[3];
+            edit_txtbox_user_nombre.Text = datosUsuario[4];
             edit_txtbox_user_apellidop.Text = datosUsuario[5];
             edit_txtbox_user_apellidom.Text = datosUsuario[6];
-            edit_txtbox_user_celular.Text   = datosUsuario[7];
-            edit_cbox_user_rol.Text         = datosUsuario[8];
-            edit_cbox_user_negocio.Text     = datosUsuario[9];
-            edit_cbox_user_gtrabajo.Text    = datosUsuario[10];
+            edit_txtbox_user_celular.Text = datosUsuario[7];
+            edit_cbox_user_rol.Text = datosUsuario[8];
+            edit_cbox_user_negocio.Text = datosUsuario[9];
+            edit_cbox_user_gtrabajo.Text = datosUsuario[10];
         }
 
         private void LlenarCamposEditarNegocio(string[] datosNegocio)
@@ -690,7 +690,7 @@ namespace Control_de_Tareas
             edit_txtbox_negocio_nombre.Text = datosNegocio[0];
             edit_txtbox_negocio_encargado.Text = datosNegocio[1];
             edit_date_pick.SelectedDate = DateTime.Parse(datosNegocio[2]);
-            edit_txtbox_negocio_correo_encargado.Text= datosNegocio[3];
+            edit_txtbox_negocio_correo_encargado.Text = datosNegocio[3];
             edit_txtbox_negocio_rut.Text = datosNegocio[4];
             edit_txtbox_negocio_direccion.Text = datosNegocio[5];
         }
@@ -738,7 +738,7 @@ namespace Control_de_Tareas
 
             foreach (Grid item in lista_menu2)
             {
-                if(selectedGrid != item)
+                if (selectedGrid != item)
                 {
                     item.Visibility = Visibility.Hidden;
                 }
@@ -792,7 +792,7 @@ namespace Control_de_Tareas
             string[] listaNombreRol = cConexion.GetRolFromUsuarios(idNegocioSeleccionado);
             idListaUsuariosCrearGP = cConexion.GetUserIDFromNegocio(idNegocioSeleccionado, gt_ninguno);
             CheckBox box;
-            for(int i = 0; i < listaUsuarios.Length; i++)
+            for (int i = 0; i < listaUsuarios.Length; i++)
             {
                 box = new CheckBox();
                 box.Tag = idListaUsuariosCrearGP[i];
@@ -813,7 +813,7 @@ namespace Control_de_Tareas
         private void CargarListaGP()
         {
             CConexion cConexion = new CConexion();
-            if(idNegocioSeleccionado == null || idNegocioSeleccionado == "1")
+            if (idNegocioSeleccionado == null || idNegocioSeleccionado == "1")
             {
                 cConexion.LlamarTabla("grupotrabajo", tabla_listaGP);
             }
@@ -843,7 +843,7 @@ namespace Control_de_Tareas
                 tabla_usuariosGPSelected.Columns[8].Visibility = Visibility.Collapsed;
                 tabla_usuariosGPSelected.Columns[9].Visibility = Visibility.Collapsed;
                 tabla_usuariosGPSelected.Columns[10].Visibility = Visibility.Collapsed;
-                tabla_usuariosGPSelected.Columns[11].Visibility = Visibility.Collapsed;         
+                tabla_usuariosGPSelected.Columns[11].Visibility = Visibility.Collapsed;
                 tabla_usuariosGPSelected.Columns[1].Header = "Correo Electrónico";
                 tabla_usuariosGPSelected.Columns[3].Header = "RUT";
                 tabla_usuariosGPSelected.Columns[4].Header = "Nombre";
@@ -877,13 +877,13 @@ namespace Control_de_Tareas
                 }
 
                 string[] negocios = cConexion.CargarCombobox("negocio");
-                foreach(string negocio in negocios)
+                foreach (string negocio in negocios)
                 {
                     cbox_user_negocio.Items.Add(negocio);
                 }
 
                 string[] grupotrabajo = cConexion.CargarCombobox("grupotrabajo");
-                foreach(string grupostrabajo in grupotrabajo)
+                foreach (string grupostrabajo in grupotrabajo)
                 {
                     cbox_user_gtrabajo.Items.Add(grupostrabajo);
                 }
@@ -945,7 +945,7 @@ namespace Control_de_Tareas
         }
         private void edit_cbox_user_negocio_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(edit_cbox_user_negocio.Items.Count > 0)
+            if (edit_cbox_user_negocio.Items.Count > 0)
             {
                 edit_cbox_user_gtrabajo.Items.Clear();
                 CConexion cconexion = new CConexion();
@@ -1001,7 +1001,7 @@ namespace Control_de_Tareas
 
         public void ActualizarNegocioSelected()
         {
-            
+
             btn_SeleccionarNegocio.Content = _negocioSelected;
             /*
             if(Pantalla_SinNegocio.Visibility == Visibility.Visible)
@@ -1024,7 +1024,7 @@ namespace Control_de_Tareas
         private void btn_SeleccionarNegocio_Click(object sender, RoutedEventArgs e)
         {
             //MessageBox.Show(_negocioSelected, idNegocioSeleccionado);
-            
+
             if (!seleccionandoNegocio)
             {
                 seleccionandoNegocio = true;
@@ -1118,7 +1118,7 @@ namespace Control_de_Tareas
 
         private void flujo_btnConfirmar_Click(object sender, RoutedEventArgs e)
         {
-            
+
 
         }
 
@@ -1127,35 +1127,43 @@ namespace Control_de_Tareas
             //Border border = new Border();
             //border.Margin = new Thickness(10, 0, 10, 0);
             int altura = 31;
+            int fontsize = 15;
+            Thickness thick = new Thickness(0, 1, 0, 0);
+            Thickness thick2 = new Thickness(0, 0, 0, 5);
+            Thickness thick3 = new Thickness(0, 0, 0, 1);
             //combobox predecedora
             ComboBox comboBox = new ComboBox();
-            foreach(Label labelCbox in StackFlujoLabelTarea.Children)
+            comboBox.Items.Add("Ninguno");
+            foreach (Label labelCbox in StackFlujoLabelTarea.Children)
             {
                 comboBox.Items.Add(labelCbox.Content);
-                comboBox.FontSize = 20;
-                comboBox.FontFamily = new FontFamily("Inter");
-                comboBox.Width = 150;
             }
+            comboBox.FontSize = fontsize;
+            comboBox.FontFamily = new FontFamily("Inter");
+            comboBox.Width = 150;
+            comboBox.Margin = thick2;
+            comboBox.SelectedIndex = 0;
             StackFlujoPredecedora.Children.Add(comboBox);
             int cantTareasFlujo = StackFlujoLabelTarea.Children.Count;
             //Nombre Tarea: 
             Label label = new Label();
             label.Height = altura;
-            label.Content = "Nombre Tarea "+ cantTareasFlujo + ": ";
-            label.FontSize = 20;
+            label.Content = "Tarea " + (cantTareasFlujo + 1) + ": ";
+            label.FontSize = fontsize;
+            label.Margin = thick;
             label.FontFamily = new FontFamily("Inter");
             StackFlujoLabelTarea.Children.Add(label);
             // txtbox
             TextBox textBox = new TextBox();
             textBox.Height = altura;
-            textBox.FontSize = 20;
+            textBox.FontSize = fontsize;
             textBox.FontFamily = new FontFamily("Inter");
             textBox.Width = 200;
             StackFlujotxtBox.Children.Add(textBox);
             // cantidad de dias
             textBox = new TextBox();
             textBox.Height = altura;
-            textBox.FontSize = 20;
+            textBox.FontSize = fontsize;
             textBox.FontFamily = new FontFamily("Inter");
             textBox.Width = 50;
             StackFlujoDias.Children.Add(textBox);
@@ -1163,34 +1171,128 @@ namespace Control_de_Tareas
             label = new Label();
             label.Height = altura;
             label.Content = "Dia(s)";
-            label.FontSize = 20;
+            label.FontSize = fontsize;
+            label.Margin = thick;
             label.FontFamily = new FontFamily("Inter");
             StackFlujoDiasLabel.Children.Add(label);
-            //Subtearea de Anterior
+            //Subtearea nueva
             CheckBox checkBox = new CheckBox();
             checkBox.Height = altura;
-            checkBox.Content = "Subtarea de Anterior";
-            checkBox.FontSize = 20;
+            checkBox.Content = "Subtarea Nueva ";
+            checkBox.Margin = thick3;
+            checkBox.FontSize = fontsize;
             checkBox.FontFamily = new FontFamily("Inter");
+            checkBox.Checked += new RoutedEventHandler(CheckboxUpdate);
+            checkBox.Unchecked += new RoutedEventHandler(CheckboxUpdate);
+            StackFlujoNewSubtarea.Children.Add(checkBox);
+            //Subtearea de Anterior
+            checkBox = new CheckBox();
+            checkBox.Height = altura;
+            checkBox.Content = "Subtarea";
+            checkBox.Margin = thick3;
+            checkBox.FontSize = fontsize;
+            checkBox.FontFamily = new FontFamily("Inter");
+            checkBox.Checked += new RoutedEventHandler(CheckboxUpdate);
+            checkBox.Unchecked += new RoutedEventHandler(CheckboxUpdate);
             StackFlujoSubtarea.Children.Add(checkBox);
             //Label Predecedora
             label = new Label();
             label.Height = altura;
             label.Content = "Predecedor: ";
-            label.FontSize = 20;
+            label.FontSize = fontsize;
+            label.Margin = thick;
             label.FontFamily = new FontFamily("Inter");
             label.Visibility = Visibility.Visible;
             StackFlujoPredecedorLabel.Children.Add(label);
             //delete task
+            /*
             Button button = new Button();
             button.Height = altura;
             button.Content = "X";
-            button.FontSize = 20;
+            button.FontSize = fontsize;            
+            //button.Margin = new Thickness(10, 0, 10, 0);
             button.FontFamily = new FontFamily("Inter");
             button.Foreground = new SolidColorBrush(Colors.White);
             button.Background = new SolidColorBrush(Colors.Red);
             button.BorderBrush = new SolidColorBrush(Colors.Transparent);
             stackFlujoDeleteTask.Children.Add(button);
+            */
+        }
+
+        private void btn_flujotarea_deleteTarea_Click(object sender, RoutedEventArgs e)
+        {
+            int totalTareas = StackFlujoLabelTarea.Children.Count;
+            totalTareas -= 1;
+            if (totalTareas > 0)
+            {
+                //StackFlujoLabelTarea.Children.RemoveAt(totalTareas);
+                StackFlujoLabelTarea.Children.RemoveAt(totalTareas);
+                StackFlujotxtBox.Children.RemoveAt(totalTareas);
+                StackFlujoDiasLabel.Children.RemoveAt(totalTareas);
+                StackFlujoDias.Children.RemoveAt(totalTareas);
+                StackFlujoPredecedora.Children.RemoveAt(totalTareas);
+                StackFlujoPredecedorLabel.Children.RemoveAt(totalTareas);
+                StackFlujoSubtarea.Children.RemoveAt(totalTareas);
+                StackFlujoNewSubtarea.Children.RemoveAt(totalTareas);
+
+            }
+        }
+
+
+        private void CheckboxUpdate(object sender, RoutedEventArgs e)
+        {
+            int totalChild = StackFlujoLabelTarea.Children.Count;
+            bool[] esNewTarea = new bool[totalChild];
+            int i = -1;
+            bool isPrevSubTarea = false;
+            foreach (CheckBox checkBox in StackFlujoNewSubtarea.Children)
+            {
+                i++;
+                if (isPrevSubTarea)
+                {
+                    checkBox.IsChecked = false;
+                    checkBox.IsEnabled = false;
+                }
+                else
+                {
+                    checkBox.IsEnabled = true;
+                }
+
+                if (checkBox.IsChecked == true)
+                {
+                    esNewTarea[i] = true;
+                    
+                }
+                else
+                {
+                    esNewTarea[i] = false;
+                }
+                if (checkBox.IsChecked == true)
+                {
+                    isPrevSubTarea = true;
+                }
+                else
+                {
+                    isPrevSubTarea = false;
+                }
+            }
+            i = -1;
+            foreach(TextBox tbox in StackFlujoDias.Children)
+            {
+                i++;
+                if (esNewTarea[i])
+                {
+                    tbox.Text = "--";
+                    tbox.IsReadOnly = true;
+                    tbox.Foreground = new SolidColorBrush(Colors.Gray);
+                }
+                else
+                {                    
+                    tbox.IsReadOnly = false;
+                    tbox.Foreground = new SolidColorBrush(Colors.Black);
+                }
+            }
+
         }
 
 

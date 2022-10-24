@@ -543,10 +543,12 @@ namespace Control_de_Tareas
             query = "";
             for(int i = 0; i < listaUsuarios.Count; i++)
             {
-                query += "UPDATE usuario SET grupotrabajo_id = " + idGP + " WHERE id = "+ listaUsuarios[i];
+                query = " UPDATE usuario SET grupotrabajo_id = " + idGP + " WHERE id = "+ listaUsuarios[i]+"";
                 cmd = new OracleCommand(query, conn);
                 var reader2 = cmd.ExecuteNonQuery(); //BUG cuando se agregan mas de 1 usuario
+                reader.Close();
             }
+            MessageBox.Show("Grupo de Trabajo creado Exitosamente");
         }
 
     }
