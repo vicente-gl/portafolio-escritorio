@@ -1131,6 +1131,8 @@ namespace Control_de_Tareas
             Thickness thick = new Thickness(0, 1, 0, 0);
             Thickness thick2 = new Thickness(0, 0, 0, 5);
             Thickness thick3 = new Thickness(0, 0, 0, 1);
+
+            int cantTareasFlujo = StackFlujoLabelTarea.Children.Count;
             //combobox predecedora
             ComboBox comboBox = new ComboBox();
             comboBox.Items.Add("Ninguno");
@@ -1142,9 +1144,8 @@ namespace Control_de_Tareas
             comboBox.FontFamily = new FontFamily("Inter");
             comboBox.Width = 150;
             comboBox.Margin = thick2;
-            comboBox.SelectedIndex = 0;
+            comboBox.SelectedIndex = cantTareasFlujo;
             StackFlujoPredecedora.Children.Add(comboBox);
-            int cantTareasFlujo = StackFlujoLabelTarea.Children.Count;
             //Nombre Tarea: 
             Label label = new Label();
             label.Height = altura;
@@ -1165,6 +1166,7 @@ namespace Control_de_Tareas
             textBox.Height = altura;
             textBox.FontSize = fontsize;
             textBox.FontFamily = new FontFamily("Inter");
+            textBox.Text = "1";
             textBox.Width = 50;
             StackFlujoDias.Children.Add(textBox);
             //Dia(s)
@@ -1178,12 +1180,13 @@ namespace Control_de_Tareas
             //Subtearea nueva
             CheckBox checkBox = new CheckBox();
             checkBox.Height = altura;
-            checkBox.Content = "Subtarea Nueva ";
+            checkBox.Content = "Subtarea Nueva    ";
             checkBox.Margin = thick3;
             checkBox.FontSize = fontsize;
             checkBox.FontFamily = new FontFamily("Inter");
             checkBox.Checked += new RoutedEventHandler(CheckboxUpdate);
             checkBox.Unchecked += new RoutedEventHandler(CheckboxUpdate);
+            checkBox.IsEnabled = false; // La ultima tarea no puede ser subtarea, pq requiere de subtareas que la llenen
             StackFlujoNewSubtarea.Children.Add(checkBox);
             //Subtearea de Anterior
             checkBox = new CheckBox();
@@ -1217,6 +1220,15 @@ namespace Control_de_Tareas
             button.BorderBrush = new SolidColorBrush(Colors.Transparent);
             stackFlujoDeleteTask.Children.Add(button);
             */
+            int j = 0;
+            foreach(CheckBox box in StackFlujoNewSubtarea.Children)
+            {
+                j++;
+                if(j == cantTareasFlujo)
+                {
+                    box.IsEnabled = true;
+                }
+            }
         }
 
         private void btn_flujotarea_deleteTarea_Click(object sender, RoutedEventArgs e)
@@ -1232,7 +1244,7 @@ namespace Control_de_Tareas
                 StackFlujoDias.Children.RemoveAt(totalTareas);
                 StackFlujoPredecedora.Children.RemoveAt(totalTareas);
                 StackFlujoPredecedorLabel.Children.RemoveAt(totalTareas);
-                StackFlujoSubtarea.Children.RemoveAt(totalTareas);
+                StackFlujoSubtarea.Children.RemoveAt(totalTareas - 1);
                 StackFlujoNewSubtarea.Children.RemoveAt(totalTareas);
 
             }
@@ -1253,15 +1265,14 @@ namespace Control_de_Tareas
                     checkBox.IsChecked = false;
                     checkBox.IsEnabled = false;
                 }
-                else
+                if (!isPrevSubTarea && i != (totalChild -1))
                 {
                     checkBox.IsEnabled = true;
                 }
 
                 if (checkBox.IsChecked == true)
                 {
-                    esNewTarea[i] = true;
-                    
+                    esNewTarea[i] = true;                    
                 }
                 else
                 {
@@ -1282,7 +1293,7 @@ namespace Control_de_Tareas
                 i++;
                 if (esNewTarea[i])
                 {
-                    tbox.Text = "--";
+                    tbox.Text = "0";
                     tbox.IsReadOnly = true;
                     tbox.Foreground = new SolidColorBrush(Colors.Gray);
                 }
@@ -1292,7 +1303,26 @@ namespace Control_de_Tareas
                     tbox.Foreground = new SolidColorBrush(Colors.Black);
                 }
             }
-
+            i = 0;
+            foreach(CheckBox checkBox1 in StackFlujoSubtarea.Children)
+            {
+                i++;
+                if (esNewTarea[i])
+                {
+                    checkBox1.IsChecked = false;
+                    checkBox1.IsEnabled = false;
+                }
+                else
+                {
+                    checkBox1.IsEnabled = true;
+                }
+                if (esNewTarea[i-1])
+                {
+                    checkBox1.IsChecked = true;
+                    checkBox1.IsEnabled = false;
+                }
+            }
+            
         }
 
 
