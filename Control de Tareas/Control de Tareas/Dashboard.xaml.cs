@@ -917,7 +917,6 @@ namespace Control_de_Tareas
                 edit_cbox_user_gtrabajo.Items.Add(grupostrabajo);
             }
             if (edit_cbox_user_gtrabajo.Items.Count <= 0) edit_cbox_user_gtrabajo.Items.Add("Ninguno");
-
         }
 
         //Actualiza los combobox dependiendo del negocio seleccionado
@@ -1194,6 +1193,7 @@ namespace Control_de_Tareas
             checkBox.Content = "Subtarea";
             checkBox.Margin = thick3;
             checkBox.FontSize = fontsize;
+            checkBox.IsEnabled= false;
             checkBox.FontFamily = new FontFamily("Inter");
             checkBox.Checked += new RoutedEventHandler(CheckboxUpdate);
             checkBox.Unchecked += new RoutedEventHandler(CheckboxUpdate);
@@ -1254,10 +1254,11 @@ namespace Control_de_Tareas
         private void CheckboxUpdate(object sender, RoutedEventArgs e)
         {
             int totalChild = StackFlujoLabelTarea.Children.Count;
-            bool[] esNewTarea = new bool[totalChild];
+            bool[] esNewSubTarea = new bool[totalChild];
+            bool[] esSubTarea = new bool[totalChild];
             int i = -1;
             bool isPrevSubTarea = false;
-            foreach (CheckBox checkBox in StackFlujoNewSubtarea.Children)
+            foreach (CheckBox checkBox in StackFlujoNewSubtarea.Children) //Revisa cuales son New Sub Tarea
             {
                 i++;
                 if (isPrevSubTarea)
@@ -1272,11 +1273,11 @@ namespace Control_de_Tareas
 
                 if (checkBox.IsChecked == true)
                 {
-                    esNewTarea[i] = true;                    
+                    esNewSubTarea[i] = true;                    
                 }
                 else
                 {
-                    esNewTarea[i] = false;
+                    esNewSubTarea[i] = false;
                 }
                 if (checkBox.IsChecked == true)
                 {
@@ -1288,10 +1289,23 @@ namespace Control_de_Tareas
                 }
             }
             i = -1;
-            foreach(TextBox tbox in StackFlujoDias.Children)
+            foreach(CheckBox checkBox in StackFlujoSubtarea.Children) //Revisa cuales son subtarea
             {
                 i++;
-                if (esNewTarea[i])
+                if(checkBox.IsChecked == true)
+                {
+                    esSubTarea[i] = true;
+                }
+                else
+                {
+                    esSubTarea[i] = false;
+                }
+            }
+            i = -1;
+            foreach(TextBox tbox in StackFlujoDias.Children) //Cambia a 0 las new subtareas
+            {
+                i++;
+                if (esNewSubTarea[i])
                 {
                     tbox.Text = "0";
                     tbox.IsReadOnly = true;
@@ -1307,22 +1321,31 @@ namespace Control_de_Tareas
             foreach(CheckBox checkBox1 in StackFlujoSubtarea.Children)
             {
                 i++;
-                if (esNewTarea[i])
+                
+                if (esNewSubTarea[i-1])
+                {
+                    checkBox1.IsChecked = true;
+                    esSubTarea[i] = true;
+                }
+                if (esNewSubTarea[i])
                 {
                     checkBox1.IsChecked = false;
-                    checkBox1.IsEnabled = false;
+                    esSubTarea[i] = false;
                 }
                 else
                 {
                     checkBox1.IsEnabled = true;
-                }
-                if (esNewTarea[i-1])
+                }                
+                
+                if (esSubTarea[i-1])
                 {
-                    checkBox1.IsChecked = true;
-                    checkBox1.IsEnabled = false;
+                    checkBox1.IsEnabled = true;
                 }
-            }
-            
+                else
+                {
+                    //checkBox1.IsEnabled= false;
+                }
+            }            
         }
 
 

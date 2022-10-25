@@ -15,7 +15,7 @@
                 <Button x:Name="mainMenuGruposTrabajo" Click="mainMenuGruposTrabajo_Click" Content="Grupos de Trabajo y Roles" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#FFCFCFCF" Margin="0,0,0,0" BorderBrush="{x:Null}"></Button>
                 <Button x:Name="mainMenuFlujosTarea" Click="mainMenuFlujosTarea_Click"  Content="Flujos de Tarea" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#FFCFCFCF" BorderBrush="{x:Null}"></Button>
                 <Button x:Name="mainMenuUsuarios" Click="mainMenuUsuarios_Click" Content="Usuarios" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#FFCFCFCF" BorderBrush="{x:Null}"></Button>
-                <Button x:Name="mainMenuPerfilesNegocio" Content="Perfiles de Negocio" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#FFCFCFCF" BorderBrush="{x:Null}"></Button>
+                <Button x:Name="mainMenuPerfilesNegocio" Visibility="Hidden" Content="Perfiles de Negocio" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#FFCFCFCF" BorderBrush="{x:Null}"></Button>
             </StackPanel>
         </Grid>
         <!--MENU NEGOCIO-->
@@ -249,13 +249,12 @@
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
-
+                        <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-
                     <Label Content="Nombre            " FontFamily="Inter" FontSize="20" Grid.Column="0" Grid.Row="0" ></Label>
                     <TextBox FontFamily="Inter" FontSize="20" Width="250" Grid.Column="1" Grid.Row="0"></TextBox>
                     <Label Content="Descripción            " FontFamily="Inter" FontSize="20" Grid.Column="0" Grid.Row="1" ></Label>
@@ -275,7 +274,7 @@
                         </StackPanel>
                         <Border Margin="10"></Border>
                         <StackPanel x:Name="StackFlujoDias" Orientation="Vertical">
-                            <TextBox Width="50" FontSize="15" FontFamily="Inter" Height="30"></TextBox>
+                            <TextBox Width="50" FontSize="15" Text="1" FontFamily="Inter" Height="30"></TextBox>
                         </StackPanel>
                         <StackPanel x:Name="StackFlujoDiasLabel"  Orientation="Vertical">
                             <Label Content="Dia(s)" FontSize="15" FontFamily="Inter" Height="30"></Label>
@@ -296,10 +295,8 @@
                         </StackPanel>
                         <StackPanel x:Name="stackFlujoDeleteTask"  Orientation="Vertical">
                             <Border Height="30"></Border> 
-                        </StackPanel>
-                    
-                    </StackPanel>
-                    
+                        </StackPanel>                    
+                    </StackPanel>                    
                 </ScrollViewer>
                 <Border Margin="15"></Border>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -348,9 +345,6 @@
                 <Label Grid.Column="0" Grid.Row="7" Margin="3" FontFamily="Inter" FontSize="20" Content="Apelido Materno"></Label>
                 <Label Grid.Column="0" Grid.Row="8" Margin="3" FontFamily="Inter" FontSize="20" Content="Celular"></Label>
                 <Label Grid.Column="0" Grid.Row="9" Margin="3" FontFamily="Inter" FontSize="20" Content="Grupo de Trabajo"></Label>
-                <!--
-                <Label Grid.Column="0" Grid.Row="12" Margin="3" FontFamily="Inter" FontSize="20" Content="Foto de Perfil"></Label>
-                -->
 
                 <ComboBox Grid.Column="1" Grid.Row="0" Name="cbox_user_negocio" SelectionChanged="cbox_user_negocio_SelectionChanged"  FontFamily="Inter" FontSize="20" Height="30"></ComboBox>
                 <TextBox Grid.Column="1"  Grid.Row="1" Name="txtbox_user_rut" FontFamily="Inter" FontSize="20"></TextBox>
