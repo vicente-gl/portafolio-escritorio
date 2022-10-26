@@ -484,6 +484,20 @@ namespace Control_de_Tareas
             var reader = cmd.ExecuteNonQuery();
         }
 
+        public void InsertFlujo_PL(string[] datos_flujo_pl)
+        {
+            string query = "INSERT INTO FLUJO_PL (NOMBRE, DESCRIPCION, DELETED, NEGOCIO_ID) VALUES('"+datos_flujo_pl[0]+"', '"+datos_flujo_pl[1]+"', 0, "+datos_flujo_pl[2]+")";
+            OracleCommand cmd = new OracleCommand(query, conn);
+            var reader = cmd.ExecuteNonQuery();
+        }
+
+        public void InsertTarea_PL(string[] datos_tareaPL)
+        {
+            string query = "INSERT INTO TAREA_PL (ORDEN, NOMBRE, DESCRIPCION, DURACION, PREDECEDORA,FLUJO_PL_ID, SUBTAREA, DE_SUBTAREA) VALUES(" + datos_tareaPL[0] + ", '" + datos_tareaPL[1] + "', '"+ datos_tareaPL[2]+ "', "+datos_tareaPL[3]+", "+ datos_tareaPL[4]+ ", "+datos_tareaPL[5]+", "+datos_tareaPL[6]+", "+datos_tareaPL[7]+")";
+            OracleCommand cmd = new OracleCommand(query, conn);
+            var reader = cmd.ExecuteNonQuery();
+        }
+
         public void InsertRol(string nombreRol)
         {
             string query = "INSERT INTO ROL (ID, NOMBRE, DELETED) VALUES( ROL_ID_SEQ.NEXTVAL, '" + nombreRol + "',0 )";

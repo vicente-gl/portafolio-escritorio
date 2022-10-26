@@ -256,9 +256,9 @@
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Label Content="Nombre            " FontFamily="Inter" FontSize="20" Grid.Column="0" Grid.Row="0" ></Label>
-                    <TextBox FontFamily="Inter" FontSize="20" Width="250" Grid.Column="1" Grid.Row="0"></TextBox>
+                    <TextBox x:Name="txtBox_NombreFlujo" FontFamily="Inter" FontSize="20" Width="250" Grid.Column="1" Grid.Row="0"></TextBox>
                     <Label Content="Descripción            " FontFamily="Inter" FontSize="20" Grid.Column="0" Grid.Row="1" ></Label>
-                    <RichTextBox FontFamily="Inter" FontSize="15" Grid.Column="1" Grid.Row="1" MaxWidth="250" ></RichTextBox>
+                    <RichTextBox x:Name="txtBox_DescFlujo" FontFamily="Inter" FontSize="15" Grid.Column="1" Grid.Row="1" MaxWidth="250" ></RichTextBox>
                 </Grid>
                 <Border Margin="20"></Border>
                 <Label FontFamily="Inter" Content="Lista de Tareas" HorizontalAlignment="Center" FontSize="25"></Label>
@@ -281,7 +281,7 @@
                         </StackPanel>
                         <Border Margin="10"></Border>
                         <StackPanel x:Name="StackFlujoNewSubtarea" Orientation="Vertical">
-                            <CheckBox FontFamily="Inter" Click="CheckboxUpdate" Content="Subtarea Nueva" Margin="0,0,0,10" FontSize="15"></CheckBox>
+                            <CheckBox FontFamily="Inter" Click="CheckboxUpdate" Content="Subtarea" Margin="0,0,0,10" FontSize="15"></CheckBox>
                         </StackPanel>
                         <Border Height="30"></Border>
                         <StackPanel Margin="0,30,0,0" x:Name="StackFlujoSubtarea" Orientation="Vertical">
@@ -290,8 +290,7 @@
                         <StackPanel x:Name="StackFlujoPredecedorLabel"  Orientation="Vertical">
                             <Border Height="30"></Border>
                         </StackPanel>
-                        <StackPanel x:Name="StackFlujoPredecedora"  Orientation="Vertical">
-                            <Border Height="30"></Border>
+                        <StackPanel Margin="0,30,0,0" x:Name="StackFlujoPredecedora"  Orientation="Vertical">
                         </StackPanel>
                         <StackPanel x:Name="stackFlujoDeleteTask"  Orientation="Vertical">
                             <Border Height="30"></Border> 
@@ -303,7 +302,7 @@
                     <Button x:Name="btn_flujotarea_addTarea" Click="btn_flujotarea_addTarea_Click" Width="150" FontFamily="Inter" FontSize="15" Content="Añadir Tarea" Foreground="White"></Button>
                     <Button x:Name="btn_flujotarea_deleteTarea" Click="btn_flujotarea_deleteTarea_Click" Margin="20,0,0,0" Width="150" FontFamily="Inter" Content="Eliminar Tarea" FontSize="15" Foreground="White" Background="Red" BorderBrush="Transparent"></Button>
                 </StackPanel>
-                <Button x:Name="btn_flujotarea_finalizar" Margin="0,20,0,0" Width="180" Height="40" FontFamily="Inter" Content="Crear Flujo" FontSize="15" Foreground="White" Background="Green" BorderBrush="Transparent"></Button>
+                <Button x:Name="btn_flujotarea_finalizar" Click="btn_flujotarea_finalizar_Click" Margin="0,20,0,0" Width="180" Height="40" FontFamily="Inter" Content="Crear Flujo" FontSize="15" Foreground="White" Background="Green" BorderBrush="Transparent"></Button>
             </StackPanel>
         </Grid>
         <!--PANTALLAS USUARIO-->

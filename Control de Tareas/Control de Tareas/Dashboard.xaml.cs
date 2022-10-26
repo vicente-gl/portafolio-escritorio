@@ -1115,8 +1115,9 @@ namespace Control_de_Tareas
             */
         }
 
-        private void flujo_btnConfirmar_Click(object sender, RoutedEventArgs e)
+        private void flujo_btnConfirmar_Click(object sender, RoutedEventArgs e) //Crea el flujo con sus tareas correspondientes
         {
+
 
 
         }
@@ -1179,7 +1180,7 @@ namespace Control_de_Tareas
             //Subtearea nueva
             CheckBox checkBox = new CheckBox();
             checkBox.Height = altura;
-            checkBox.Content = "Subtarea Nueva    ";
+            checkBox.Content = "Subtarea    ";
             checkBox.Margin = thick3;
             checkBox.FontSize = fontsize;
             checkBox.FontFamily = new FontFamily("Inter");
@@ -1190,7 +1191,7 @@ namespace Control_de_Tareas
             //Subtearea de Anterior
             checkBox = new CheckBox();
             checkBox.Height = altura;
-            checkBox.Content = "Subtarea";
+            checkBox.Content = "Microtarea";
             checkBox.Margin = thick3;
             checkBox.FontSize = fontsize;
             checkBox.IsEnabled= false;
@@ -1320,7 +1321,131 @@ namespace Control_de_Tareas
             i = 0;
             foreach(CheckBox checkBox1 in StackFlujoSubtarea.Children)
             {
+                if (esNewSubTarea[i])
+                {
+                    checkBox1.IsChecked = true;
+                    esSubTarea[i] = true;
+                }
+                if(i > 0)
+                {
+                    if (esSubTarea[i - 1])
+                    {
+                        //checkBox1.IsChecked = true;
+                        checkBox1.IsEnabled = true;
+                    }
+
+                }
                 i++;
+            }
+        }
+
+        private void btn_flujotarea_finalizar_Click(object sender, RoutedEventArgs e)
+        {
+            CConexion cConexion = new CConexion();
+            cConexion.EstablecerConn();
+
+
+            string[] datos_FlujoPL = { "", "", "" };
+            datos_FlujoPL[0] = txtBox_NombreFlujo.Text;
+            datos_FlujoPL[1] = new TextRange(txtBox_DescFlujo.Document.ContentStart, txtBox_DescFlujo.Document.ContentEnd).Text;
+            datos_FlujoPL[2] = idNegocioSeleccionado;
+
+            cConexion.InsertFlujo_PL(datos_FlujoPL); // Query para insertar flujo pl
+
+            string ID_flujoPL = cConexion.GetIDByName("flujo_pl", datos_FlujoPL[0]);
+
+            //Crear Tareas en BD
+            int cantTareas = StackFlujoLabelTarea.Children.Count;
+
+            string[] nombreTarea = new string[cantTareas];
+            string[] cantDias = new string[cantTareas];
+            string[] newSubtarea = new string[cantTareas];
+            string[] subTarea = new string[cantTareas];
+            string[] predecedor = new string[cantTareas];
+
+            string[] datosTarea = new string[8];
+
+            int i = 0;
+            foreach (TextBox textBox in StackFlujotxtBox.Children) // Nombre tarea
+            {
+                nombreTarea[i] = textBox.Text;
+                i++;
+            }
+            i = 0;
+            foreach(TextBox textBox in StackFlujoDias.Children) // cantidad dias
+            {
+                cantDias[i] = textBox.Text;
+                i++;
+            }
+            i = 0;
+            foreach (CheckBox checkBox in StackFlujoNewSubtarea.Children) // subtarea nueva
+            {
+                string check;
+                if (checkBox.IsChecked == true)
+                {
+                    check = "1";
+                }
+                else
+                {
+                    check = "0";
+                }
+                newSubtarea[i] = check;
+                i++;
+            }
+            i = 0;
+            subTarea[i] = "0"; //Se agrega antes porque no existe la opcion de "de subtarea" para la primera
+            i++;
+            foreach (CheckBox checkBox in StackFlujoSubtarea.Children) // subtarea nueva    error
+            {
+                string check;
+                if (checkBox.IsChecked == true)
+                {
+                    check = "1";
+                }
+                else
+                {
+                    check = "0";
+                }
+                subTarea[i] = check;
+                i++;
+            }
+
+            i = 0;
+            predecedor[i] = "0"; //Se agrega antes porque no existe la opcion de "de subtarea" para la primera
+            i++;
+            foreach (ComboBox cbox in StackFlujoPredecedora.Children) // predecedor *********SACAR BORDER
+            {
+                predecedor[i] = cbox.SelectedIndex.ToString();
+                if(predecedor[i] == null) predecedor[i] = "0";
+                i++;
+            }
+
+            for(i = 0; i < cantTareas; i++) // realiza las querys correspondientes
+            {
+                datosTarea[0] = i.ToString();
+                datosTarea[1] = nombreTarea[i];
+                datosTarea[2] = "No Hay";
+                datosTarea[3] = cantDias[i];
+                datosTarea[4] = predecedor[i];
+                datosTarea[5] = ID_flujoPL;
+                datosTarea[6] = newSubtarea[i];
+                datosTarea[7] = subTarea[i];
+
+                cConexion.InsertTarea_PL(datosTarea);
+            }
+            MessageBox.Show("Flujo Creado Exitosamente");
+
+
+
+        }
+
+
+
+        //Codigos Antiguos
+        /*
+         * 
+         * 
+         *                 i++;
                 
                 if (esNewSubTarea[i-1])
                 {
@@ -1345,13 +1470,9 @@ namespace Control_de_Tareas
                 {
                     //checkBox1.IsEnabled= false;
                 }
-            }            
-        }
 
 
-
-        //Codigos Antiguos
-        /*
+         * 
         private void AgregarFlujoKanban()
         {
             bool camposLlenos = true;
@@ -1399,6 +1520,5 @@ namespace Control_de_Tareas
             }
         }
         */
-
     }
 }
