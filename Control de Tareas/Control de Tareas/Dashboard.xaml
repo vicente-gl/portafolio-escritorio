@@ -270,7 +270,7 @@
                         </StackPanel>
                         <Border Margin="10"></Border>
                         <StackPanel x:Name="StackFlujotxtBox" Orientation="Vertical">
-                            <TextBox Width="200" FontSize="15" FontFamily="Inter" Height="30"></TextBox>
+                            <TextBox Width="200" x:Name="flujo_tarea1_name" FontSize="15" FontFamily="Inter" Height="30"></TextBox>
                         </StackPanel>
                         <Border Margin="10"></Border>
                         <StackPanel x:Name="StackFlujoDias" Orientation="Vertical">
@@ -437,7 +437,7 @@
             <Image Source="/Process Color Alpha.png" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" RenderOptions.BitmapScalingMode="HighQuality"></Image>
             <Ellipse HorizontalAlignment="Left" Margin="300,0,0,0" Width="50" Height="50">
                 <Ellipse.Fill>
-                    <ImageBrush ImageSource="/Iconos/WIN_20220921_11_50_38_Pro (2).jpg" RenderOptions.BitmapScalingMode="HighQuality" />
+                    <ImageBrush ImageSource="/Iconos/Captura de pantalla 2022-10-26 111721.png" RenderOptions.BitmapScalingMode="HighQuality" />
                 </Ellipse.Fill>
             </Ellipse>
             <Label x:Name="label_logedUser" x:FieldModifier="public" Content="LOGEADO SIN CREDENCIALES" Foreground="WhiteSmoke" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="360, 0, 0, 0" FontSize="20" FontFamily="Inter Light"></Label>

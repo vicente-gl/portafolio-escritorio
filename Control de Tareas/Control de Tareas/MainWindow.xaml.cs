@@ -34,14 +34,14 @@ namespace Control_de_Tareas
         {
             username = txtBoxUser.Text;
             password = txtBoxPassword.Password;
-            LoginSinCredencial();
-            /*
+            //LoginSinCredencial();
+            
             CConexion cConexion = new CConexion();
             cConexion.EstablecerConn();
             if(cConexion.CheckCredentials(username, password)){
                 this.Close();
             }
-            */
+            
             
 
         }        

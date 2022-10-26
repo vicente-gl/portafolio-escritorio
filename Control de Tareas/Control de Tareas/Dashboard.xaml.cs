@@ -1202,7 +1202,7 @@ namespace Control_de_Tareas
             //Label Predecedora
             label = new Label();
             label.Height = altura;
-            label.Content = "Predecedor: ";
+            label.Content = "Predecesor: ";
             label.FontSize = fontsize;
             label.Margin = thick;
             label.FontFamily = new FontFamily("Inter");
@@ -1243,8 +1243,8 @@ namespace Control_de_Tareas
                 StackFlujotxtBox.Children.RemoveAt(totalTareas);
                 StackFlujoDiasLabel.Children.RemoveAt(totalTareas);
                 StackFlujoDias.Children.RemoveAt(totalTareas);
-                StackFlujoPredecedora.Children.RemoveAt(totalTareas);
-                StackFlujoPredecedorLabel.Children.RemoveAt(totalTareas);
+                StackFlujoPredecedora.Children.RemoveAt(totalTareas-1);
+                StackFlujoPredecedorLabel.Children.RemoveAt(totalTareas-1);
                 StackFlujoSubtarea.Children.RemoveAt(totalTareas - 1);
                 StackFlujoNewSubtarea.Children.RemoveAt(totalTareas);
 
@@ -1339,103 +1339,154 @@ namespace Control_de_Tareas
             }
         }
 
+        private void LimpiarCamposCrearFlujo()
+        {
+            int totalTareas = StackFlujoLabelTarea.Children.Count;
+            for(int i = 0; i <= totalTareas+1; i++)
+            {
+                totalTareas = StackFlujoLabelTarea.Children.Count;
+                totalTareas -= 1;
+                if (totalTareas > 0)
+                {
+                    //StackFlujoLabelTarea.Children.RemoveAt(totalTareas);
+                    StackFlujoLabelTarea.Children.RemoveAt(totalTareas);
+                    StackFlujotxtBox.Children.RemoveAt(totalTareas);
+                    StackFlujoDiasLabel.Children.RemoveAt(totalTareas);
+                    StackFlujoDias.Children.RemoveAt(totalTareas);
+                    StackFlujoPredecedora.Children.RemoveAt(totalTareas - 1);
+                    StackFlujoPredecedorLabel.Children.RemoveAt(totalTareas - 1);
+                    StackFlujoSubtarea.Children.RemoveAt(totalTareas - 1);
+                    StackFlujoNewSubtarea.Children.RemoveAt(totalTareas);
+                }
+            }
+
+            txtBox_NombreFlujo.Text = "";
+            txtBox_DescFlujo.Document.Blocks.Clear();
+            flujo_tarea1_name.Text = "";
+        }
+
+        private bool CheckCrearFlujoCamposCheck()
+        {
+            bool camposOK = true;
+            if (txtBox_NombreFlujo.Text == "") camposOK = false;
+            if(new TextRange(txtBox_DescFlujo.Document.ContentStart, txtBox_DescFlujo.Document.ContentEnd).Text == "") camposOK=false;
+            foreach (TextBox textBox in StackFlujotxtBox.Children)
+            {
+                if(textBox.Text == "") camposOK=false;
+            }
+            foreach(TextBox textBox1 in StackFlujoDias.Children)
+            {
+                if(textBox1.Text == "") camposOK=false;
+            }
+
+            return camposOK;
+        }
+
         private void btn_flujotarea_finalizar_Click(object sender, RoutedEventArgs e)
         {
-            CConexion cConexion = new CConexion();
-            cConexion.EstablecerConn();
-
-
-            string[] datos_FlujoPL = { "", "", "" };
-            datos_FlujoPL[0] = txtBox_NombreFlujo.Text;
-            datos_FlujoPL[1] = new TextRange(txtBox_DescFlujo.Document.ContentStart, txtBox_DescFlujo.Document.ContentEnd).Text;
-            datos_FlujoPL[2] = idNegocioSeleccionado;
-
-            cConexion.InsertFlujo_PL(datos_FlujoPL); // Query para insertar flujo pl
-
-            string ID_flujoPL = cConexion.GetIDByName("flujo_pl", datos_FlujoPL[0]);
-
-            //Crear Tareas en BD
-            int cantTareas = StackFlujoLabelTarea.Children.Count;
-
-            string[] nombreTarea = new string[cantTareas];
-            string[] cantDias = new string[cantTareas];
-            string[] newSubtarea = new string[cantTareas];
-            string[] subTarea = new string[cantTareas];
-            string[] predecedor = new string[cantTareas];
-
-            string[] datosTarea = new string[8];
-
-            int i = 0;
-            foreach (TextBox textBox in StackFlujotxtBox.Children) // Nombre tarea
+            if (CheckCrearFlujoCamposCheck())
             {
-                nombreTarea[i] = textBox.Text;
-                i++;
-            }
-            i = 0;
-            foreach(TextBox textBox in StackFlujoDias.Children) // cantidad dias
-            {
-                cantDias[i] = textBox.Text;
-                i++;
-            }
-            i = 0;
-            foreach (CheckBox checkBox in StackFlujoNewSubtarea.Children) // subtarea nueva
-            {
-                string check;
-                if (checkBox.IsChecked == true)
+                CConexion cConexion = new CConexion();
+                cConexion.EstablecerConn();
+
+
+                string[] datos_FlujoPL = { "", "", "" };
+                datos_FlujoPL[0] = txtBox_NombreFlujo.Text;
+                datos_FlujoPL[1] = new TextRange(txtBox_DescFlujo.Document.ContentStart, txtBox_DescFlujo.Document.ContentEnd).Text;
+                datos_FlujoPL[2] = idNegocioSeleccionado;
+
+                //cConexion.InsertFlujo_PL(datos_FlujoPL); // Query para insertar flujo pl
+
+                string ID_flujoPL = cConexion.GetIDByName("flujo_pl", datos_FlujoPL[0]);
+
+                //Crear Tareas en BD
+                int cantTareas = StackFlujoLabelTarea.Children.Count;
+
+                string[] nombreTarea = new string[cantTareas];
+                string[] cantDias = new string[cantTareas];
+                string[] newSubtarea = new string[cantTareas];
+                string[] subTarea = new string[cantTareas];
+                string[] predecedor = new string[cantTareas];
+
+                string[] datosTarea = new string[8];
+
+                int i = 0;
+                foreach (TextBox textBox in StackFlujotxtBox.Children) // Nombre tarea
                 {
-                    check = "1";
+                    nombreTarea[i] = textBox.Text;
+                    i++;
                 }
-                else
+                i = 0;
+                foreach(TextBox textBox in StackFlujoDias.Children) // cantidad dias
                 {
-                    check = "0";
+                    cantDias[i] = textBox.Text;
+                    i++;
                 }
-                newSubtarea[i] = check;
-                i++;
-            }
-            i = 0;
-            subTarea[i] = "0"; //Se agrega antes porque no existe la opcion de "de subtarea" para la primera
-            i++;
-            foreach (CheckBox checkBox in StackFlujoSubtarea.Children) // subtarea nueva    error
-            {
-                string check;
-                if (checkBox.IsChecked == true)
+                i = 0;
+                foreach (CheckBox checkBox in StackFlujoNewSubtarea.Children) // subtarea nueva
                 {
-                    check = "1";
+                    string check;
+                    if (checkBox.IsChecked == true)
+                    {
+                        check = "1";
+                    }
+                    else
+                    {
+                        check = "0";
+                    }
+                    newSubtarea[i] = check;
+                    i++;
                 }
-                else
+                i = 0;
+                subTarea[i] = "0"; //Se agrega antes porque no existe la opcion de "de subtarea" para la primera
+                i++;
+                foreach (CheckBox checkBox in StackFlujoSubtarea.Children) // subtarea nueva    error
                 {
-                    check = "0";
+                    string check;
+                    if (checkBox.IsChecked == true)
+                    {
+                        check = "1";
+                    }
+                    else
+                    {
+                        check = "0";
+                    }
+                    subTarea[i] = check;
+                    i++;
                 }
-                subTarea[i] = check;
+
+                i = 0;
+                predecedor[i] = "0"; //Se agrega antes porque no existe la opcion de "de subtarea" para la primera
                 i++;
-            }
+                foreach (ComboBox cbox in StackFlujoPredecedora.Children) // predecedor *********SACAR BORDER
+                {
+                    predecedor[i] = cbox.SelectedIndex.ToString();
+                    if(predecedor[i] == null) predecedor[i] = "0";
+                    i++;
+                }
 
-            i = 0;
-            predecedor[i] = "0"; //Se agrega antes porque no existe la opcion de "de subtarea" para la primera
-            i++;
-            foreach (ComboBox cbox in StackFlujoPredecedora.Children) // predecedor *********SACAR BORDER
+                for(i = 0; i < cantTareas; i++) // realiza las querys correspondientes
+                {
+                    datosTarea[0] = i.ToString();
+                    datosTarea[1] = nombreTarea[i];
+                    datosTarea[2] = "No Hay";
+                    datosTarea[3] = cantDias[i];
+                    datosTarea[4] = predecedor[i];
+                    datosTarea[5] = ID_flujoPL;
+                    datosTarea[6] = newSubtarea[i];
+                    datosTarea[7] = subTarea[i];
+
+                    //cConexion.InsertTarea_PL(datosTarea);
+                }
+                MessageBox.Show("Flujo Creado Exitosamente");
+
+                LimpiarCamposCrearFlujo();
+
+            }
+            else
             {
-                predecedor[i] = cbox.SelectedIndex.ToString();
-                if(predecedor[i] == null) predecedor[i] = "0";
-                i++;
+                MessageBox.Show("Debe llenar todos los campos");
             }
-
-            for(i = 0; i < cantTareas; i++) // realiza las querys correspondientes
-            {
-                datosTarea[0] = i.ToString();
-                datosTarea[1] = nombreTarea[i];
-                datosTarea[2] = "No Hay";
-                datosTarea[3] = cantDias[i];
-                datosTarea[4] = predecedor[i];
-                datosTarea[5] = ID_flujoPL;
-                datosTarea[6] = newSubtarea[i];
-                datosTarea[7] = subTarea[i];
-
-                cConexion.InsertTarea_PL(datosTarea);
-            }
-            MessageBox.Show("Flujo Creado Exitosamente");
-
-
 
         }
 

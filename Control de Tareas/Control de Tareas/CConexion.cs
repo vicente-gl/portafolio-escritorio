@@ -132,14 +132,14 @@ namespace Control_de_Tareas
         public bool CheckCredentials(string email, string pass)
         {
 
-            string query = "SELECT * FROM usuario WHERE correo = '" + email + "' AND password = '"+pass+"';";
-            var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+            string query = "SELECT * FROM usuario WHERE correo = '" + email + "' AND password = '"+pass+"'";
+            OracleCommand cmd = new OracleCommand(query, conn);
             var reader = cmd.ExecuteReader();
             string result = "";
 
             while (reader.Read())
             {
-                result = reader.GetString("id");
+                result = reader.GetString(0);
             }
 
 
@@ -154,13 +154,13 @@ namespace Control_de_Tareas
                 //User found
                 reader.Close();
                 Console.WriteLine(result);
-                query = "SELECT CONCAT(nombre, ' ', apellidop, ' ', apellidom) AS nombrecompleto FROM usuario WHERE id = " + result + ";";
-                cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conex);
+                query = "SELECT CONCAT(nombre ,CONCAT(' ',CONCAT(apellidop, CONCAT(' ', apellidom)))) FROM usuario WHERE id = "+result+"";
+                cmd = new OracleCommand(query, conn);
                 reader = cmd.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    result = reader.GetString("nombrecompleto");
+                    result = reader.GetString(0);
                 }
 
                 Dashboard dashboard = new Dashboard();
