@@ -27,7 +27,6 @@ namespace Control_de_Tareas
         static string puerto = "3306";
 
         public string cadenaConexion = "server=" + servidor + ";" + "port=" + puerto + ";" + "uid=" + usuario + ";" + "pwd=" + password + ";" + "database=" + bd + ";";
-        //public string cadenaConexion2 = "Data Source = (DESCRIPTION = (ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = adb.sa-santiago-1.oraclecloud.com)(PORT = 1521)))(CONNECT_DATA = (SERVICE_NAME = g52de4c04e63870_processsa_high.adb.oraclecloud.com))); User ID = ADMIN / Schema; Password= Duoc12345678;";
         public string cadenaConexion2 = "User ID = ADMIN; Password = Duoc12345678; Data Source = processsa_high";
 
 
@@ -35,11 +34,6 @@ namespace Control_de_Tareas
         {
             try
             {
-                /*
-                conex.ConnectionString = cadenaConexion;
-                conex.Open();
-                return true;
-                */
                 conn.ConnectionString = cadenaConexion2;
                 conn.Open();
                 return true;
@@ -72,8 +66,6 @@ namespace Control_de_Tareas
             }
             oraReader.Close();
             conn.Close();
-
-
         }
 
         public string NombreUsuarioLogeado(int idUsuario)
@@ -129,25 +121,33 @@ namespace Control_de_Tareas
         }
         
         
+        //Oracle OK
         public bool CheckCredentials(string email, string pass)
         {
 
-            string query = "SELECT * FROM usuario WHERE correo = '" + email + "' AND password = '"+pass+"'";
+            string query = "SELECT * FROM usuario a join rol b on a.rol_id = b.id WHERE correo = '" + email + "' AND password = '"+pass+"'";
             OracleCommand cmd = new OracleCommand(query, conn);
             var reader = cmd.ExecuteReader();
             string result = "";
+            string resultRol = "";
 
             while (reader.Read())
             {
                 result = reader.GetString(0);
+                resultRol = reader.GetString(13);
             }
 
 
             if (result == "")
             {
                 //Pass o mail incorrecto
-                Console.WriteLine("user not found");
+                MessageBox.Show("Usuario no se encuentra en el sistema");
                 return false;   
+            }
+            if(resultRol != "Admin Escritorio")
+            {
+                MessageBox.Show("Usuario no cuenta con las credenciales para acceder al sistema");
+                return false;
             }
             else
             {

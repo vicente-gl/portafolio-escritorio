@@ -836,7 +836,6 @@ namespace Control_de_Tareas
                 CConexion cConexion = new CConexion();
                 DataRowView row = (DataRowView)tabla_listaGP.SelectedItems[0];
                 string idSelected = row["id"].ToString();
-                Console.WriteLine(idSelected);
                 cConexion.LlamarTablaUsuariosGP("usuario", tabla_usuariosGPSelected, idSelected);
                 tabla_usuariosGPSelected.Columns[0].Visibility = Visibility.Collapsed;
                 tabla_usuariosGPSelected.Columns[2].Visibility = Visibility.Collapsed;

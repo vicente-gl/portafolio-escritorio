@@ -364,7 +364,7 @@
             </Grid>
         </Grid>
             <!--PANTALLA LISTAR USUARIOS-->
-        <Grid Name="Pantalla_Listar_Usuarios" Margin="509,80,0,0" Height='850' Background="#FFFFFF" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden">
+        <Grid Name="Pantalla_Listar_Usuarios" Margin="509,80,0,0" Height='700' Background="#FFFFFF" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden">
             <Rectangle Margin="509,0,0,0" Width="1500" Fill="#FFFFFF"></Rectangle>
             <Rectangle Fill="#FFFFFF"></Rectangle>
             <Button x:Name="btn_listarUsuarios" Click="btn_listarUsuarios_Click" FontFamily="Inter" FontSize="15" HorizontalAlignment="Left" Background="LightYellow" BorderThickness="0" VerticalAlignment="Top" Content="Cargar Usuarios" Margin="160,40,0,20"></Button>
