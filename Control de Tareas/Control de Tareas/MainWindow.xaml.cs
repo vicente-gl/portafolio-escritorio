@@ -55,8 +55,17 @@ namespace Control_de_Tareas
 
         private void btn_connectBD_Click(object sender, RoutedEventArgs e)
         {
-            CConexion objConexion = new CConexion();
-            objConexion.EstablecerConn();
+            try
+            {
+                CConexion objConexion = new CConexion();
+                objConexion.EstablecerConn();
+                objConexion.CerrarConn();
+                MessageBox.Show("Conexión con el servidor exitosa.");
+
+            }catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo establecer conexion con el servidor. Error: " + ex.Message);
+            }
         }
     }
 }

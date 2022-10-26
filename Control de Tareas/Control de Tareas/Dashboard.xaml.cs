@@ -152,6 +152,8 @@ namespace Control_de_Tareas
                 CambiarColorBoton(btn_admin_rol, color_menu2_pressed);
                 CConexion cConexion = new CConexion();
                 cConexion.LlamarTabla("rol", datagrid_Rol);
+                datagrid_Rol.Columns[0].Visibility = Visibility.Collapsed;
+                datagrid_Rol.Columns[2].Visibility = Visibility.Collapsed;
             }
             else
             {
@@ -331,8 +333,8 @@ namespace Control_de_Tareas
         {
             CConexion cConexion = new CConexion();
             cConexion.LlamarTabla("negocio", tablaNegocios);
-            //tablaNegocios.Columns[0].Visibility = Visibility.Collapsed;
-            //tablaNegocios.Columns[6].Visibility = Visibility.Collapsed;
+            tablaNegocios.Columns[0].Visibility = Visibility.Collapsed;
+            tablaNegocios.Columns[7].Visibility = Visibility.Collapsed;
         }
         //Eliminar Negocio
         private void btn_listarNegocios_Eliminar_Click(object sender, RoutedEventArgs e)
@@ -561,15 +563,29 @@ namespace Control_de_Tareas
             if (idNegocioSeleccionado == null || idNegocioSeleccionado == "1")
             {
                 CConexion cConexion = new CConexion();
-                cConexion.LlamarTabla("usuario", tablaUsuarios);
+                cConexion.LlamarTablaUsuariosTodo(tablaUsuarios);
             }
             else
             {
                 CConexion cConexion = new CConexion();
-                cConexion.LlamarTablaNegocioSelected("usuario", tablaUsuarios, idNegocioSeleccionado);
+                cConexion.LlamarTablaUsuariosTodoNegocioSelected(idNegocioSeleccionado, tablaUsuarios);
             }
             tablaUsuarios.Columns[0].Visibility = Visibility.Collapsed;
+            tablaUsuarios.Columns[2].Visibility = Visibility.Collapsed;
+            tablaUsuarios.Columns[5].Header = "Apellido Paterno";
+            tablaUsuarios.Columns[6].Header = "Apellido Materno";
             tablaUsuarios.Columns[8].Visibility = Visibility.Collapsed;
+            tablaUsuarios.Columns[9].Visibility = Visibility.Collapsed;
+            tablaUsuarios.Columns[10].Visibility = Visibility.Collapsed;
+            tablaUsuarios.Columns[11].Visibility = Visibility.Collapsed;
+            tablaUsuarios.Columns[12].Visibility = Visibility.Collapsed;
+            tablaUsuarios.Columns[13].Header = "Rol";
+            tablaUsuarios.Columns[14].Visibility = Visibility.Collapsed;
+            tablaUsuarios.Columns[15].Visibility = Visibility.Collapsed;
+            tablaUsuarios.Columns[16].Header = "Grupo de Trabajo";
+            tablaUsuarios.Columns[17].Visibility = Visibility.Collapsed;
+            tablaUsuarios.Columns[18].Visibility = Visibility.Collapsed;
+
 
         }
 
@@ -823,6 +839,7 @@ namespace Control_de_Tareas
             }
             tabla_listaGP.Columns[0].Header = "ID de Grupo de Trabajo";
             tabla_listaGP.Columns[1].Header = "Nombre de Grupo de Trabajo";
+            tabla_listaGP.Columns[0].Visibility = Visibility.Collapsed;
             tabla_listaGP.Columns[3].Visibility = Visibility.Collapsed;
             tabla_listaGP.Columns[2].Visibility = Visibility.Collapsed;
         }
@@ -838,6 +855,7 @@ namespace Control_de_Tareas
                 string idSelected = row["id"].ToString();
                 cConexion.LlamarTablaUsuariosGP("usuario", tabla_usuariosGPSelected, idSelected);
                 tabla_usuariosGPSelected.Columns[0].Visibility = Visibility.Collapsed;
+                tabla_usuariosGPSelected.Columns[1].Visibility = Visibility.Collapsed;
                 tabla_usuariosGPSelected.Columns[2].Visibility = Visibility.Collapsed;
                 tabla_usuariosGPSelected.Columns[8].Visibility = Visibility.Collapsed;
                 tabla_usuariosGPSelected.Columns[9].Visibility = Visibility.Collapsed;
@@ -1468,7 +1486,7 @@ namespace Control_de_Tareas
                 {
                     datosTarea[0] = i.ToString();
                     datosTarea[1] = nombreTarea[i];
-                    datosTarea[2] = "No Hay";
+                    datosTarea[2] = "No Implementado Aun";
                     datosTarea[3] = cantDias[i];
                     datosTarea[4] = predecedor[i];
                     datosTarea[5] = ID_flujoPL;

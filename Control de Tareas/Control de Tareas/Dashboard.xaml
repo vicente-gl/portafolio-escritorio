@@ -184,7 +184,7 @@
 
         </Grid>
             <!--PANTALLA AGREGAR GRUPO DE TRABAJO-->
-        <Grid Name="Pantalla_Agregar_GP" Margin="509,80,0,0" Height="1000" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden">
+        <Grid Name="Pantalla_Agregar_GP" Margin="509,80,0,0" Height="1000" VerticalAlignment="Top" Width="1398" HorizontalAlignment="Center" Visibility="Hidden">
             <Rectangle Fill="#FFFFFF"></Rectangle>
             <Label HorizontalAlignment="Center" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="30" Content="Agregar Grupo de Trabajo"></Label>
             <Grid Name="Pantalla_Agregar_GP_NoNegocio" Background="#FFFF">
@@ -227,7 +227,7 @@
                     <Label HorizontalAlignment="Right" FontFamily="Inter Light" FontSize="25" Content="Integrantes"></Label>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <DataGrid x:Name="tabla_listaGP" SelectedCellsChanged="tabla_listaGP_SelectedCellsChanged" IsReadOnly="True" FontFamily="Intern" ItemsSource="{Binding Path=LoadDataBinding}" MinHeight="400" MinWidth="300"></DataGrid>
+                    <DataGrid x:Name="tabla_listaGP" SelectedCellsChanged="tabla_listaGP_SelectedCellsChanged" IsReadOnly="True" FontFamily="Intern" ItemsSource="{Binding Path=LoadDataBinding}" MinHeight="400" MinWidth="100"></DataGrid>
                     <Border Margin="30"></Border>
                     <DataGrid x:Name="tabla_usuariosGPSelected" MinHeight="400" IsReadOnly="True" FontFamily="Intern" ItemsSource="{Binding Path=LoadDataBinding}" MinWidth="300"></DataGrid>
                 </StackPanel>
@@ -263,40 +263,43 @@
                 <Border Margin="20"></Border>
                 <Label FontFamily="Inter" Content="Lista de Tareas" HorizontalAlignment="Center" FontSize="25"></Label>
                 <Border Margin="10"></Border>
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel MaxHeight="300" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <StackPanel x:Name="StackFlujoLabelTarea" Orientation="Vertical">
-                            <Label Content="Tarea 1: " FontSize="15" FontFamily="Inter" Height="30"></Label>
-                        </StackPanel>
-                        <Border Margin="10"></Border>
-                        <StackPanel x:Name="StackFlujotxtBox" Orientation="Vertical">
-                            <TextBox Width="200" x:Name="flujo_tarea1_name" FontSize="15" FontFamily="Inter" Height="30"></TextBox>
-                        </StackPanel>
-                        <Border Margin="10"></Border>
-                        <StackPanel x:Name="StackFlujoDias" Orientation="Vertical">
-                            <TextBox Width="50" FontSize="15" Text="1" FontFamily="Inter" Height="30"></TextBox>
-                        </StackPanel>
-                        <StackPanel x:Name="StackFlujoDiasLabel"  Orientation="Vertical">
-                            <Label Content="Dia(s)" FontSize="15" FontFamily="Inter" Height="30"></Label>
-                        </StackPanel>
-                        <Border Margin="10"></Border>
-                        <StackPanel x:Name="StackFlujoNewSubtarea" Orientation="Vertical">
-                            <CheckBox FontFamily="Inter" Click="CheckboxUpdate" Content="Subtarea" Margin="0,0,0,10" FontSize="15"></CheckBox>
-                        </StackPanel>
-                        <Border Height="30"></Border>
-                        <StackPanel Margin="0,30,0,0" x:Name="StackFlujoSubtarea" Orientation="Vertical">
-                        </StackPanel>
-                        <Border Margin="10"></Border>
-                        <StackPanel x:Name="StackFlujoPredecedorLabel"  Orientation="Vertical">
+                <Grid>
+                    <ScrollViewer CanContentScroll="True" VerticalScrollBarVisibility="Visible">
+                        <StackPanel Background="GhostWhite" ScrollViewer.CanContentScroll="True" MaxHeight="300" MaxWidth="900" Orientation="Horizontal" HorizontalAlignment="center">
+                            <StackPanel x:Name="StackFlujoLabelTarea" Orientation="Vertical">
+                                <Label Content="Tarea 1: " FontSize="15" FontFamily="Inter" Height="30"></Label>
+                            </StackPanel>
+                            <Border Margin="10"></Border>
+                            <StackPanel x:Name="StackFlujotxtBox" Orientation="Vertical">
+                                <TextBox Width="200" x:Name="flujo_tarea1_name" FontSize="15" FontFamily="Inter" Height="30"></TextBox>
+                            </StackPanel>
+                            <Border Margin="10"></Border>
+                            <StackPanel x:Name="StackFlujoDias" Orientation="Vertical">
+                                <TextBox Width="50" FontSize="15" Text="1" FontFamily="Inter" Height="30"></TextBox>
+                            </StackPanel>
+                            <StackPanel x:Name="StackFlujoDiasLabel"  Orientation="Vertical">
+                                <Label Content="Dia(s)" FontSize="15" FontFamily="Inter" Height="30"></Label>
+                            </StackPanel>
+                            <Border Margin="10"></Border>
+                            <StackPanel x:Name="StackFlujoNewSubtarea" Orientation="Vertical">
+                                <CheckBox FontFamily="Inter" Click="CheckboxUpdate" Content="Subtarea" Margin="0,0,0,10" FontSize="15"></CheckBox>
+                            </StackPanel>
                             <Border Height="30"></Border>
+                            <StackPanel Margin="0,30,0,0" x:Name="StackFlujoSubtarea" Orientation="Vertical">
+                            </StackPanel>
+                            <Border Margin="10"></Border>
+                            <StackPanel x:Name="StackFlujoPredecedorLabel"  Orientation="Vertical">
+                                <Border Height="30"></Border>
+                            </StackPanel>
+                            <StackPanel Margin="0,30,0,0" x:Name="StackFlujoPredecedora"  Orientation="Vertical">
+                            </StackPanel>
+                            <StackPanel x:Name="stackFlujoDeleteTask"  Orientation="Vertical">
+                                <Border Height="30"></Border>
+                            </StackPanel>
                         </StackPanel>
-                        <StackPanel Margin="0,30,0,0" x:Name="StackFlujoPredecedora"  Orientation="Vertical">
-                        </StackPanel>
-                        <StackPanel x:Name="stackFlujoDeleteTask"  Orientation="Vertical">
-                            <Border Height="30"></Border> 
-                        </StackPanel>                    
-                    </StackPanel>                    
-                </ScrollViewer>
+                    </ScrollViewer>
+                </Grid>
+                
                 <Border Margin="15"></Border>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button x:Name="btn_flujotarea_addTarea" Click="btn_flujotarea_addTarea_Click" Width="150" FontFamily="Inter" FontSize="15" Content="Añadir Tarea" Foreground="White"></Button>

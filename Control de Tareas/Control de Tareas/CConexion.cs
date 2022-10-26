@@ -153,7 +153,6 @@ namespace Control_de_Tareas
             {
                 //User found
                 reader.Close();
-                Console.WriteLine(result);
                 query = "SELECT CONCAT(nombre ,CONCAT(' ',CONCAT(apellidop, CONCAT(' ', apellidom)))) FROM usuario WHERE id = "+result+"";
                 cmd = new OracleCommand(query, conn);
                 reader = cmd.ExecuteReader();
@@ -165,7 +164,6 @@ namespace Control_de_Tareas
 
                 Dashboard dashboard = new Dashboard();
                 dashboard.label_logedUser.Content = result;
-                Console.WriteLine(result);
                 dashboard.Show();
 
                 return true;
@@ -198,6 +196,44 @@ namespace Control_de_Tareas
         {
             EstablecerConn();
             string query = "SELECT * FROM " + tabla + " where Deleted = 0 ORDER BY ID";
+            OracleCommand cmd = new OracleCommand(query, conn);
+
+            try
+            {
+                OracleDataAdapter adp = new OracleDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                adp.Fill(ds, "LoadDataBinding");
+                datagridItem.DataContext = ds;
+            }
+            catch (OracleException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        public void LlamarTablaUsuariosTodo(System.Windows.Controls.DataGrid datagridItem)
+        {
+            EstablecerConn();
+            string query = "select * from usuario a join rol b on a.rol_id = b.id join grupotrabajo c on a.grupotrabajo_id = c.id where a.deleted = 0";
+            OracleCommand cmd = new OracleCommand(query, conn);
+
+            try
+            {
+                OracleDataAdapter adp = new OracleDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                adp.Fill(ds, "LoadDataBinding");
+                datagridItem.DataContext = ds;
+            }
+            catch (OracleException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        public void LlamarTablaUsuariosTodoNegocioSelected(string negocio, System.Windows.Controls.DataGrid datagridItem)
+        {
+            EstablecerConn();
+            string query = "select * from usuario a join rol b on a.rol_id = b.id join grupotrabajo c on a.grupotrabajo_id = c.id where a.deleted = 0 and a.negocio_id = "+negocio+"";
             OracleCommand cmd = new OracleCommand(query, conn);
 
             try
