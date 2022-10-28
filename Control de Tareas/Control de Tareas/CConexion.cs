@@ -520,6 +520,19 @@ namespace Control_de_Tareas
             var reader = cmd.ExecuteNonQuery();
         }
 
+        public void DeleteFlujo(string idFlujo)
+        {
+            string query = "delete from flujo_pl where id = " + idFlujo + "";
+            OracleCommand cmd = new OracleCommand(query, conn);
+            var reader = cmd.ExecuteNonQuery();
+        }
+        public void DeleteTareasFlujo(string idFlujo)
+        {
+            string query = "delete from tarea_pl where flujo_pl_id = "+idFlujo+"";
+            OracleCommand cmd = new OracleCommand(query, conn);
+            var reader = cmd.ExecuteNonQuery();
+        }
+
         public void ResetGPUsuarios(string idgp_eliminado, string gt_ninguno)
         {
             string query = "UPDATE usuario SET grupotrabajo_id = "+ gt_ninguno + " WHERE grupotrabajo_id = "+idgp_eliminado+"";

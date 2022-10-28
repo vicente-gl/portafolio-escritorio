@@ -220,6 +220,7 @@
   <ItemGroup>
     <Resource Include="Control-de-Tareas.ico" />
     <Resource Include="Iconos\Captura de pantalla 2022-10-26 111721.png" />
+    <Resource Include="Iconos\logout-512.png" />
     <Content Include="Iconos\profilepic_placeholder.jpg" />
     <Resource Include="Iconos\WIN_20220921_11_50_38_Pro %282%29.jpg" />
   </ItemGroup>

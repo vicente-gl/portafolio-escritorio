@@ -1579,38 +1579,64 @@ namespace Control_de_Tareas
                 string idSelected = row["id"].ToString();
                 cConexion.LlamarTablaTareasDeFlujo("tarea_pl", dataGrid_TareasdeFlujo, idSelected);
                 dataGrid_TareasdeFlujo.Columns[0].Visibility = Visibility.Collapsed;
-                //dataGrid_TareasdeFlujo.Columns[1].Visibility = Visibility.Collapsed;
                 dataGrid_TareasdeFlujo.Columns[3].Visibility = Visibility.Collapsed;
                 dataGrid_TareasdeFlujo.Columns[6].Visibility = Visibility.Collapsed;
-                //dataGrid_TareasdeFlujo.Columns[9].Visibility = Visibility.Collapsed;
-                //dataGrid_TareasdeFlujo.Columns[10].Visibility = Visibility.Collapsed;
-                //dataGrid_TareasdeFlujo.Columns[11].Visibility = Visibility.Collapsed;
-                //dataGrid_TareasdeFlujo.Columns[1].Header = "Correo Electrónico";
-                //dataGrid_TareasdeFlujo.Columns[3].Header = "RUT";
-                //dataGrid_TareasdeFlujo.Columns[4].Header = "Nombre";
-                //dataGrid_TareasdeFlujo.Columns[5].Header = "Apellido Paterno";
-                //dataGrid_TareasdeFlujo.Columns[6].Header = "Apellido Materno";
-                //dataGrid_TareasdeFlujo.Columns[7].Header = "Celular";
+
             }
+        }
+
+        private void btn_eliminarFlujo_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                DataRowView row = (DataRowView)dataGrid_ListaFlujos.SelectedItems[0];
+                string idSelected = row["id"].ToString();
+
+                CConexion conexion = new CConexion();
+                conexion.EstablecerConn();
+                conexion.DeleteTareasFlujo(idSelected);
+                conexion.DeleteFlujo(idSelected);
+                MessageBox.Show("Flujo y Tareas Eliminados correctamente");
+            }
+            catch
+            {
+                MessageBox.Show("No ha seleccionado ningun flujo");
+            }
+
         }
 
         string rolEditTarget;
         //PARA IR A LA PANTALLA DE EDITAR ROL
         private void btn_Editar_Rol_Click(object sender, RoutedEventArgs e)
         {
-            DataRowView row = (DataRowView)datagrid_Rol.SelectedItems[0];
-            string idSelected = row["id"].ToString();
-            string idSelectedName = row["nombre"].ToString();
-            rolEditTarget = idSelected;
-
-            if (idSelectedName == "Ninguno")
+            try
             {
-                MessageBox.Show("No se puede editar el Rol Ninguno");
+                if((DataRowView)datagrid_Rol.SelectedItems[0] == null)
+                {
+                    MessageBox.Show("No ha seleccionado ninguno rol.");
+                }
+                else
+                {
+                    DataRowView row = (DataRowView)datagrid_Rol.SelectedItems[0];
+                    string idSelected = row["id"].ToString();
+                    string idSelectedName = row["nombre"].ToString();
+                    rolEditTarget = idSelected;
+
+                    if (idSelectedName == "Ninguno")
+                    {
+                        MessageBox.Show("No se puede editar el Rol Ninguno");
+                    }
+                    else
+                    {             
+                        Pantalla_Editar_Rol.Visibility = Visibility.Visible;
+                        txtbox_rolNuevoNombre.Text = row["nombre"].ToString();
+                    }
+                }
+
             }
-            else
-            {             
-                Pantalla_Editar_Rol.Visibility = Visibility.Visible;
-                txtbox_rolNuevoNombre.Text = row["nombre"].ToString();
+            catch
+            {
+                MessageBox.Show("No ha seleccionado ninguno rol.");
             }
         }
         //PARA CONFIRMAR NUEVO NOMBRE DEL ROL
@@ -1619,28 +1645,29 @@ namespace Control_de_Tareas
             CConexion cConexion = new CConexion();
             cConexion.EstablecerConn();
             cConexion.UpdateNombre(txtbox_rolNuevoNombre.Text.ToString(), "rol", rolEditTarget);
-            cConexion.CerrarConn();            //
+            cConexion.CerrarConn();
             MessageBox.Show("Rol Editado Correctamente");
             Pantalla_Editar_Rol.Visibility = Visibility.Hidden;
-
-            /*
-            try
-            {
-                
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("No se pudo editar Rol. Error: " + ex);
-            }
-            */
-
         }
 
         private void btn_EditarRolVolver_Click(object sender, RoutedEventArgs e)
         {
             Pantalla_Editar_Rol.Visibility = Visibility.Hidden;
         }
+
+        private void logout_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (MessageBox.Show("¿Cerrar Sesion?", "Confirmar", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+            {
+            }
+            else
+            {
+                this.Close();
+            }
+            
+        }
+
+
 
 
 

@@ -352,7 +352,7 @@
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                     <Button Foreground="White" Content="Editar Flujo de Tarea" FontFamily="Inter" FontSize="17"></Button>
                     <Border Width="20"></Border>
-                    <Button BorderBrush="Transparent" Content="Eliminar Flujo" FontFamily="Inter" FontSize="17" Foreground="White" Background="Red"></Button>
+                    <Button x:Name="btn_eliminarFlujo" Click="btn_eliminarFlujo_Click" BorderBrush="Transparent" Content="Eliminar Flujo" FontFamily="Inter" FontSize="17" Foreground="White" Background="Red"></Button>
                 </StackPanel>
 
             </StackPanel>
@@ -485,7 +485,8 @@
 
         <!--BARRA DE ARRIBA-->
         <Grid Name="GridTopBar" HorizontalAlignment="Center" Height="80" Width="{Binding ActualWidth, ElementName=GridDashboard}" VerticalAlignment="Top">
-            <Rectangle Fill="#171725" HorizontalAlignment="Center" Width="1920" Height="134" VerticalAlignment="Top"/>
+            <Rectangle Fill="#171725" HorizontalAlignment="Center" Width="1920" Height="134" VerticalAlignment="Top"/>            
+            <Image x:Name="logout" Source="/Iconos/logout-512.png" Cursor="Hand" MouseLeftButtonDown="logout_MouseLeftButtonDown" HorizontalAlignment="Right" Margin="0,0,50,0" Height="50"></Image>
             <Image Source="/Process Color Alpha.png" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" RenderOptions.BitmapScalingMode="HighQuality"></Image>
             <Ellipse HorizontalAlignment="Left" Margin="300,0,0,0" Width="50" Height="50">
                 <Ellipse.Fill>
