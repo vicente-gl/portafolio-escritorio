@@ -30,6 +30,8 @@ namespace Control_de_Tareas
         private string negocioEditTarget;
         private string grupoTrabajoIdTarget;
 
+        private Grid lastGridChecked;
+
         public bool seleccionandoNegocio = false;
 
         public string _negocioSelected;
@@ -49,6 +51,8 @@ namespace Control_de_Tareas
             {
                 idNegocioSeleccionado = value;
                 ActualizarNegocioSelected();
+                MostrarPantallaNegocioSeleccionado();
+
                 //falta por agregar Pantalla visible preseleccionada 
             }
         }
@@ -190,6 +194,7 @@ namespace Control_de_Tareas
                 if (Pantalla_SinNegocio.Visibility.Equals(Visibility.Hidden))
                 {
                     Pantalla_SinNegocio.Visibility = Visibility.Visible;
+                    lastGridChecked = Pantalla_Agregar_GP;
                     CambiarColorBoton(btn_gptrabajo_crear, color_menu2_idle);
                 }
                 else
@@ -204,6 +209,7 @@ namespace Control_de_Tareas
                 {
                     Pantalla_Agregar_GP.Visibility = Visibility.Visible;
                     CambiarColorBoton(btn_gptrabajo_crear, color_menu2_pressed);
+                    lastGridChecked = null;
                 }
                 else
                 {
@@ -226,6 +232,7 @@ namespace Control_de_Tareas
                 {
                     Pantalla_SinNegocio.Visibility = Visibility.Visible;
                     CambiarColorBoton(btn_flujos_crear, color_menu2_idle);
+                    lastGridChecked = Pantalla_Crear_FlujoTarea;
                 }
                 else
                 {
@@ -240,6 +247,7 @@ namespace Control_de_Tareas
                     Pantalla_Crear_FlujoTarea.Visibility = Visibility.Visible;
                     CargarCboxFlujo();
                     CambiarColorBoton(btn_flujos_crear, color_menu2_pressed);
+                    lastGridChecked = null;
 
                 }
                 else
@@ -263,6 +271,7 @@ namespace Control_de_Tareas
                 {
                     Pantalla_SinNegocio.Visibility = Visibility.Visible;
                     CambiarColorBoton(btnMenu_flujos_listar, color_menu2_idle);
+                    lastGridChecked = Pantalla_Listar_FlujoTarea;
                 }
                 else
                 {
@@ -277,6 +286,7 @@ namespace Control_de_Tareas
                     Pantalla_Listar_FlujoTarea.Visibility = Visibility.Visible;
                     //CargarCboxFlujo();
                     CambiarColorBoton(btnMenu_flujos_listar, color_menu2_pressed);
+                    lastGridChecked = null;
 
                 }
                 else
@@ -384,30 +394,37 @@ namespace Control_de_Tareas
             }
             else
             {
-                if (MessageBox.Show("¿Desea Eliminar el Negocio Seleccionado?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                DataRowView row = (DataRowView)tablaNegocios.SelectedItems[0];
+                if (row["nombre"].ToString() == "Ninguno")
                 {
-                    //do no stuff
+                    MessageBox.Show("No se puede eliminar el Negocio: Ninguno", "Error");
                 }
                 else
                 {
-                    CConexion cConexion = new CConexion();
-                    cConexion.EstablecerConn();
-                    DataRowView row = (DataRowView)tablaNegocios.SelectedItems[0];
-                    string idSelected = row["id"].ToString();
-                    cConexion.DeleteRow(idSelected, "negocio");
-                    MessageBox.Show("Negocio Eliminado Exitosamente");
-                    cConexion.CerrarConn();
-                    CConexion ccConexion = new CConexion();
-                    ccConexion.LlamarTabla("negocio", tablaNegocios);
-                    ccConexion.CerrarConn();
+                    if (MessageBox.Show("¿Desea Eliminar el Negocio Seleccionado?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                    {
+                        //do no stuff
+                    }
+                    else
+                    {
+                        CConexion cConexion = new CConexion();
+                        cConexion.EstablecerConn();
+
+                        string idSelected = row["id"].ToString();
+                        cConexion.DeleteRow(idSelected, "negocio");
+                        MessageBox.Show("Negocio Eliminado Exitosamente");
+                        cConexion.CerrarConn();
+                        CConexion ccConexion = new CConexion();
+                        ccConexion.LlamarTabla("negocio", tablaNegocios);
+                        ccConexion.CerrarConn();
+                    }
                 }
+
             }
         }
         //Pantalla Editar Negocio
         private void btn_listarNegocios_Editar_Click(object sender, RoutedEventArgs e)
         {
-            Pantalla_Editar_Negocio.Visibility = Visibility.Visible;
-
             if (tablaNegocios.SelectedValue == null)
             {
                 MessageBox.Show("No se ha seleccionado ningún Usuario");
@@ -418,19 +435,27 @@ namespace Control_de_Tareas
                 //IList rows = tablaUsuarios.SelectedItems;
                 DataRowView row = (DataRowView)tablaNegocios.SelectedItems[0];
                 string idSelected = row["id"].ToString();
-                string[] datosNegocio = new string[6];
 
-                negocioEditTarget = idSelected;
-                datosNegocio[0] = row["nombre"].ToString();
-                datosNegocio[1] = row["encargado"].ToString();
-                datosNegocio[2] = row["fecha_ingreso"].ToString();
-                datosNegocio[3] = row["correo_encargado"].ToString();
-                datosNegocio[4] = row["rut"].ToString();
-                datosNegocio[5] = row["direccion"].ToString();
+                if(row["nombre"].ToString() == "Ninguno")
+                {
+                    MessageBox.Show("No se puede editar el Negocio: Ninguno", "Error");
+                }
+                else
+                {
+                    string[] datosNegocio = new string[6];
+
+                    negocioEditTarget = idSelected;
+                    datosNegocio[0] = row["nombre"].ToString();
+                    datosNegocio[1] = row["encargado"].ToString();
+                    datosNegocio[2] = row["fecha_ingreso"].ToString();
+                    datosNegocio[3] = row["correo_encargado"].ToString();
+                    datosNegocio[4] = row["rut"].ToString();
+                    datosNegocio[5] = row["direccion"].ToString();
 
 
-                Pantalla_Editar_Negocio.Visibility = Visibility.Visible;
-                LlenarCamposEditarNegocio(datosNegocio);
+                    Pantalla_Editar_Negocio.Visibility = Visibility.Visible;
+                    LlenarCamposEditarNegocio(datosNegocio);
+                }
             }
         }
 
@@ -515,13 +540,20 @@ namespace Control_de_Tareas
             {
                 DataRowView row = (DataRowView)tabla_listaGP.SelectedItems[0];
                 string idSelected = row["id"].ToString();
-                grupoTrabajoIdTarget = idSelected;
+                if(row["nombre"].ToString() == "Ninguno")
+                {
+                    MessageBox.Show("No se puede editar el grupo de trabajo: Ninguno", "Error");
+                }
+                else
+                {
+                    grupoTrabajoIdTarget = idSelected;
 
-                txtBox_CrearGP_Editar.Text = row["nombre"].ToString();
+                    txtBox_CrearGP_Editar.Text = row["nombre"].ToString();
                
 
-                Pantalla_Editar_GP.Visibility = Visibility.Visible;
-                CargarUsuariosEditGP(grupoTrabajoIdTarget);
+                    Pantalla_Editar_GP.Visibility = Visibility.Visible;
+                    CargarUsuariosEditGP(grupoTrabajoIdTarget);
+                }
             }
         }
 
@@ -557,21 +589,28 @@ namespace Control_de_Tareas
                 DataRowView row = (DataRowView)tabla_listaGP.SelectedItems[0];
                 string idSelected = row["id"].ToString();
                 string nombreGP = row["nombre"].ToString();
-                int cantUsuarios = tabla_usuariosGPSelected.Items.Count;
-                string mensaje;
-                cConexion.DeleteRow(idSelected, "grupotrabajo");
-                string gt_ninguno = cConexion.GetIDByName("grupotrabajo", "Ninguno");
-                cConexion.ResetGPUsuarios(idSelected, gt_ninguno);
-                cConexion.CerrarConn();
-                if (tabla_usuariosGPSelected.Items.Count == 1)
+                if(nombreGP == "Ninguno")
                 {
-                    mensaje = cantUsuarios + " Usuario del Grupo de Trabajo: " + nombreGP + " se actualizó correctamente a Ninguno";
+                    MessageBox.Show("No se puede eliminar el grupo de trabajo: Ninguno", "Error");
                 }
                 else
                 {
-                    mensaje = cantUsuarios + " Usuarios del Grupo de Trabajo: " + nombreGP + " se actualizaron correctamente a Ninguno";
+                    int cantUsuarios = tabla_usuariosGPSelected.Items.Count;
+                    string mensaje;
+                    cConexion.DeleteRow(idSelected, "grupotrabajo");
+                    string gt_ninguno = cConexion.GetIDByName("grupotrabajo", "Ninguno");
+                    cConexion.ResetGPUsuarios(idSelected, gt_ninguno);
+                    cConexion.CerrarConn();
+                    if (tabla_usuariosGPSelected.Items.Count == 1)
+                    {
+                        mensaje = cantUsuarios + " Usuario del Grupo de Trabajo: " + nombreGP + " se actualizó correctamente a Ninguno";
+                    }
+                    else
+                    {
+                        mensaje = cantUsuarios + " Usuarios del Grupo de Trabajo: " + nombreGP + " se actualizaron correctamente a Ninguno";
+                    }
+                    MessageBox.Show("Grupo de Trabajo Eliminado Exitosamente.\n " + mensaje);
                 }
-                MessageBox.Show("Grupo de Trabajo Eliminado Exitosamente.\n " + mensaje);
             } catch (Exception ex)
             {
                 MessageBox.Show("Error, no se pudo eliminar el Grupo de Trabajo: " + ex.Message);
@@ -816,6 +855,9 @@ namespace Control_de_Tareas
             CambiarColorBoton(btn_admin_rol, color_menu2_idle);
             CambiarColorBoton(btn_gptrabajo_crear, color_menu2_idle);
             CambiarColorBoton(btn_gptrabajo_listar, color_menu2_idle);
+            //Flujos
+            CambiarColorBoton(btn_flujos_crear, color_menu2_idle);
+            CambiarColorBoton(btnMenu_flujos_listar, color_menu2_idle);
             //Usuarios
             CambiarColorBoton(btn_usuarios_crear, color_menu2_idle);
             CambiarColorBoton(btn_usuarios_listar, color_menu2_idle);
@@ -858,7 +900,6 @@ namespace Control_de_Tareas
                 Pantalla_Agregar_Usuario,
                 Pantalla_Listar_Usuarios,
                 Pantalla_Editar_Usuario,
-                Pantalla_Administrar_Roles,
                 Pantalla_Agregar_GP,
                 Pantalla_ListarGP,
                 Pantalla_Editar_GP,
@@ -1221,6 +1262,15 @@ namespace Control_de_Tareas
 
 
         }
+
+        private void MostrarPantallaNegocioSeleccionado()
+        {
+            if(lastGridChecked != null)
+            {
+                lastGridChecked.Visibility = Visibility.Visible;
+            }
+        }
+            
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
@@ -1785,96 +1835,5 @@ namespace Control_de_Tareas
             }
             
         }
-
-
-
-
-
-
-
-
-
-
-
-
-        //Codigos Antiguos
-        /*
-         * 
-         * 
-         *                 i++;
-                
-                if (esNewSubTarea[i-1])
-                {
-                    checkBox1.IsChecked = true;
-                    esSubTarea[i] = true;
-                }
-                if (esNewSubTarea[i])
-                {
-                    checkBox1.IsChecked = false;
-                    esSubTarea[i] = false;
-                }
-                else
-                {
-                    checkBox1.IsEnabled = true;
-                }                
-                
-                if (esSubTarea[i-1])
-                {
-                    checkBox1.IsEnabled = true;
-                }
-                else
-                {
-                    //checkBox1.IsEnabled= false;
-                }
-
-
-         * 
-        private void AgregarFlujoKanban()
-        {
-            bool camposLlenos = true;
-
-            foreach (TextBox textbox in subflujoTxtBox.Children)
-            {
-                if (textbox.Text == "") camposLlenos = false;
-            }
-            if (subflujoTxtBox2.Children.Count > 0)
-            {
-                foreach (TextBox textBox in subflujoTxtBox2.Children)
-                {
-                    if (textBox.Text == "") camposLlenos = false;
-                }
-            }
-            if (txtBoxNombreFlujo.Text == "") camposLlenos = false;
-            if (!camposLlenos)
-            {
-                MessageBox.Show("Debes ingresar todos los campos");
-
-            }
-            else //Ejecutar Query
-            {
-                CConexion cConexion = new CConexion();
-                cConexion.EstablecerConn();
-                int plantilla = 0;
-                if ((bool)CheckBoxFlujoTarea.IsChecked == true) plantilla = 1;
-
-                int orden = cConexion.GetFlujoTareaCount(idNegocioSeleccionado) + 1; //obtiene cantidad de flujos en negocio para deifinir ultimo en la lista en el orden
-                cConexion.InsertFlujoTarea(txtBoxNombreFlujo.Text, orden, plantilla); //inserta flujo de negocio
-
-                //obtiene ID de tarea recien creada
-                //Obtener cantidad de subflujos
-                int totalSubflujos = subflujoTxtBox.Children.Count + subflujoTxtBox2.Children.Count;
-                int i = 0;
-                foreach (TextBox txtBox in subflujoTxtBox.Children)
-                {
-                    cConexion.InsertSubFlujo(txtBox.Text, i);
-                }
-                if (totalSubflujos > 5)
-                {
-                    //foreach
-                }
-
-            }
-        }
-        */
     }
 }
