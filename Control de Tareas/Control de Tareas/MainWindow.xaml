@@ -23,7 +23,7 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <Button x:Name="btn_connectBD" Click="btn_connectBD_Click" Content="Conectar a Base de datos" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="#FF11A8A8" Margin="15,0,0,15"></Button>
+        <Button x:Name="btn_connectBD" Click="btn_connectBD_Click" Content="Probar Conexión a Base de datos" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="#FF11A8A8" Margin="15,0,0,15"></Button>
         <Rectangle HorizontalAlignment="Center" Height="180" Margin="0,147,0,0" VerticalAlignment="Top" Width="350" Fill="#FFEDEDED"/>
         <Image HorizontalAlignment="Left" Height="83" Margin="23,16,0,0" RenderOptions.BitmapScalingMode="HighQuality" VerticalAlignment="Top" Width="244" Source="/Process Color Alpha.png"/>
         <Button x:Name="btnLogin" Content="Login" Click="btnLogin_Click" HorizontalAlignment="Center" Margin="0,281,0,0" VerticalAlignment="Top" Width="120" BorderBrush="{x:Null}" Background="#FF11A8A8" Foreground="White"/>

@@ -28,6 +28,7 @@ namespace Control_de_Tareas
 
         private string usuarioEditTarget;
         private string negocioEditTarget;
+        private string grupoTrabajoIdTarget;
 
         public bool seleccionandoNegocio = false;
 
@@ -504,6 +505,48 @@ namespace Control_de_Tareas
 
         }
         //Botones pantalla Listar GP
+        private void btn_editar_GP_Click(object sender, RoutedEventArgs e)
+        {
+            if (tabla_listaGP.SelectedValue == null)
+            {
+                MessageBox.Show("No se ha seleccionado ningún Grupo de Trabajo");
+            }
+            else
+            {
+                DataRowView row = (DataRowView)tabla_listaGP.SelectedItems[0];
+                string idSelected = row["id"].ToString();
+                grupoTrabajoIdTarget = idSelected;
+
+                txtBox_CrearGP_Editar.Text = row["nombre"].ToString();
+               
+
+                Pantalla_Editar_GP.Visibility = Visibility.Visible;
+                CargarUsuariosEditGP(grupoTrabajoIdTarget);
+            }
+        }
+
+
+        private void btn_editarGP_Confirmar_Click(object sender, RoutedEventArgs e)
+        {
+
+            CConexion cConexion = new CConexion();
+            cConexion.EstablecerConn();
+            cConexion.UpdateGrupoTrabajo(txtBox_CrearGP_Editar.Text, grupoTrabajoIdTarget);
+            string idNinguno = cConexion.GetIDByName("grupotrabajo", "Ninguno");
+            cConexion.ResetGP(idNinguno, grupoTrabajoIdTarget); //Pasar todos los usuarios de ese grupo de trabajo a "Ninguno"
+            List<string> listaIDUsuarios = new List<string>();
+            foreach (CheckBox cb in ListBoxUsuariosGP_Editar.Items)
+            {
+                if (cb.IsChecked == true)
+                {
+                    listaIDUsuarios.Add(cb.Tag.ToString());
+                }
+            }
+            cConexion.ActualizarGPdeUsuarios(grupoTrabajoIdTarget, listaIDUsuarios); //Actualizar todos los usuarios de la lista al nuevo GP
+            cConexion.CerrarConn();
+            Pantalla_Editar_GP_SiNegocio.Visibility = Visibility.Hidden;
+        }
+
         //Boton Eliminar GP
         private void btn_eliminar_GP_Click(object sender, RoutedEventArgs e)
         {
@@ -818,6 +861,7 @@ namespace Control_de_Tareas
                 Pantalla_Administrar_Roles,
                 Pantalla_Agregar_GP,
                 Pantalla_ListarGP,
+                Pantalla_Editar_GP,
                 Pantalla_Crear_FlujoTarea,
                 Pantalla_Listar_FlujoTarea
             };
@@ -835,6 +879,31 @@ namespace Control_de_Tareas
                 }
             }
         }
+
+        private bool PuedeCambiarDeNegocio()// Bloquea el cambio de negocio si se encuentra en una pantalla en donde se requiere un negocio seleccionado
+        {
+            List<Grid> lista_pantalla;
+            lista_pantalla = new List<Grid>
+            {
+                Pantalla_Agregar_GP,
+                Pantalla_ListarGP,
+                Pantalla_Editar_GP,
+                Pantalla_Crear_FlujoTarea,
+                Pantalla_Listar_FlujoTarea
+            };
+            //opcion5
+
+            foreach (Grid item in lista_pantalla)
+            {
+                if (item.Visibility == Visibility.Visible)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
 
         //Carga datos para creacion de Grupo de Trabajo
         private void CargarUsuariosCrearGP()
@@ -861,6 +930,34 @@ namespace Control_de_Tareas
                 box.FontSize = 18;
 
                 ListBoxUsuariosGP.Items.Add(box);
+            }
+        }
+
+        //Carga datos para Edicion de Grupo de Trabajo
+        private void CargarUsuariosEditGP(string gpEditID)
+        {
+            CConexion cConexion = new CConexion();
+            cConexion.EstablecerConn();
+            ListBoxUsuariosGP_Editar.Items.Clear();
+            string gt_ninguno = cConexion.GetIDByName("grupotrabajo", "Ninguno");
+            string[] listaUsuarios = cConexion.GetUsuariosFromNegocioEditGP(idNegocioSeleccionado, gt_ninguno, gpEditID);
+            string[] listaNombreRol = cConexion.GetRolFromUsuarios(idNegocioSeleccionado);
+            idListaUsuariosCrearGP = cConexion.GetUserIDFromNegocioGPEDIT(idNegocioSeleccionado, gt_ninguno, gpEditID);
+            CheckBox box;
+            for (int i = 0; i < listaUsuarios.Length; i++)
+            {
+                box = new CheckBox();
+                box.Tag = idListaUsuariosCrearGP[i];
+                box.Content = listaUsuarios[i] + " - " + listaNombreRol[i];
+                if (box.Content.ToString().Contains("Admin"))
+                {
+                    box.FontWeight = FontWeights.Bold;
+                }
+                box.Name = "checkboxUser" + i;
+                box.FontFamily = new FontFamily("Inter");
+                box.FontSize = 18;
+
+                ListBoxUsuariosGP_Editar.Items.Add(box);
             }
         }
 
@@ -1102,18 +1199,26 @@ namespace Control_de_Tareas
         private void btn_SeleccionarNegocio_Click(object sender, RoutedEventArgs e)
         {
             //MessageBox.Show(_negocioSelected, idNegocioSeleccionado);
-
-            if (!seleccionandoNegocio)
+            if (PuedeCambiarDeNegocio())
             {
-                seleccionandoNegocio = true;
-                NegocioSeleccionado negocioSeleccionado = new NegocioSeleccionado();
-                negocioSeleccionado.Show();
+                if (!seleccionandoNegocio)
+                {
+                
+                    seleccionandoNegocio = true;
+                    NegocioSeleccionado negocioSeleccionado = new NegocioSeleccionado();
+                    negocioSeleccionado.Show();
 
-                negocioSeleccionado.NegocioSeleccionadoOK += value => seleccionandoNegocio = value;
+                    negocioSeleccionado.NegocioSeleccionadoOK += value => seleccionandoNegocio = value;
 
-                negocioSeleccionado.NegocioSeleccionadoString += value => _negocioSelected = value;
-                negocioSeleccionado.NegocioSeleccionadoInt += value => IDNegocioSeleccionado = value;
+                    negocioSeleccionado.NegocioSeleccionadoString += value => _negocioSelected = value;
+                    negocioSeleccionado.NegocioSeleccionadoInt += value => IDNegocioSeleccionado = value;
+                }
             }
+            else
+            {
+                MessageBox.Show("No puedes cambiar de negocio mientras haces esta operación", "Error");
+            }
+
 
         }
 
@@ -1463,109 +1568,123 @@ namespace Control_de_Tareas
 
         private void btn_flujotarea_finalizar_Click(object sender, RoutedEventArgs e)
         {
-            if (CheckCrearFlujoCamposCheck())
+
+            CConexion cConexion = new CConexion();
+            cConexion.EstablecerConn();
+            string[] datos_FlujoPL = { "", "", "" };
+            datos_FlujoPL[0] = txtBox_NombreFlujo.Text;
+            datos_FlujoPL[1] = new TextRange(txtBox_DescFlujo.Document.ContentStart, txtBox_DescFlujo.Document.ContentEnd).Text;
+            datos_FlujoPL[2] = idNegocioSeleccionado;
+            //checkear si existe flujo con el mismo nombre
+            if (cConexion.CheckFlujoName(datos_FlujoPL[0]))
             {
-                CConexion cConexion = new CConexion();
-                cConexion.EstablecerConn();
-
-
-                string[] datos_FlujoPL = { "", "", "" };
-                datos_FlujoPL[0] = txtBox_NombreFlujo.Text;
-                datos_FlujoPL[1] = new TextRange(txtBox_DescFlujo.Document.ContentStart, txtBox_DescFlujo.Document.ContentEnd).Text;
-                datos_FlujoPL[2] = idNegocioSeleccionado;
-
-                cConexion.InsertFlujo_PL(datos_FlujoPL); // Query para insertar flujo pl
-
-                string ID_flujoPL = cConexion.GetIDByName("flujo_pl", datos_FlujoPL[0]);
-
-                //Crear Tareas en BD
-                int cantTareas = StackFlujoLabelTarea.Children.Count;
-
-                string[] nombreTarea = new string[cantTareas];
-                string[] cantDias = new string[cantTareas];
-                string[] newSubtarea = new string[cantTareas];
-                string[] subTarea = new string[cantTareas];
-                string[] predecedor = new string[cantTareas];
-
-                string[] datosTarea = new string[8];
-
-                int i = 0;
-                foreach (TextBox textBox in StackFlujotxtBox.Children) // Nombre tarea
+                if (CheckCrearFlujoCamposCheck())
                 {
-                    nombreTarea[i] = textBox.Text;
-                    i++;
-                }
-                i = 0;
-                foreach(TextBox textBox in StackFlujoDias.Children) // cantidad dias
-                {
-                    cantDias[i] = textBox.Text;
-                    i++;
-                }
-                i = 0;
-                foreach (CheckBox checkBox in StackFlujoNewSubtarea.Children) // subtarea nueva
-                {
-                    string check;
-                    if (checkBox.IsChecked == true)
+
+
+
+
+                    cConexion.InsertFlujo_PL(datos_FlujoPL); // Query para insertar flujo pl
+
+                    string ID_flujoPL = cConexion.GetIDByName("flujo_pl", datos_FlujoPL[0]);
+
+                    //Crear Tareas en BD
+                    int cantTareas = StackFlujoLabelTarea.Children.Count;
+
+                    string[] nombreTarea = new string[cantTareas];
+                    string[] cantDias = new string[cantTareas];
+                    string[] newSubtarea = new string[cantTareas];
+                    string[] subTarea = new string[cantTareas];
+                    string[] predecedor = new string[cantTareas];
+
+                    string[] datosTarea = new string[8];
+
+                    int i = 0;
+                    foreach (TextBox textBox in StackFlujotxtBox.Children) // Nombre tarea
                     {
-                        check = "1";
+                        nombreTarea[i] = textBox.Text;
+                        i++;
                     }
-                    else
+                    i = 0;
+                    foreach (TextBox textBox in StackFlujoDias.Children) // cantidad dias
                     {
-                        check = "0";
+                        cantDias[i] = textBox.Text;
+                        i++;
                     }
-                    newSubtarea[i] = check;
-                    i++;
-                }
-                i = 0;
-                subTarea[i] = "0"; //Se agrega antes porque no existe la opcion de "de subtarea" para la primera
-                i++;
-                foreach (CheckBox checkBox in StackFlujoSubtarea.Children) // subtarea nueva    error
-                {
-                    string check;
-                    if (checkBox.IsChecked == true)
+                    i = 0;
+                    foreach (CheckBox checkBox in StackFlujoNewSubtarea.Children) // subtarea nueva
                     {
-                        check = "1";
+                        string check;
+                        if (checkBox.IsChecked == true)
+                        {
+                            check = "1";
+                        }
+                        else
+                        {
+                            check = "0";
+                        }
+                        newSubtarea[i] = check;
+                        i++;
                     }
-                    else
+                    i = 0;
+                    subTarea[i] = "0"; //Se agrega antes porque no existe la opcion de "de subtarea" para la primera
+                    i++;
+                    foreach (CheckBox checkBox in StackFlujoSubtarea.Children) // subtarea nueva    error
                     {
-                        check = "0";
+                        string check;
+                        if (checkBox.IsChecked == true)
+                        {
+                            check = "1";
+                        }
+                        else
+                        {
+                            check = "0";
+                        }
+                        subTarea[i] = check;
+                        i++;
                     }
-                    subTarea[i] = check;
+
+                    i = 0;
+                    predecedor[i] = "0"; //Se agrega antes porque no existe la opcion de "de subtarea" para la primera
                     i++;
-                }
+                    foreach (ComboBox cbox in StackFlujoPredecedora.Children) // predecedor *********SACAR BORDER
+                    {
+                        predecedor[i] = cbox.SelectedIndex.ToString();
+                        if (predecedor[i] == null) predecedor[i] = "0";
+                        i++;
+                    }
 
-                i = 0;
-                predecedor[i] = "0"; //Se agrega antes porque no existe la opcion de "de subtarea" para la primera
-                i++;
-                foreach (ComboBox cbox in StackFlujoPredecedora.Children) // predecedor *********SACAR BORDER
+                    for (i = 0; i < cantTareas; i++) // realiza las querys correspondientes
+                    {
+                        datosTarea[0] = i.ToString();
+                        datosTarea[1] = nombreTarea[i];
+                        datosTarea[2] = "No Implementado Aun";
+                        datosTarea[3] = cantDias[i];
+                        datosTarea[4] = predecedor[i];
+                        datosTarea[5] = ID_flujoPL;
+                        datosTarea[6] = newSubtarea[i];
+                        datosTarea[7] = subTarea[i];
+
+                        cConexion.InsertTarea_PL(datosTarea);
+                    }
+                    MessageBox.Show("Flujo Creado Exitosamente");
+
+                    LimpiarCamposCrearFlujo();
+
+                }
+                else
                 {
-                    predecedor[i] = cbox.SelectedIndex.ToString();
-                    if(predecedor[i] == null) predecedor[i] = "0";
-                    i++;
+                    MessageBox.Show("Debe llenar todos los campos");
                 }
-
-                for(i = 0; i < cantTareas; i++) // realiza las querys correspondientes
-                {
-                    datosTarea[0] = i.ToString();
-                    datosTarea[1] = nombreTarea[i];
-                    datosTarea[2] = "No Implementado Aun";
-                    datosTarea[3] = cantDias[i];
-                    datosTarea[4] = predecedor[i];
-                    datosTarea[5] = ID_flujoPL;
-                    datosTarea[6] = newSubtarea[i];
-                    datosTarea[7] = subTarea[i];
-
-                    cConexion.InsertTarea_PL(datosTarea);
-                }
-                MessageBox.Show("Flujo Creado Exitosamente");
-
-                LimpiarCamposCrearFlujo();
-
             }
             else
             {
-                MessageBox.Show("Debe llenar todos los campos");
+                MessageBox.Show("Ya existe un flujo con ese mismo nombre");
+                cConexion.CerrarConn();
             }
+            
+
+            
 
         }
 
@@ -1666,6 +1785,9 @@ namespace Control_de_Tareas
             }
             
         }
+
+
+
 
 
 

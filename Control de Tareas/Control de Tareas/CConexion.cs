@@ -92,7 +92,8 @@ namespace Control_de_Tareas
 
         public void CerrarConn()
         {
-            this.conex.Close();
+            //this.conex.Close();
+            conn.Close();
         }
 
         public MySqlConnection Get_connection()
@@ -346,6 +347,27 @@ namespace Control_de_Tareas
             return result;
         }
 
+        public bool CheckFlujoName(string nombre)
+        {
+            string query = "select nombre from flujo_pl where nombre = '"+ nombre + "'";
+            OracleCommand cmd = new OracleCommand(query, conn);
+            var reader = cmd.ExecuteReader();
+            string result = "";
+
+            while (reader.Read())
+            {
+                result = reader.GetString(0);
+            }
+            if(result == nombre)
+            {
+                return false; //True que si puede agregar flujo
+            }
+            else
+            {
+                return true; //Falso, no puede agregar flujo
+            }
+        }
+
         //Oracle OK
         public string GetIDByName(string tabla, string name)
         {
@@ -363,11 +385,33 @@ namespace Control_de_Tareas
             return result;
         }
 
-
         //ORACLE OK
         public string[] GetUsuariosFromNegocio(string id_negocio, string gt_ninguno)
         {
             string query = "SELECT nombre || ' ' || apellidop || ' ' || apellidom AS nombrecompleto FROM usuario WHERE negocio_id = " + id_negocio + " AND grupotrabajo_id = " + gt_ninguno;
+            OracleCommand cmd = new OracleCommand(query, conn);
+            OracleDataReader mydr;
+            List<string> usuariosNegocio = new List<string>();
+            try
+            {
+                mydr = cmd.ExecuteReader();
+                while (mydr.Read())
+                {
+                    string subj = mydr.GetString(0);
+                    usuariosNegocio.Add(subj);
+                }
+                mydr.Close();
+            }
+            catch (OracleException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return usuariosNegocio.ToArray();
+        }
+
+        public string[] GetUsuariosFromNegocioEditGP(string id_negocio, string gt_ninguno, string gt_oldGP)
+        {
+            string query = "SELECT nombre || ' ' || apellidop || ' ' || apellidom AS nombrecompleto FROM usuario WHERE negocio_id = " + id_negocio + " AND grupotrabajo_id = " + gt_ninguno + " OR grupotrabajo_id = " + gt_oldGP;
             OracleCommand cmd = new OracleCommand(query, conn);
             OracleDataReader mydr;
             List<string> usuariosNegocio = new List<string>();
@@ -407,8 +451,31 @@ namespace Control_de_Tareas
             {
                 MessageBox.Show(ex.Message);
             }
-            return usuariosNegocio.ToArray();
+            return usuariosNegocio.ToArray();            
+        }
+
+        public string[] GetUserIDFromNegocioGPEDIT(string id_negocio, string gt_ninguno, string gt_ID)
+        {
+            string query = "SELECT id FROM usuario WHERE negocio_id = " + id_negocio + " AND grupotrabajo_id = " + gt_ninguno + " OR grupotrabajo_id = " + gt_ID;
+            OracleCommand cmd = new OracleCommand(query, conn);
+            OracleDataReader mydr;
+            List<string> usuariosNegocio = new List<string>();
+            try
+            {
+                mydr = cmd.ExecuteReader();
+                while (mydr.Read())
+                {
+                    string subj = mydr.GetString(0);
+                    usuariosNegocio.Add(subj);
+                }
+                mydr.Close();
             }
+            catch (OracleException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return usuariosNegocio.ToArray();
+        }
 
         public string[] GetRolFromUsuarios(string id_negocio)
         {
@@ -499,6 +566,12 @@ namespace Control_de_Tareas
             OracleCommand cmd = new OracleCommand(query, conn);
             var reader = cmd.ExecuteNonQuery();
         }
+        public void ResetGP(string idninguno, string idGP)
+        {
+            string query = "update usuario set grupotrabajo_id = "+ idninguno + " where grupotrabajo_id = "+idGP;
+            OracleCommand cmd = new OracleCommand(query, conn);
+            var reader = cmd.ExecuteNonQuery();
+        }
         public void UpdateNombre(string nombre, string tabla, string id)
         {
             string query = "UPDATE "+tabla+" SET nombre = '" + nombre + "' WHERE id = " + id + "";
@@ -509,6 +582,13 @@ namespace Control_de_Tareas
         public void UpdateNegocio(string[] datosNegocio)
         {
             string query = "UPDATE negocio SET nombre = '" + datosNegocio[0] + "', encargado = '" + datosNegocio[1] + "', correo_encargado = '" + datosNegocio[3] + "', fecha_ingreso = TO_DATE('"+ datosNegocio[2] + "', 'yyyy-MM-dd'), rut = '" + datosNegocio[4] + "', direccion = '"+datosNegocio[5]+"' WHERE id = " + datosNegocio[6] + "";
+            OracleCommand cmd = new OracleCommand(query, conn);
+            var reader = cmd.ExecuteNonQuery();
+        }
+
+        public void UpdateGrupoTrabajo(string nombre, string idGP)
+        {
+            string query = "UPDATE grupotrabajo SET nombre = '" + nombre + "' WHERE id = " + idGP + "";
             OracleCommand cmd = new OracleCommand(query, conn);
             var reader = cmd.ExecuteNonQuery();
         }
@@ -637,6 +717,21 @@ namespace Control_de_Tareas
                 reader.Close();
             }
             MessageBox.Show("Grupo de Trabajo creado Exitosamente");
+        }
+
+        //Cambiar a que actualice los usuarios de la lista al grupo de trabajo ya creado
+        public void ActualizarGPdeUsuarios(string idGP, List<string> listaUsuarios)
+        {
+            string query;
+            query = "";
+            for (int i = 0; i < listaUsuarios.Count; i++)
+            {
+                query = " UPDATE usuario SET grupotrabajo_id = " + idGP + " WHERE id = " + listaUsuarios[i] + "";
+                OracleCommand cmd = new OracleCommand(query, conn);
+                var reader = cmd.ExecuteNonQuery(); //BUG cuando se agregan mas de 1 usuario
+                //reader.Close();
+            }
+            MessageBox.Show("Grupo de Trabajo Editado Exitosamente");
         }
 
     }

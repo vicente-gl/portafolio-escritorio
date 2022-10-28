@@ -256,12 +256,44 @@
                     <DataGrid x:Name="tabla_usuariosGPSelected" MinHeight="400" IsReadOnly="True" FontFamily="Intern" ItemsSource="{Binding Path=LoadDataBinding}" MinWidth="300"></DataGrid>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                    <Button Content="Editar Grupo" FontFamily="Inter" FontSize="20" FontWeight="ExtraLight" Height="Auto" Width="Auto" Foreground="White" BorderBrush="Transparent"></Button>
+                    <Button Content="Editar Grupo" x:Name="btn_editar_GP" Click="btn_editar_GP_Click" FontFamily="Inter" FontSize="20" FontWeight="ExtraLight" Height="Auto" Width="Auto" Foreground="White" BorderBrush="Transparent"></Button>
                     <Border Margin="50,0,50,0"></Border>
                     <Button Content="Eliminar Grupo" x:Name="btn_eliminar_GP" Click="btn_eliminar_GP_Click" Background="Red" FontFamily="Inter" FontSize="20" FontWeight="ExtraLight" Height="Auto" Width="Auto" Foreground="White" BorderBrush="Transparent"></Button>
                 </StackPanel>
             </StackPanel>
+        </Grid>
+        <!--PANTALLA EDITAR GRUPO DE TRABAJO-->
+        <Grid Name="Pantalla_Editar_GP" Margin="509,80,0,0" Height="1000" VerticalAlignment="Top" Width="1398" HorizontalAlignment="Center" Visibility="Hidden">
+            <Rectangle Fill="#FFFFFF"></Rectangle>
+            <Label HorizontalAlignment="Center" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="30" Content="Agregar Grupo de Trabajo"></Label>
+            <Grid Name="Pantalla_Editar_GP_NoNegocio" Background="#FFFF">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="30" Content="Primero Debe Seleccionar un Negocio"></Label>
+            </Grid>
+            <Grid Name="Pantalla_Editar_GP_SiNegocio" Background="#FFFF">
+                <Label HorizontalAlignment="Center" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="30" Content="Agregar Grupo de Trabajo"></Label>
+                <StackPanel Margin="0,100,0,0" HorizontalAlignment="Center" Orientation="Horizontal">
+                    <Border Margin="20"></Border>
+                    <Grid HorizontalAlignment="Center">
+                        <StackPanel>
+                            <Label HorizontalAlignment="Left" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="23" Content="Nombre"></Label>
+                            <Border Margin="10"></Border>
+                            <TextBox x:Name="txtBox_CrearGP_Editar" HorizontalAlignment="Center" FontFamily="Inter" FontSize="23" Width="300"></TextBox>
+                            <Border Margin="0"></Border>
+                            <Border Width="300"></Border>
+                            <Label HorizontalAlignment="Left" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="23" Content="Integrantes"></Label>
+                            <Border Margin="0"></Border>
+                            <StackPanel>
+                                <ListBox x:Name="ListBoxUsuariosGP_Editar" MaxHeight="300" Width="Auto" MinWidth="600">
+                                </ListBox>
+                                <Border Margin="0,0,0,30"></Border>
+                                <Button x:Name="btn_editarGP_Confirmar" Click="btn_editarGP_Confirmar_Click" Grid.Column="1" Grid.Row="14" Width="350" HorizontalAlignment="Center" FontFamily="Inter" FontSize="20" Content="Actualizar Grupo de Trabajo"></Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                    <Border Margin="20"></Border>
 
+                </StackPanel>
+            </Grid>
         </Grid>
         <!--PANTALLAS FLUJOS DE TAREA-->
             <!--PANTALLA CREAR FLUJO DE TAREA-->
@@ -350,7 +382,9 @@
                 </StackPanel>
                 <Border Height="30"></Border>
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <!--
                     <Button Foreground="White" Content="Editar Flujo de Tarea" FontFamily="Inter" FontSize="17"></Button>
+                    -->
                     <Border Width="20"></Border>
                     <Button x:Name="btn_eliminarFlujo" Click="btn_eliminarFlujo_Click" BorderBrush="Transparent" Content="Eliminar Flujo" FontFamily="Inter" FontSize="17" Foreground="White" Background="Red"></Button>
                 </StackPanel>
@@ -486,7 +520,7 @@
         <!--BARRA DE ARRIBA-->
         <Grid Name="GridTopBar" HorizontalAlignment="Center" Height="80" Width="{Binding ActualWidth, ElementName=GridDashboard}" VerticalAlignment="Top">
             <Rectangle Fill="#171725" HorizontalAlignment="Center" Width="1920" Height="134" VerticalAlignment="Top"/>            
-            <Image x:Name="logout" Source="/Iconos/logout-512.png" Cursor="Hand" MouseLeftButtonDown="logout_MouseLeftButtonDown" HorizontalAlignment="Right" Margin="0,0,50,0" Height="50"></Image>
+            <Image x:Name="logout" Source="/Iconos/logout-512.png" Cursor="Hand" MouseLeftButtonDown="logout_MouseLeftButtonDown" HorizontalAlignment="Right" Margin="0,0,50,0" Height="30"></Image>
             <Image Source="/Process Color Alpha.png" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" RenderOptions.BitmapScalingMode="HighQuality"></Image>
             <Ellipse HorizontalAlignment="Left" Margin="300,0,0,0" Width="50" Height="50">
                 <Ellipse.Fill>
