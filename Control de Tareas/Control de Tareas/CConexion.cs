@@ -268,6 +268,25 @@ namespace Control_de_Tareas
             }
         }
 
+        public void LlamarTablaTareasDeFlujo(string tabla, System.Windows.Controls.DataGrid datagridItem, string id)
+        {
+            EstablecerConn();
+            string query = "SELECT * FROM " + tabla + " where flujo_pl_id = " + id + " order by 2";
+            OracleCommand cmd = new OracleCommand(query, conn);
+
+            try
+            {
+                OracleDataAdapter adp = new OracleDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                adp.Fill(ds, "LoadDataBinding");
+                datagridItem.DataContext = ds;
+            }
+            catch (OracleException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
         //Oracle OK
 
         public void LlamarTablaNegocioSelected(string tabla, System.Windows.Controls.DataGrid datagridItem, string negocioID)
@@ -477,6 +496,12 @@ namespace Control_de_Tareas
         public void UpdateUsuario (string[] datosUsuario)
         {
             string query = "UPDATE usuario SET correo = '"+datosUsuario[1]+"', password = '"+datosUsuario[2]+"', rut = '"+datosUsuario[3]+"', nombre = '"+datosUsuario[4]+"', apellidop = '"+datosUsuario[5]+"', apellidom = '"+datosUsuario[6]+"', celular = "+datosUsuario[7]+", rol_id = "+datosUsuario[9]+", negocio_id = "+datosUsuario[10]+", grupotrabajo_id = "+datosUsuario[11]+" WHERE id = "+datosUsuario[0]+"";
+            OracleCommand cmd = new OracleCommand(query, conn);
+            var reader = cmd.ExecuteNonQuery();
+        }
+        public void UpdateNombre(string nombre, string tabla, string id)
+        {
+            string query = "UPDATE "+tabla+" SET nombre = '" + nombre + "' WHERE id = " + id + "";
             OracleCommand cmd = new OracleCommand(query, conn);
             var reader = cmd.ExecuteNonQuery();
         }

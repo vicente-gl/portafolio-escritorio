@@ -43,7 +43,7 @@
             <Label Content="Negocios /" Foreground="Gray" Margin="15,10,0,0" FontSize="12" FontFamily="Inter"></Label>
             <StackPanel HorizontalAlignment="Left" Margin="0,50,0,0">
                 <Button Click="btn_flujos_crear_Click" x:Name="btn_flujos_crear" Content="Agregar Flujo de Tarea" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
-                <Button x:Name="btn_flujos_listar" Content="Listar Flujos de Tarea" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
+                <Button Click="btnMenu_flujos_listar_Click" x:Name="btnMenu_flujos_listar" Content="Listar Flujos de Tarea" FontFamily="Inter Medium" FontSize="15" Height="50" Width="250" Background="#EDEDED" BorderBrush="#EDEDED"></Button>
             </StackPanel>
         </Grid>
         <!--MENU USUARIOS-->
@@ -176,14 +176,38 @@
                 <Border Margin="20,0,20,0"></Border>
                 <StackPanel>
                     <Label HorizontalAlignment="Center" Margin="60,20,60,60" FontFamily="Inter Light" FontSize="30" Content="Lista de Roles"></Label>
-                    <DataGrid x:Name="datagrid_Rol" FontFamily="Inter"  ItemsSource="{Binding Path=LoadDataBinding}" MinHeight="300" MaxHeight="500"></DataGrid>
+                    <DataGrid x:Name="datagrid_Rol" IsReadOnly="True" FontFamily="Inter" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding Path=LoadDataBinding}" MinHeight="300" MaxHeight="500"></DataGrid>
                     <Border></Border>
+                    <Button x:Name="btn_Editar_Rol" Click="btn_Editar_Rol_Click" FontFamily="Inter" Foreground="White" Content="Editar Rol" Width="200"></Button>
+                    <Border Height="20"></Border>
+                    <Button x:Name="btn_Eliminar_Rol" FontFamily="Inter" Foreground="White" Background="Red" Content="Eliminar Rol" BorderBrush="Transparent" Width="130"></Button>
+                </StackPanel>                
+            </StackPanel>
+        </Grid>
+        <!--PANTALLA EDITAR ROL-->
+        <Grid Name="Pantalla_Editar_Rol" Margin="509,80,0,0" Height='800' VerticalAlignment="Top" HorizontalAlignment="Center" Width="1398" Visibility="Hidden">
+            <Rectangle Fill="#FFFFFF"></Rectangle>
+            <Label HorizontalAlignment="Center" Margin="60,20,60,60" FontFamily="Inter Light" FontSize="30" Content="Roles de Negocio"></Label>
+            <StackPanel Margin="0,90,0,0" HorizontalAlignment="Center" Orientation="Horizontal">
+                <StackPanel>
+                    <Label HorizontalAlignment="Center" Margin="60,20,60,60" FontFamily="Inter Light" FontSize="30" Content="Editar Rol"></Label>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel>
+                            <Label Content="Nombre Rol" FontFamily="Inter" FontSize="20"></Label>
+                        </StackPanel>
+                        <Border Margin="20,0,0,0"></Border>
+                        <StackPanel>
+                            <TextBox x:Name="txtbox_rolNuevoNombre" FontFamily="Inter" FontSize="20" Width="250"></TextBox>
+                            <Border Margin="0,20,0,20"></Border>
+                            <Button x:Name="btn_EditarRol" Click="btn_EditarRol_Click" FontFamily="Inter" Foreground="White" Content="Editar Nombre de Rol"></Button>
+                            <Button x:Name="btn_EditarRolVolver" Click="btn_EditarRolVolver_Click"  FontFamily="Inter" Margin="0,20,0,0" Width="90" Background="Green" BorderBrush="Transparent" Foreground="White" Content="Volver"></Button>
+                        </StackPanel>
+                    </StackPanel>
                 </StackPanel>
-                
             </StackPanel>
 
         </Grid>
-            <!--PANTALLA AGREGAR GRUPO DE TRABAJO-->
+        <!--PANTALLA AGREGAR GRUPO DE TRABAJO-->
         <Grid Name="Pantalla_Agregar_GP" Margin="509,80,0,0" Height="1000" VerticalAlignment="Top" Width="1398" HorizontalAlignment="Center" Visibility="Hidden">
             <Rectangle Fill="#FFFFFF"></Rectangle>
             <Label HorizontalAlignment="Center" Margin="0,20,0,0" FontFamily="Inter Light" FontSize="30" Content="Agregar Grupo de Trabajo"></Label>
@@ -306,6 +330,31 @@
                     <Button x:Name="btn_flujotarea_deleteTarea" Click="btn_flujotarea_deleteTarea_Click" Margin="20,0,0,0" Width="150" FontFamily="Inter" Content="Eliminar Tarea" FontSize="15" Foreground="White" Background="Red" BorderBrush="Transparent"></Button>
                 </StackPanel>
                 <Button x:Name="btn_flujotarea_finalizar" Click="btn_flujotarea_finalizar_Click" Margin="0,20,0,0" Width="180" Height="40" FontFamily="Inter" Content="Crear Flujo" FontSize="15" Foreground="White" Background="Green" BorderBrush="Transparent"></Button>
+            </StackPanel>
+        </Grid>
+            <!--PANTALLA LISTAR FLUJOS-->
+        <Grid Name="Pantalla_Listar_FlujoTarea" Margin="509,80,0,0" Height='800' VerticalAlignment="Top" HorizontalAlignment="Center" Width="1398" Visibility="Hidden">
+            <Rectangle Fill="#FFFFFF"></Rectangle>
+            <Label HorizontalAlignment="Center" Margin="60,20,60,60" VerticalAlignment="Top" FontFamily="Inter Light" FontSize="30" Content="Flujos de Tarea"></Label>
+            <StackPanel HorizontalAlignment="Center" Margin="0,100,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <Label HorizontalAlignment="Center" Margin="100,0,0,0" FontFamily="Inter" FontSize="20" Content="Lista de Flujos de Tarea"></Label>
+                    <Border Width="150"></Border>
+                    <Label HorizontalAlignment="Center" Margin="30,0,0,0" Content="Lista de Tareas en Flujo Seleccionado" FontFamily="Inter" FontSize="20"></Label>
+                </StackPanel>
+                <Border Height="25"></Border>
+                <StackPanel Orientation="Horizontal">
+                    <DataGrid x:Name="dataGrid_ListaFlujos" SelectedCellsChanged="dataGrid_ListaFlujos_SelectedCellsChanged" IsReadOnly="True" FontFamily="Inter" Width="250" MinHeight="300" MaxHeight="500" ItemsSource="{Binding Path=LoadDataBinding}"></DataGrid>
+                    <Border Width="90"></Border>
+                    <DataGrid x:Name="dataGrid_TareasdeFlujo" IsReadOnly="True" FontFamily="Inter" MaxWidth="500" MinWidth="400" MinHeight="300" MaxHeight="500" ItemsSource="{Binding Path=LoadDataBinding}"></DataGrid>                    
+                </StackPanel>
+                <Border Height="30"></Border>
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <Button Foreground="White" Content="Editar Flujo de Tarea" FontFamily="Inter" FontSize="17"></Button>
+                    <Border Width="20"></Border>
+                    <Button BorderBrush="Transparent" Content="Eliminar Flujo" FontFamily="Inter" FontSize="17" Foreground="White" Background="Red"></Button>
+                </StackPanel>
+
             </StackPanel>
         </Grid>
         <!--PANTALLAS USUARIO-->

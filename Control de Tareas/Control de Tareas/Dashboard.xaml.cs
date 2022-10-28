@@ -189,7 +189,7 @@ namespace Control_de_Tareas
                 if (Pantalla_SinNegocio.Visibility.Equals(Visibility.Hidden))
                 {
                     Pantalla_SinNegocio.Visibility = Visibility.Visible;
-                    CambiarColorBoton(btn_gptrabajo_crear, color_menu2_pressed);
+                    CambiarColorBoton(btn_gptrabajo_crear, color_menu2_idle);
                 }
                 else
                 {
@@ -199,7 +199,7 @@ namespace Control_de_Tareas
             }
             else
             {
-                if (Pantalla_Administrar_Roles.Visibility.Equals(Visibility.Hidden))
+                if (Pantalla_Agregar_GP.Visibility.Equals(Visibility.Hidden))
                 {
                     Pantalla_Agregar_GP.Visibility = Visibility.Visible;
                     CambiarColorBoton(btn_gptrabajo_crear, color_menu2_pressed);
@@ -224,7 +224,7 @@ namespace Control_de_Tareas
                 if (Pantalla_SinNegocio.Visibility.Equals(Visibility.Hidden))
                 {
                     Pantalla_SinNegocio.Visibility = Visibility.Visible;
-                    CambiarColorBoton(btn_flujos_crear, color_menu2_pressed);
+                    CambiarColorBoton(btn_flujos_crear, color_menu2_idle);
                 }
                 else
                 {
@@ -246,7 +246,45 @@ namespace Control_de_Tareas
                     Pantalla_Crear_FlujoTarea.Visibility = Visibility.Hidden;
                     CambiarColorBoton(btn_flujos_crear, color_menu2_idle);
                 }
-                CargarUsuariosCrearGP();
+                //CargarUsuariosCrearGP();
+
+            }
+        }
+
+        private void btnMenu_flujos_listar_Click(object sender, RoutedEventArgs e)
+        {
+            ApagarBotonesMenu2();
+            OcultarOtrasPantallas(Pantalla_SinNegocio);
+            OcultarOtrasPantallas(Pantalla_Listar_FlujoTarea);
+            if (idNegocioSeleccionado == null || idNegocioSeleccionado == "1")
+            {
+                if (Pantalla_SinNegocio.Visibility.Equals(Visibility.Hidden))
+                {
+                    Pantalla_SinNegocio.Visibility = Visibility.Visible;
+                    CambiarColorBoton(btnMenu_flujos_listar, color_menu2_idle);
+                }
+                else
+                {
+                    Pantalla_SinNegocio.Visibility = Visibility.Hidden;
+                    CambiarColorBoton(btnMenu_flujos_listar, color_menu2_idle);
+                }
+            }
+            else
+            {
+                if (Pantalla_Listar_FlujoTarea.Visibility.Equals(Visibility.Hidden))
+                {
+                    Pantalla_Listar_FlujoTarea.Visibility = Visibility.Visible;
+                    //CargarCboxFlujo();
+                    CambiarColorBoton(btnMenu_flujos_listar, color_menu2_pressed);
+
+                }
+                else
+                {
+                    Pantalla_Listar_FlujoTarea.Visibility = Visibility.Hidden;
+                    CambiarColorBoton(btnMenu_flujos_listar, color_menu2_idle);
+                }
+                //CargarUsuariosCrearGP();
+                CargarListaFlujos();
 
             }
         }
@@ -780,7 +818,8 @@ namespace Control_de_Tareas
                 Pantalla_Administrar_Roles,
                 Pantalla_Agregar_GP,
                 Pantalla_ListarGP,
-                Pantalla_Crear_FlujoTarea
+                Pantalla_Crear_FlujoTarea,
+                Pantalla_Listar_FlujoTarea
             };
             //opcion5
 
@@ -842,6 +881,29 @@ namespace Control_de_Tareas
             tabla_listaGP.Columns[0].Visibility = Visibility.Collapsed;
             tabla_listaGP.Columns[3].Visibility = Visibility.Collapsed;
             tabla_listaGP.Columns[2].Visibility = Visibility.Collapsed;
+        }
+
+        //Carga Tablas de Listar Flujos
+        private void CargarListaFlujos()
+        {
+            CConexion cConexion = new CConexion();
+            if (idNegocioSeleccionado == null || idNegocioSeleccionado == "1")
+            {
+                cConexion.LlamarTabla("flujo_pl", dataGrid_ListaFlujos);
+                //cConexion.LlamarTabla("tarea_pl", dataGrid_TareasdeFlujo);
+            }
+            else
+            {
+                cConexion.LlamarTablaNegocioSelected("flujo_pl", dataGrid_ListaFlujos, idNegocioSeleccionado);
+                //cConexion.LlamarTablaNegocioSelected("tarea_pl", dataGrid_TareasdeFlujo, idNegocioSeleccionado);
+            }
+            //tabla_listaGP.Columns[1].Header = "Nombre de Grupo de Trabajo";
+            dataGrid_ListaFlujos.Columns[0].Visibility = Visibility.Collapsed;
+            dataGrid_ListaFlujos.Columns[2].Visibility = Visibility.Collapsed;
+            dataGrid_ListaFlujos.Columns[3].Visibility = Visibility.Collapsed;
+            dataGrid_ListaFlujos.Columns[4].Visibility = Visibility.Collapsed;
+
+
         }
 
         // Llenar lista de integrantes
@@ -1412,7 +1474,7 @@ namespace Control_de_Tareas
                 datos_FlujoPL[1] = new TextRange(txtBox_DescFlujo.Document.ContentStart, txtBox_DescFlujo.Document.ContentEnd).Text;
                 datos_FlujoPL[2] = idNegocioSeleccionado;
 
-                //cConexion.InsertFlujo_PL(datos_FlujoPL); // Query para insertar flujo pl
+                cConexion.InsertFlujo_PL(datos_FlujoPL); // Query para insertar flujo pl
 
                 string ID_flujoPL = cConexion.GetIDByName("flujo_pl", datos_FlujoPL[0]);
 
@@ -1493,7 +1555,7 @@ namespace Control_de_Tareas
                     datosTarea[6] = newSubtarea[i];
                     datosTarea[7] = subTarea[i];
 
-                    //cConexion.InsertTarea_PL(datosTarea);
+                    cConexion.InsertTarea_PL(datosTarea);
                 }
                 MessageBox.Show("Flujo Creado Exitosamente");
 
@@ -1506,6 +1568,83 @@ namespace Control_de_Tareas
             }
 
         }
+
+        //Mostrar tareas de flujo seleccionado
+        private void dataGrid_ListaFlujos_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            if (dataGrid_ListaFlujos.SelectedItems.Count != 0) // Evita bug extraño
+            {
+                CConexion cConexion = new CConexion();
+                DataRowView row = (DataRowView)dataGrid_ListaFlujos.SelectedItems[0];
+                string idSelected = row["id"].ToString();
+                cConexion.LlamarTablaTareasDeFlujo("tarea_pl", dataGrid_TareasdeFlujo, idSelected);
+                dataGrid_TareasdeFlujo.Columns[0].Visibility = Visibility.Collapsed;
+                //dataGrid_TareasdeFlujo.Columns[1].Visibility = Visibility.Collapsed;
+                dataGrid_TareasdeFlujo.Columns[3].Visibility = Visibility.Collapsed;
+                dataGrid_TareasdeFlujo.Columns[6].Visibility = Visibility.Collapsed;
+                //dataGrid_TareasdeFlujo.Columns[9].Visibility = Visibility.Collapsed;
+                //dataGrid_TareasdeFlujo.Columns[10].Visibility = Visibility.Collapsed;
+                //dataGrid_TareasdeFlujo.Columns[11].Visibility = Visibility.Collapsed;
+                //dataGrid_TareasdeFlujo.Columns[1].Header = "Correo Electrónico";
+                //dataGrid_TareasdeFlujo.Columns[3].Header = "RUT";
+                //dataGrid_TareasdeFlujo.Columns[4].Header = "Nombre";
+                //dataGrid_TareasdeFlujo.Columns[5].Header = "Apellido Paterno";
+                //dataGrid_TareasdeFlujo.Columns[6].Header = "Apellido Materno";
+                //dataGrid_TareasdeFlujo.Columns[7].Header = "Celular";
+            }
+        }
+
+        string rolEditTarget;
+        //PARA IR A LA PANTALLA DE EDITAR ROL
+        private void btn_Editar_Rol_Click(object sender, RoutedEventArgs e)
+        {
+            DataRowView row = (DataRowView)datagrid_Rol.SelectedItems[0];
+            string idSelected = row["id"].ToString();
+            string idSelectedName = row["nombre"].ToString();
+            rolEditTarget = idSelected;
+
+            if (idSelectedName == "Ninguno")
+            {
+                MessageBox.Show("No se puede editar el Rol Ninguno");
+            }
+            else
+            {             
+                Pantalla_Editar_Rol.Visibility = Visibility.Visible;
+                txtbox_rolNuevoNombre.Text = row["nombre"].ToString();
+            }
+        }
+        //PARA CONFIRMAR NUEVO NOMBRE DEL ROL
+        private void btn_EditarRol_Click(object sender, RoutedEventArgs e)
+        {
+            CConexion cConexion = new CConexion();
+            cConexion.EstablecerConn();
+            cConexion.UpdateNombre(txtbox_rolNuevoNombre.Text.ToString(), "rol", rolEditTarget);
+            cConexion.CerrarConn();            //
+            MessageBox.Show("Rol Editado Correctamente");
+            Pantalla_Editar_Rol.Visibility = Visibility.Hidden;
+
+            /*
+            try
+            {
+                
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo editar Rol. Error: " + ex);
+            }
+            */
+
+        }
+
+        private void btn_EditarRolVolver_Click(object sender, RoutedEventArgs e)
+        {
+            Pantalla_Editar_Rol.Visibility = Visibility.Hidden;
+        }
+
+
+
+
 
 
 
