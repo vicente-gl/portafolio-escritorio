@@ -512,6 +512,44 @@ namespace Control_de_Tareas
             }
         }
 
+        //Boton Eliminar Rol
+        private void btn_Eliminar_Rol_Click(object sender, RoutedEventArgs e)
+        {
+            if (datagrid_Rol.SelectedValue == null)
+            {
+                MessageBox.Show("No se ha seleccionado ningún Usuario");
+            }
+            else
+            {
+                DataRowView row = (DataRowView)datagrid_Rol.SelectedItems[0];
+                if (row["nombre"].ToString() == "Ninguno")
+                {
+                    MessageBox.Show("No se puede eliminar el Rol: Ninguno", "Error");
+                }
+                else
+                {
+                    if (MessageBox.Show("¿Desea Eliminar el Rol Seleccionado?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                    {
+                        //do no stuff
+                    }
+                    else
+                    {
+                        CConexion cConexion = new CConexion();
+                        cConexion.EstablecerConn();
+
+                        string idSelected = row["id"].ToString();
+                        cConexion.DeleteRow(idSelected, "rol");
+                        MessageBox.Show("Rol Eliminado Exitosamente");
+                        cConexion.CerrarConn();
+                        CConexion ccConexion = new CConexion();
+                        ccConexion.LlamarTabla("rol", datagrid_Rol);
+                        ccConexion.CerrarConn();
+                    }
+                }
+
+            }
+        }
+
         //Botones Grupos de Trabajo
         //Boton Crear Grupo de Trabajo
         private void btn_agregarGP_Click(object sender, RoutedEventArgs e)
@@ -1835,5 +1873,7 @@ namespace Control_de_Tareas
             }
             
         }
+
+
     }
 }

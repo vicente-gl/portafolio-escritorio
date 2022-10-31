@@ -180,7 +180,7 @@
                     <Border></Border>
                     <Button x:Name="btn_Editar_Rol" Click="btn_Editar_Rol_Click" FontFamily="Inter" Foreground="White" Content="Editar Rol" Width="200"></Button>
                     <Border Height="20"></Border>
-                    <Button x:Name="btn_Eliminar_Rol" FontFamily="Inter" Foreground="White" Background="Red" Content="Eliminar Rol" BorderBrush="Transparent" Width="130"></Button>
+                    <Button x:Name="btn_Eliminar_Rol" Click="btn_Eliminar_Rol_Click"  FontFamily="Inter" Foreground="White" Background="Red" Content="Eliminar Rol" BorderBrush="Transparent" Width="130"></Button>
                 </StackPanel>                
             </StackPanel>
         </Grid>
