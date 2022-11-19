@@ -35,14 +35,19 @@ namespace Control_de_Tareas
         {
             username = txtBoxUser.Text;
             password = toSHA256(txtBoxPassword.Password);
-            //MessageBox.Show(toSHA256(password));
+            string pass = txtBoxPassword.Password;
+            //MessageBox.Show(pass);
+            Console.WriteLine(toSHA256(pass));
+            //MessageBox.Show(toSHA256(pass));
             //LoginSinCredencial();
+            
             
             CConexion cConexion = new CConexion();
             cConexion.EstablecerConn();
             if(cConexion.CheckCredentials(username, password)){
                 this.Close();
             }
+            
             
             
             
@@ -72,16 +77,23 @@ namespace Control_de_Tareas
         }
         public static string toSHA256(string s)
         {
-            //using var sha256 = SHA256.Create();
-            var sha256 = SHA256.Create();
+            string hash = String.Empty;
 
-            byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(s));
-            var sb = new StringBuilder();
-            for (int i = 0; i < bytes.Length; i++)
+            // Initialize a SHA256 hash object
+            using (SHA256 sha256 = SHA256.Create())
             {
-                sb.Append(bytes[i].ToString("x2"));
+                // Compute the hash of the given string
+                byte[] hashValue = sha256.ComputeHash(Encoding.UTF8.GetBytes(s));
+
+                // Convert the byte array to string format
+                foreach (byte b in hashValue)
+                {
+                    hash += $"{b:X2}";
+                }
             }
-            return sb.ToString();
+
+            return (hash.ToLower());
+
         }
     }
 }

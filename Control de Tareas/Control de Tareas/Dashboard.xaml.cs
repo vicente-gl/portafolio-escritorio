@@ -827,7 +827,7 @@ namespace Control_de_Tareas
                 string[] datosUsuario = new string[12];
                 datosUsuario[0] = usuarioEditTarget;
                 datosUsuario[1] = edit_txtbox_user_correo.Text; //correo
-                datosUsuario[2] = toSHA256(edit_txtbox_user_password.Text); //password
+                datosUsuario[2] = toSHA256(edit_txtbox_user_password.Text.ToString()); //password
                 datosUsuario[3] = edit_txtbox_user_rut.Text; //ruttoSHA256(txtbox_user_password.Text.ToString());
                 datosUsuario[4] = edit_txtbox_user_nombre.Text; //nombre
                 datosUsuario[5] = edit_txtbox_user_apellidop.Text; //apellidop
@@ -1875,19 +1875,25 @@ namespace Control_de_Tareas
             }
             
         }
-
         public static string toSHA256(string s)
         {
-            //using var sha256 = SHA256.Create();
-            var sha256 = SHA256.Create();
+            string hash = String.Empty;
 
-            byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(s));
-            var sb = new StringBuilder();
-            for (int i = 0; i < bytes.Length; i++)
+            // Initialize a SHA256 hash object
+            using (SHA256 sha256 = SHA256.Create())
             {
-                sb.Append(bytes[i].ToString("x2"));
+                // Compute the hash of the given string
+                byte[] hashValue = sha256.ComputeHash(Encoding.UTF8.GetBytes(s));
+
+                // Convert the byte array to string format
+                foreach (byte b in hashValue)
+                {
+                    hash += $"{b:X2}";
+                }
             }
-            return sb.ToString();
+
+            return hash.ToLower();
+
         }
 
 
