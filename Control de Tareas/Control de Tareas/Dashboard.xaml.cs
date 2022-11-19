@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -616,6 +617,7 @@ namespace Control_de_Tareas
             cConexion.CerrarConn();
             Pantalla_Editar_GP_SiNegocio.Visibility = Visibility.Hidden;
         }
+        
 
         //Boton Eliminar GP
         private void btn_eliminar_GP_Click(object sender, RoutedEventArgs e)
@@ -684,7 +686,7 @@ namespace Control_de_Tareas
                     string[] datosUsuario = new string[12];
                     datosUsuario[0] = "0";
                     datosUsuario[1] = txtbox_user_correo.Text;
-                    datosUsuario[2] = txtbox_user_password.Text.ToString();
+                    datosUsuario[2] = toSHA256(txtbox_user_password.Text.ToString());
                     datosUsuario[3] = txtbox_user_rut.Text;
                     datosUsuario[4] = txtbox_user_nombre.Text;
                     datosUsuario[5] = txtbox_user_apellidop.Text;
@@ -825,8 +827,8 @@ namespace Control_de_Tareas
                 string[] datosUsuario = new string[12];
                 datosUsuario[0] = usuarioEditTarget;
                 datosUsuario[1] = edit_txtbox_user_correo.Text; //correo
-                datosUsuario[2] = edit_txtbox_user_password.Text; //password
-                datosUsuario[3] = edit_txtbox_user_rut.Text; //rut
+                datosUsuario[2] = toSHA256(edit_txtbox_user_password.Text); //password
+                datosUsuario[3] = edit_txtbox_user_rut.Text; //ruttoSHA256(txtbox_user_password.Text.ToString());
                 datosUsuario[4] = edit_txtbox_user_nombre.Text; //nombre
                 datosUsuario[5] = edit_txtbox_user_apellidop.Text; //apellidop
                 datosUsuario[6] = edit_txtbox_user_apellidom.Text; //apellidom
@@ -1872,6 +1874,20 @@ namespace Control_de_Tareas
                 this.Close();
             }
             
+        }
+
+        public static string toSHA256(string s)
+        {
+            //using var sha256 = SHA256.Create();
+            var sha256 = SHA256.Create();
+
+            byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(s));
+            var sb = new StringBuilder();
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                sb.Append(bytes[i].ToString("x2"));
+            }
+            return sb.ToString();
         }
 
 

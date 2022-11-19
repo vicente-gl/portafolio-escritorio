@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -33,7 +34,8 @@ namespace Control_de_Tareas
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             username = txtBoxUser.Text;
-            password = txtBoxPassword.Password;
+            password = toSHA256(txtBoxPassword.Password);
+            //MessageBox.Show(toSHA256(password));
             //LoginSinCredencial();
             
             CConexion cConexion = new CConexion();
@@ -41,6 +43,7 @@ namespace Control_de_Tareas
             if(cConexion.CheckCredentials(username, password)){
                 this.Close();
             }
+            
             
             
 
@@ -66,6 +69,19 @@ namespace Control_de_Tareas
             {
                 MessageBox.Show("No se pudo establecer conexion con el servidor. Error: " + ex.Message);
             }
+        }
+        public static string toSHA256(string s)
+        {
+            //using var sha256 = SHA256.Create();
+            var sha256 = SHA256.Create();
+
+            byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(s));
+            var sb = new StringBuilder();
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                sb.Append(bytes[i].ToString("x2"));
+            }
+            return sb.ToString();
         }
     }
 }
