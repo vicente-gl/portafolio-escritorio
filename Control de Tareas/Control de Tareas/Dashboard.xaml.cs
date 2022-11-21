@@ -1054,11 +1054,11 @@ namespace Control_de_Tareas
             {
                 cConexion.LlamarTablaNegocioSelected("grupotrabajo", tabla_listaGP, idNegocioSeleccionado);
             }
-            tabla_listaGP.Columns[0].Header = "ID de Grupo de Trabajo";
-            tabla_listaGP.Columns[1].Header = "Nombre de Grupo de Trabajo";
-            tabla_listaGP.Columns[0].Visibility = Visibility.Collapsed;
-            tabla_listaGP.Columns[3].Visibility = Visibility.Collapsed;
-            tabla_listaGP.Columns[2].Visibility = Visibility.Collapsed;
+            //tabla_listaGP.Columns[0].Header = "ID de Grupo de Trabajo";
+            //tabla_listaGP.Columns[1].Header = "Nombre de Grupo de Trabajo";
+            //tabla_listaGP.Columns[0].Visibility = Visibility.Collapsed;
+            //tabla_listaGP.Columns[3].Visibility = Visibility.Collapsed;
+            //tabla_listaGP.Columns[2].Visibility = Visibility.Collapsed;
         }
 
         //Carga Tablas de Listar Flujos
@@ -1093,7 +1093,8 @@ namespace Control_de_Tareas
                 CConexion cConexion = new CConexion();
                 DataRowView row = (DataRowView)tabla_listaGP.SelectedItems[0];
                 string idSelected = row["id"].ToString();
-                cConexion.LlamarTablaUsuariosGP("usuario", tabla_usuariosGPSelected, idSelected);
+                cConexion.LlamarTablaUsuariosGP2("usuario", tabla_usuariosGPSelected, idSelected);
+
                 tabla_usuariosGPSelected.Columns[0].Visibility = Visibility.Collapsed;
                 tabla_usuariosGPSelected.Columns[1].Visibility = Visibility.Collapsed;
                 tabla_usuariosGPSelected.Columns[2].Visibility = Visibility.Collapsed;
@@ -1101,12 +1102,15 @@ namespace Control_de_Tareas
                 tabla_usuariosGPSelected.Columns[9].Visibility = Visibility.Collapsed;
                 tabla_usuariosGPSelected.Columns[10].Visibility = Visibility.Collapsed;
                 tabla_usuariosGPSelected.Columns[11].Visibility = Visibility.Collapsed;
+                tabla_usuariosGPSelected.Columns[12].Visibility = Visibility.Collapsed;
+                tabla_usuariosGPSelected.Columns[14].Visibility = Visibility.Collapsed;
                 tabla_usuariosGPSelected.Columns[1].Header = "Correo Electrónico";
                 tabla_usuariosGPSelected.Columns[3].Header = "RUT";
                 tabla_usuariosGPSelected.Columns[4].Header = "Nombre";
                 tabla_usuariosGPSelected.Columns[5].Header = "Apellido Paterno";
                 tabla_usuariosGPSelected.Columns[6].Header = "Apellido Materno";
                 tabla_usuariosGPSelected.Columns[7].Header = "Celular";
+                tabla_usuariosGPSelected.Columns[13].Header = "Rol";
             }
 
 

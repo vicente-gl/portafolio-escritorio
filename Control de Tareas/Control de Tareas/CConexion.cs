@@ -268,6 +268,24 @@ namespace Control_de_Tareas
                 MessageBox.Show(ex.ToString());
             }
         }
+        public void LlamarTablaUsuariosGP2(string tabla, System.Windows.Controls.DataGrid datagridItem, string idGP)
+        {
+            EstablecerConn();
+            string query = "SELECT * FROM " + tabla + " a left join rol b on a.rol_id = b.id where a.grupotrabajo_id = " + idGP + "";
+            OracleCommand cmd = new OracleCommand(query, conn);
+
+            try
+            {
+                OracleDataAdapter adp = new OracleDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                adp.Fill(ds, "LoadDataBinding");
+                datagridItem.DataContext = ds;
+            }
+            catch (OracleException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
 
         public void LlamarTablaTareasDeFlujo(string tabla, System.Windows.Controls.DataGrid datagridItem, string id)
         {
@@ -308,8 +326,6 @@ namespace Control_de_Tareas
                 MessageBox.Show(ex.ToString());
             }
         }
-
-
         //Oracle OK
         public void LlamarTablaSeleccionarNegocio(string tabla, System.Windows.Controls.DataGrid datagridItem)
         {
