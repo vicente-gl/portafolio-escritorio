@@ -67,8 +67,8 @@ namespace Control_de_Tareas
             {
                 CConexion objConexion = new CConexion();
                 objConexion.EstablecerConn();
-                objConexion.CerrarConn();
                 MessageBox.Show("Conexión con el servidor exitosa.");
+                objConexion.CerrarConn();
 
             }catch (Exception ex)
             {

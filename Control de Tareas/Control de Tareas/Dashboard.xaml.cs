@@ -1054,11 +1054,11 @@ namespace Control_de_Tareas
             {
                 cConexion.LlamarTablaNegocioSelected("grupotrabajo", tabla_listaGP, idNegocioSeleccionado);
             }
-            //tabla_listaGP.Columns[0].Header = "ID de Grupo de Trabajo";
-            //tabla_listaGP.Columns[1].Header = "Nombre de Grupo de Trabajo";
-            //tabla_listaGP.Columns[0].Visibility = Visibility.Collapsed;
-            //tabla_listaGP.Columns[3].Visibility = Visibility.Collapsed;
-            //tabla_listaGP.Columns[2].Visibility = Visibility.Collapsed;
+            tabla_listaGP.Columns[0].Header = "ID de Grupo de Trabajo";
+            tabla_listaGP.Columns[1].Header = "Nombre de Grupo de Trabajo";
+            tabla_listaGP.Columns[0].Visibility = Visibility.Collapsed;
+            tabla_listaGP.Columns[3].Visibility = Visibility.Collapsed;
+            tabla_listaGP.Columns[2].Visibility = Visibility.Collapsed;
         }
 
         //Carga Tablas de Listar Flujos
