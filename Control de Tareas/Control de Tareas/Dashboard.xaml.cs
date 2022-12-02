@@ -544,6 +544,9 @@ namespace Control_de_Tareas
                         cConexion.CerrarConn();
                         CConexion ccConexion = new CConexion();
                         ccConexion.LlamarTabla("rol", datagrid_Rol);
+                        cConexion.LlamarTabla("rol", datagrid_Rol);
+                        datagrid_Rol.Columns[0].Visibility = Visibility.Collapsed;
+                        datagrid_Rol.Columns[2].Visibility = Visibility.Collapsed;
                         ccConexion.CerrarConn();
                     }
                 }
@@ -720,16 +723,7 @@ namespace Control_de_Tareas
 
         private void btn_listarUsuarios_Click(object sender, RoutedEventArgs e)
         {
-            if (idNegocioSeleccionado == null || idNegocioSeleccionado == "1")
-            {
-                CConexion cConexion = new CConexion();
-                cConexion.LlamarTablaUsuariosTodo(tablaUsuarios);
-            }
-            else
-            {
-                CConexion cConexion = new CConexion();
-                cConexion.LlamarTablaUsuariosTodoNegocioSelected(idNegocioSeleccionado, tablaUsuarios);
-            }
+            CargarListaUsuario();
             tablaUsuarios.Columns[0].Visibility = Visibility.Collapsed;
             tablaUsuarios.Columns[2].Visibility = Visibility.Collapsed;
             tablaUsuarios.Columns[5].Header = "Apellido Paterno";
@@ -748,6 +742,21 @@ namespace Control_de_Tareas
 
 
         }
+
+        private void CargarListaUsuario()
+        {
+            if (idNegocioSeleccionado == null || idNegocioSeleccionado == "1")
+            {
+                CConexion cConexion = new CConexion();
+                cConexion.LlamarTablaUsuariosTodo(tablaUsuarios);
+            }
+            else
+            {
+                CConexion cConexion = new CConexion();
+                cConexion.LlamarTablaUsuariosTodoNegocioSelected(idNegocioSeleccionado, tablaUsuarios);
+            }
+        }
+
 
         private void btn_editarUsuario_Click(object sender, RoutedEventArgs e)
         {
@@ -840,6 +849,8 @@ namespace Control_de_Tareas
 
                 cConexion.UpdateUsuario(datosUsuario);
                 MessageBox.Show("Usuario Modificado Exitosamente");
+                Pantalla_Editar_Usuario.Visibility = Visibility.Hidden;
+                CargarListaUsuario();
             }
 
 
@@ -850,7 +861,7 @@ namespace Control_de_Tareas
         private void LlenarCamposEditarUser(string[] datosUsuario)
         {
             edit_txtbox_user_correo.Text = datosUsuario[1];
-            edit_txtbox_user_password.Text = datosUsuario[2];
+            edit_txtbox_user_password.Text = "";
             edit_txtbox_user_rut.Text = datosUsuario[3];
             edit_txtbox_user_nombre.Text = datosUsuario[4];
             edit_txtbox_user_apellidop.Text = datosUsuario[5];
@@ -1458,7 +1469,7 @@ namespace Control_de_Tareas
             //Subtearea nueva
             CheckBox checkBox = new CheckBox();
             checkBox.Height = altura;
-            checkBox.Content = "Subtarea    ";
+            checkBox.Content = "Compuesta    ";
             checkBox.Margin = thick3;
             checkBox.FontSize = fontsize;
             checkBox.FontFamily = new FontFamily("Inter");
@@ -1469,7 +1480,7 @@ namespace Control_de_Tareas
             //Subtearea de Anterior
             checkBox = new CheckBox();
             checkBox.Height = altura;
-            checkBox.Content = "Microtarea";
+            checkBox.Content = "Subtarea";
             checkBox.Margin = thick3;
             checkBox.FontSize = fontsize;
             checkBox.IsEnabled= false;
