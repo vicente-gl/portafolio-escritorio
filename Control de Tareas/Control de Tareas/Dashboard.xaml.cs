@@ -504,6 +504,12 @@ namespace Control_de_Tareas
 
                     string nombreRol = txtbox_rolNombre.Text;
                     cConexion.InsertRol(nombreRol);
+                    cConexion.CerrarConn();
+                    CConexion ccConexion = new CConexion();
+                    ccConexion.LlamarTabla("rol", datagrid_Rol);
+                    cConexion.LlamarTabla("rol", datagrid_Rol);
+                    datagrid_Rol.Columns[0].Visibility = Visibility.Collapsed;
+                    datagrid_Rol.Columns[2].Visibility = Visibility.Collapsed;
                     MessageBox.Show("Rol Agregado Exitosamente");
                 }
                 catch (Exception ex)
