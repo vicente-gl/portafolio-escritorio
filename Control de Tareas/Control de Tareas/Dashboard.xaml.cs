@@ -1691,10 +1691,6 @@ namespace Control_de_Tareas
             {
                 if (CheckCrearFlujoCamposCheck())
                 {
-
-
-
-
                     cConexion.InsertFlujo_PL(datos_FlujoPL); // Query para insertar flujo pl
 
                     string ID_flujoPL = cConexion.GetIDByName("flujo_pl", datos_FlujoPL[0]);
